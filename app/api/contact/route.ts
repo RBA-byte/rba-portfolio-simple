@@ -39,9 +39,8 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ ok: true }, { status: 200 });
   } catch (err) {
     console.error("Failed to send inquiry email:", err);
-    return NextResponse.json(
-      { error: "We couldn't send your inquiry right now. Please try again shortly." },
-      { status: 502 }
-    );
+    const message =
+      err instanceof Error ? err.message : "We couldn't send your inquiry.";
+    return NextResponse.json({ error: message }, { status: 502 });
   }
 }

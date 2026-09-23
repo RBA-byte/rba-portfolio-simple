@@ -1,45 +1,95 @@
+import type { ResponsiveImage } from "@/types";
+
 /**
  * All editorial copy and image references live here so the brand's
  * photography and words can be swapped in one place.
  *
- * To use your own photographs: drop files into /public/images and
- * change each src below to "/images/your-file.jpg". The placeholders
- * point at picsum.photos purely so the site renders correctly before
- * real photography is added — replace them before launch.
+ * Each hero photo needs TWO crops:
+ *   - mobile:  a portrait/vertical crop (tall) for phone screens
+ *   - desktop: a landscape/horizontal crop (wide) for tablets and up
+ * This avoids a tall portrait photo being stretched across a wide
+ * desktop screen, or vice versa.
+ *
+ * To use your own photographs: drop both crops of each photo into
+ * /public/images and change the src values below to
+ * "/images/your-file.jpg". The placeholders point at picsum.photos
+ * purely so the site renders correctly before real photography is
+ * added — replace them before launch.
  */
 
-export interface HeroImage {
-  src: string;
-  alt: string;
-}
-
-export const heroImages: HeroImage[] = [
+export const heroImages: ResponsiveImage[] = [
   {
-    src: "/images/wedding-01.jpg",
+    mobile: "/images/wedding-01.jpg",
+    desktop: "https://picsum.photos/seed/rba-wedding-01d/2400/1350",
     alt: "Bride and groom silhouetted against golden evening light",
   },
   {
-    src: "/images/wedding-02.jpg",
+    mobile: "/images/wedding-02.jpg",
+    desktop: "https://picsum.photos/seed/rba-wedding-02d/2400/1350",
     alt: "Close detail of a bridal bouquet and hand",
   },
   {
-    src: "/images/wedding-03.jpg",
+    mobile: "/images/wedding-03.jpg",
+    desktop: "https://picsum.photos/seed/rba-wedding-03d/2400/1350",
     alt: "Wide shot of a wedding venue at dusk",
   },
   {
-    src: "/images/wedding-04.jpg",
+    mobile: "/images/wedding-04.jpg",
+    desktop: "https://picsum.photos/seed/rba-wedding-04d/2400/1350",
     alt: "Candid portrait of the couple laughing together",
   },
   {
-    src: "/images/wedding-05.jpg",
+    mobile: "/images/wedding-05.jpg",
+    desktop: "https://picsum.photos/seed/rba-wedding-05d/2400/1350",
     alt: "Architectural detail of the ceremony setting",
   },
+  {
+    mobile: "/images/wedding-06.jpg",
+    desktop: "https://picsum.photos/seed/rba-wedding-05d/2400/1350",
+    alt: "Architectural detail of the ceremony setting",
+  },
+  {
+    mobile: "/images/wedding-07.jpg",
+    desktop: "https://picsum.photos/seed/rba-wedding-05d/2400/1350",
+    alt: "Architectural detail of the ceremony setting",
+  },
+  {
+    mobile: "/images/wedding-08.jpg",
+    desktop: "https://picsum.photos/seed/rba-wedding-05d/2400/1350",
+    alt: "Architectural detail of the ceremony setting",
+  },
+  {
+    mobile: "/images/wedding-09.jpg",
+    desktop: "https://picsum.photos/seed/rba-wedding-05d/2400/1350",
+    alt: "Architectural detail of the ceremony setting",
+  },
+  {
+    mobile: "/images/wedding-10.jpg",
+    desktop: "https://picsum.photos/seed/rba-wedding-05d/2400/1350",
+    alt: "Architectural detail of the ceremony setting",
+  },
+  {
+    mobile: "/images/wedding-11.jpg",
+    desktop: "https://picsum.photos/seed/rba-wedding-05d/2400/1350",
+    alt: "Architectural detail of the ceremony setting",
+  },
+  {
+    mobile: "/images/wedding-12.jpg",
+    desktop: "https://picsum.photos/seed/rba-wedding-05d/2400/1350",
+    alt: "Architectural detail of the ceremony setting",
+  },
+  {
+    mobile: "/images/wedding-13.jpg",
+    desktop: "https://picsum.photos/seed/rba-wedding-05d/2400/1350",
+    alt: "Architectural detail of the ceremony setting",
+  },
+  {
+    mobile: "/images/wedding-14.jpg",
+    desktop: "https://picsum.photos/seed/rba-wedding-05d/2400/1350",
+    alt: "Architectural detail of the ceremony setting",
+  },
+ 
 ];
-
-export const aboutImage = {
-  src: "/images/about-us-01.jpg",
-  alt: "RBA Films & Photography on location during a wedding film shoot",
-};
 
 export const brand = {
   titleLine1: "Cinematic Weddings",

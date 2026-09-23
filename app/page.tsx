@@ -5,9 +5,8 @@ import Header from "@/components/Header";
 import HeroCarousel from "@/components/HeroCarousel";
 import AboutSection from "@/components/AboutSection";
 import ContactSection from "@/components/ContactSection";
+import { heroImages } from "@/lib/content";
 import type { SectionId } from "@/types";
-
-const SECTION_ORDER: SectionId[] = ["hero", "about", "contact"];
 
 export default function Page() {
   const storyRef = useRef<HTMLDivElement>(null);
@@ -15,6 +14,12 @@ export default function Page() {
   const aboutRef = useRef<HTMLElement>(null);
   const contactRef = useRef<HTMLElement>(null);
   const [section, setSection] = useState<SectionId>("hero");
+
+  // Lifted up (rather than kept local to HeroCarousel) so About/Contact
+  // can show the same photo the visitor was last looking at, and so it
+  // survives scrolling away and back to the hero.
+  const [heroIndex, setHeroIndex] = useState(0);
+  const activeImage = heroImages[heroIndex];
 
   useEffect(() => {
     const root = storyRef.current;
@@ -49,13 +54,17 @@ export default function Page() {
       <Header section={section} />
       <div ref={storyRef} className="scroll-story">
         <section ref={heroRef} className="relative h-full w-full">
-          <HeroCarousel onContinue={scrollToAbout} />
+          <HeroCarousel
+            index={heroIndex}
+            onIndexChange={setHeroIndex}
+            onContinue={scrollToAbout}
+          />
         </section>
         <section ref={aboutRef} className="h-full w-full">
-          <AboutSection />
+          <AboutSection image={activeImage} />
         </section>
         <section ref={contactRef} className="h-full w-full">
-          <ContactSection />
+          <ContactSection image={activeImage} />
         </section>
       </div>
     </main>

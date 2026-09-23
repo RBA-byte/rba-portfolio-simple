@@ -13,11 +13,11 @@ export default function ThankYou() {
       transition={{ duration: 0.55, ease: EASE }}
       className="flex flex-col items-center text-center"
     >
-      <h3 className="font-display text-3xl text-ink sm:text-4xl">
+      <h3 className="font-display text-3xl text-paper sm:text-4xl">
         {contactCopy.thankYou.heading}
       </h3>
-      <div className="mt-5 h-px w-10 bg-ink/30" />
-      <p className="mt-6 max-w-[32ch] text-[0.95rem] font-light leading-relaxed text-ink/75">
+      <div className="mt-5 h-px w-10 bg-paper/40" />
+      <p className="mt-6 max-w-[32ch] text-[0.95rem] font-light leading-relaxed text-paper/85">
         {contactCopy.thankYou.body}
       </p>
     </motion.div>

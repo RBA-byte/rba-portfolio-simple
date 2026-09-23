@@ -38,13 +38,16 @@ function ChevronDown() {
 }
 
 export default function HeroCarousel({
+  index,
+  onIndexChange,
   onContinue,
 }: {
+  index: number;
+  onIndexChange: (next: number) => void;
   onContinue: () => void;
 }) {
-  const [index, setIndex] = useState(0);
-  const [width, setWidth] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
+  const [width, setWidth] = useState(0);
 
   useEffect(() => {
     const el = containerRef.current;
@@ -55,13 +58,14 @@ export default function HeroCarousel({
       }
     });
     observer.observe(el);
+    setWidth(el.getBoundingClientRect().width);
     return () => observer.disconnect();
   }, []);
 
   const lastIndex = heroImages.length - 1;
 
   const goTo = (next: number) => {
-    setIndex(Math.max(0, Math.min(lastIndex, next)));
+    onIndexChange(Math.max(0, Math.min(lastIndex, next)));
   };
 
   const handleDragEnd = (
@@ -76,28 +80,46 @@ export default function HeroCarousel({
     }
   };
 
+  // The full draggable range across every slide — NOT per-slide. Pinning
+  // this to {left:0, right:0} (the previous bug) forced the track back
+  // toward slide 0 the instant a drag began, no matter which slide was
+  // active, producing a visible flash back to the first photo.
+  const maxOffset = lastIndex * width;
+
   return (
     <div ref={containerRef} className="relative h-full w-full overflow-hidden bg-ink">
       <motion.div
         className="flex h-full cursor-grab touch-pan-y active:cursor-grabbing"
         drag="x"
         dragDirectionLock
-        dragConstraints={{ left: 0, right: 0 }}
+        dragConstraints={{ left: -maxOffset, right: 0 }}
         dragElastic={0.06}
         onDragEnd={handleDragEnd}
         animate={{ x: -index * width }}
         transition={{ duration: 0.6, ease: EASE }}
       >
         {heroImages.map((image, i) => (
-          <div key={image.src} className="relative h-full w-full flex-shrink-0">
+          <div key={image.alt} className="relative h-full w-full flex-shrink-0">
+            {/* Portrait crop for phones */}
             <Image
-              src={image.src}
+              src={image.mobile}
               alt={image.alt}
               fill
               priority={i === 0}
               loading={i === 0 ? undefined : "lazy"}
               sizes="100vw"
-              className="pointer-events-none object-cover"
+              className="pointer-events-none object-cover md:hidden"
+              draggable={false}
+            />
+            {/* Landscape crop for tablets/desktop */}
+            <Image
+              src={image.desktop}
+              alt={image.alt}
+              fill
+              priority={i === 0}
+              loading={i === 0 ? undefined : "lazy"}
+              sizes="100vw"
+              className="pointer-events-none hidden object-cover md:block"
               draggable={false}
             />
           </div>

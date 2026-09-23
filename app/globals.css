@@ -17,9 +17,14 @@ body {
   font-family: var(--font-sans), sans-serif;
 }
 
-/* Vertical story scroll: each section snaps to fill the viewport */
+/* Vertical story scroll: each section snaps to fill the viewport.
+   `dvh` (dynamic viewport height) tracks the browser chrome live, so the
+   layout resizes smoothly as the address bar shows/hides instead of
+   staying pinned to one size and leaving a gap. `vh` is the fallback for
+   browsers that don't support dvh yet. */
 .scroll-story {
-  height: 100svh;
+  height: 100vh;
+  height: 100dvh;
   overflow-y: auto;
   overflow-x: hidden;
   scroll-snap-type: y mandatory;
@@ -45,6 +50,14 @@ body {
 .carousel-track > * {
   scroll-snap-align: start;
   scroll-snap-stop: always;
+}
+
+/* Subtle film-grain texture, used over the About/Contact backdrops */
+.grain {
+  pointer-events: none;
+  opacity: 0.15;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
 /* Visible, restrained focus state */
