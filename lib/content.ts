@@ -37,7 +37,7 @@ export const heroImages: HeroImage[] = [
 ];
 
 export const aboutImage = {
-  src: "https://picsum.photos/seed/rba-about/1400/1750",
+  src: "/images/about-us-01.jpg",
   alt: "RBA Films & Photography on location during a wedding film shoot",
 };
 
