@@ -2,12 +2,15 @@
 
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { motion, AnimatePresence, type PanInfo } from "framer-motion";
 import { heroImages } from "@/lib/content";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 const SWIPE_DISTANCE = 60;
 const SWIPE_VELOCITY = 300;
+/** Pointer has to move less than this (px) to still count as a tap, not a swipe. */
+const TAP_TOLERANCE = 8;
 
 function ChevronRight() {
   return (
@@ -48,6 +51,10 @@ export default function HeroCarousel({
 }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [width, setWidth] = useState(0);
+  const router = useRouter();
+  // Tracked natively (not via Framer's drag events) so a tap can be told
+  // apart from a swipe regardless of which slide is currently active.
+  const pointerStart = useRef<{ x: number; y: number } | null>(null);
 
   useEffect(() => {
     const el = containerRef.current;
@@ -86,6 +93,22 @@ export default function HeroCarousel({
   // active, producing a visible flash back to the first photo.
   const maxOffset = lastIndex * width;
 
+  const handlePointerDown = (e: React.PointerEvent) => {
+    pointerStart.current = { x: e.clientX, y: e.clientY };
+  };
+
+  const handlePointerUp = (slug: string) => (e: React.PointerEvent) => {
+    const start = pointerStart.current;
+    pointerStart.current = null;
+    if (!start) return;
+    const distance = Math.hypot(e.clientX - start.x, e.clientY - start.y);
+    // Only a genuine tap (barely any movement) opens the post — anything
+    // further was a swipe intended to change slides, not follow a link.
+    if (distance < TAP_TOLERANCE) {
+      router.push(`/blog/${slug}`);
+    }
+  };
+
   return (
     <div ref={containerRef} className="relative h-full w-full overflow-hidden bg-ink">
       <motion.div
@@ -99,7 +122,20 @@ export default function HeroCarousel({
         transition={{ duration: 0.6, ease: EASE }}
       >
         {heroImages.map((image, i) => (
-          <div key={image.alt} className="relative h-full w-full flex-shrink-0">
+          <div
+            key={image.slug}
+            onPointerDown={handlePointerDown}
+            onPointerUp={handlePointerUp(image.slug)}
+            role="link"
+            tabIndex={0}
+            aria-label={`Read the story behind this photograph: ${image.alt}`}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                router.push(`/blog/${image.slug}`);
+              }
+            }}
+            className="relative h-full w-full flex-shrink-0 cursor-pointer"
+          >
             {/* Portrait crop for phones */}
             <Image
               src={image.mobile}

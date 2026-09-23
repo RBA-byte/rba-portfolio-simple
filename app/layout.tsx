@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Bodoni_Moda, Poppins } from "next/font/google";
+import ContactPill from "@/components/ContactPill";
 import "./globals.css";
 
 const display = Bodoni_Moda({
@@ -36,7 +37,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${display.variable} ${sans.variable}`}>
-      <body>{children}</body>
+      <body>
+        {children}
+        <ContactPill />
+      </body>
     </html>
   );
 }

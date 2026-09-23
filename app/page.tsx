@@ -5,6 +5,7 @@ import Header from "@/components/Header";
 import HeroCarousel from "@/components/HeroCarousel";
 import AboutSection from "@/components/AboutSection";
 import ContactSection from "@/components/ContactSection";
+import StudioSection from "@/components/StudioSection";
 import { heroImages } from "@/lib/content";
 import type { SectionId } from "@/types";
 
@@ -13,6 +14,7 @@ export default function Page() {
   const heroRef = useRef<HTMLElement>(null);
   const aboutRef = useRef<HTMLElement>(null);
   const contactRef = useRef<HTMLElement>(null);
+  const studioRef = useRef<HTMLElement>(null);
   const [section, setSection] = useState<SectionId>("hero");
 
   // Lifted up (rather than kept local to HeroCarousel) so About/Contact
@@ -27,6 +29,7 @@ export default function Page() {
       ["hero", heroRef.current],
       ["about", aboutRef.current],
       ["contact", contactRef.current],
+      ["studio", studioRef.current],
     ];
 
     const observer = new IntersectionObserver(
@@ -65,6 +68,9 @@ export default function Page() {
         </section>
         <section ref={contactRef} className="h-full w-full">
           <ContactSection image={activeImage} />
+        </section>
+        <section ref={studioRef} className="h-full w-full">
+          <StudioSection />
         </section>
       </div>
     </main>

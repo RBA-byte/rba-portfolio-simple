@@ -66,6 +66,7 @@ export default function Header({ section }: { section: SectionId }) {
               {section === "hero" && <HeroTitle />}
               {section === "about" && <SectionTitle label="ABOUT US" />}
               {section === "contact" && <SectionTitle label="CONTACT" />}
+              {section === "studio" && <SectionTitle label="VISIT US" />}
             </motion.div>
           </AnimatePresence>
         </div>
