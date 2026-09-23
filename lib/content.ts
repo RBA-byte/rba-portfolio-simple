@@ -15,7 +15,7 @@ export interface HeroImage {
 
 export const heroImages: HeroImage[] = [
   {
-    src: "/public/images/wedding-01.jpg",
+    src: "/images/wedding-01.jpg",
     alt: "Bride and groom silhouetted against golden evening light",
   },
   {
