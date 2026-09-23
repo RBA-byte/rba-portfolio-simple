@@ -12,7 +12,7 @@ import type { ResponsiveImage } from "@/types";
 export default function SectionBackdrop({ image }: { image: ResponsiveImage }) {
   return (
     <div className="absolute inset-0 overflow-hidden">
-      <div className="absolute inset-0 scale-110 blur-lg">
+      <div className="absolute inset-0 scale-110 blur-md">
         <Image
           src={image.mobile}
           alt=""
