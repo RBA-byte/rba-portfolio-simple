@@ -15,7 +15,7 @@ export interface HeroImage {
 
 export const heroImages: HeroImage[] = [
   {
-    src: "https://picsum.photos/seed/rba-wedding-01/1600/2100",
+    src: "/public/images/wedding-01.jpg",
     alt: "Bride and groom silhouetted against golden evening light",
   },
   {
