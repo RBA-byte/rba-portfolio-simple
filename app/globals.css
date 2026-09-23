@@ -1,0 +1,65 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+html,
+body {
+  overscroll-behavior-y: none;
+}
+
+body {
+  background-color: #131210;
+  color: #f5f2ec;
+  font-family: var(--font-sans), sans-serif;
+}
+
+/* Vertical story scroll: each section snaps to fill the viewport */
+.scroll-story {
+  height: 100svh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scroll-snap-type: y mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+
+.scroll-story > section {
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+
+/* Hero's own horizontal carousel scrolls independently of the story */
+.carousel-track {
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.carousel-track::-webkit-scrollbar {
+  display: none;
+}
+
+.carousel-track > * {
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+
+/* Visible, restrained focus state */
+:focus-visible {
+  outline: 1px solid #f5f2ec;
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
