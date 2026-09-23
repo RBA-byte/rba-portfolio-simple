@@ -19,19 +19,19 @@ export const heroImages: HeroImage[] = [
     alt: "Bride and groom silhouetted against golden evening light",
   },
   {
-    src: "https://picsum.photos/seed/rba-wedding-02/1600/2100",
+    src: "/images/wedding-02.jpg",
     alt: "Close detail of a bridal bouquet and hand",
   },
   {
-    src: "https://picsum.photos/seed/rba-wedding-03/1600/2100",
+    src: "/images/wedding-03.jpg",
     alt: "Wide shot of a wedding venue at dusk",
   },
   {
-    src: "https://picsum.photos/seed/rba-wedding-04/1600/2100",
+    src: "/images/wedding-04.jpg",
     alt: "Candid portrait of the couple laughing together",
   },
   {
-    src: "https://picsum.photos/seed/rba-wedding-05/1600/2100",
+    src: "/images/wedding-05.jpg",
     alt: "Architectural detail of the ceremony setting",
   },
 ];
