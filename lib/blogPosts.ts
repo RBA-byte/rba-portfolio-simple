@@ -23,36 +23,59 @@ function heroImage(slug: string) {
 
 export const blogPosts: BlogPost[] = [
   {
-    slug: "golden-hour-vows",
-    title: "Golden Hour Vows",
+    slug: "luxury-cinematic-wedding-photography-lahore",
+    title: "AFTERGLOW",
     metaDescription:
-      "Inside a golden-hour wedding ceremony shot by RBA Films & Photography — how light shapes a wedding film.",
-    featuredImage: heroImage("golden-hour-vows"),
+      "Discover the art of luxury cinematic wedding photography in Lahore, from atmospheric Walima portraits to timeless, editorial wedding storytelling.",
+    featuredImage: heroImage("luxury-cinematic-wedding-photography-lahore"),
     publishedAt: "2026-06-12",
     blocks: [
       {
+        type: "heading",
+        text: "Luxury Cinematic Wedding Photography in Lahore: The Walima Edit",
+      },
+	  
+	  {
         type: "paragraph",
-        text: "There's a narrow window, twenty minutes at most, when the light turns the whole world the same warm colour. Every wedding we shoot is planned, quietly, around finding that window.",
+        text: "A Walima carries a different kind of energy. After the celebrations, rituals, colour and movement of the wedding days, there is often a quieter elegance to the reception—the couple, the atmosphere, the details and the emotions taking centre stage. For couples looking for luxury wedding photography in Lahore, a Walima offers an opportunity to create photographs that feel less like conventional event coverage and more like frames from a cinematic story.",
       },
       {
         type: "heading",
-        text: "Why timing the light matters",
+        text: "Creating a Cinematic Walima",
       },
       {
         type: "paragraph",
-        text: "A ceremony scheduled an hour later can change everything about how it's remembered on film. We work with couples and their planners ahead of time to build the day around this light, not the other way around.",
+        text: "Cinematic wedding photography is not simply about making an image look dramatic. It is about creating an atmosphere The use of controlled light, carefully considered composition, movement, depth and colour can transform an ordinary moment into something visually expressive. Smoke, haze and atmospheric elements can add another layer of depth, allowing light to become part of the composition itself. In a portrait like this, the couple becomes the centre of the frame while the surrounding atmosphere creates separation and dimension.",
       },
       {
         type: "paragraph",
-        text: "The result isn't a filter or an edit — it's simply what the evening looked like, captured while it was happening.",
+        text: "Luxury photography is often associated with elaborate venues, couture, florals and grand décor. But the feeling of luxury can also come from restraint. Clean compositions. Intentional lighting. Elegant posing. Beautiful skin tones. Subtle movement. Rather than photographing every moment in the same way, a cinematic approach allows certain images to breathe. The result is a wedding gallery that feels cohesive and considered rather than simply a collection of event photographs.",
       },
       {
         type: "heading",
-        text: "What we look for on the day",
+        text: "The Editorial Influence",
       },
       {
         type: "paragraph",
-        text: "Open ground facing west, minimal artificial light nearby, and a couple willing to step outside for ten quiet minutes together. That's usually all it takes.",
+        text: "There is a growing appreciation for editorial wedding photography in Lahore, particularly among couples who want their wedding photographs to feel contemporary while still retaining the character of a Pakistani celebration. Editorial photography brings attention to composition, styling, light and expression. Combined with cinematic wedding storytelling, it can create portraits that feel timeless rather than tied to a particular trend. A Walima portrait is particularly suited to this approach. The evening setting, formal attire and refined atmosphere naturally lend themselves to a more sophisticated visual language.",
+      },
+	  
+	   {
+        type: "heading",
+        text: "Capturing the Couple, Not Just the Event",
+      },
+      {
+        type: "paragraph",
+        text: "Wedding photography should ultimately be about the people. The venue will change. The décor will eventually be dismantled. The flowers will disappear. What remains are the photographs that bring the feeling of the evening back. A cinematic wedding photographer looks for those moments of connection—the way a couple holds each other, a glance between them, a quiet pause between celebrations. These moments don't need to be forced. They need to be noticed.",
+      },
+	  
+	   {
+        type: "heading",
+        text: "Cinematic Wedding Photography in Lahore",
+      },
+      {
+        type: "paragraph",
+        text: "Lahore weddings have their own visual character. From traditional ceremonies and vibrant Mehndis to formal Baraats and elegant Walimas, every celebration has a different rhythm. Our approach at RBA Films & Photography is to combine the emotion of documentary photography with the visual language of cinema and editorial portraiture. The goal isn't simply to document what happened. It is to create photographs and films that allow you to remember how it felt. For couples searching for a luxury wedding photographer in Lahore who approaches weddings through cinematic storytelling, the Walima can become more than the final event of the celebrations. It can become the beginning of the story you keep.",
       },
     ],
   },
