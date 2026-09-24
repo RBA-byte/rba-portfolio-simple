@@ -16,7 +16,7 @@ export default function BlogHeader() {
   const boxShadow = useMotionTemplate`0 10px 24px rgba(10,10,10,${shadowStrength})`;
 
   const glass = {
-    background: "rgba(19,18,16,0.4)",
+    background: "rgba(255,255,255,0.08)",
     backdropFilter: "blur(12px)",
     WebkitBackdropFilter: "blur(12px)",
   };

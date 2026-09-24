@@ -6,10 +6,17 @@ import { InstagramIcon, WhatsAppIcon } from "@/components/icons";
 /** Exported so GoToTopButton can match this exactly. */
 export const FLOATING_BUTTON_SIZE = 50;
 
-export default function ContactPill() {
+export default function ContactPill({
+  tone = "light",
+}: {
+  /** "dark" is for bright backgrounds (e.g. the Visit Us section). */
+  tone?: "light" | "dark";
+}) {
   return (
     <div
-      className="glass-pill fixed z-50 flex items-center overflow-hidden rounded-full"
+      className={`fixed z-50 flex items-center overflow-hidden rounded-full ${
+        tone === "dark" ? "glass-pill-dark" : "glass-pill"
+      }`}
       style={{
         right: "max(1.1rem, env(safe-area-inset-right))",
         bottom: "max(1.1rem, env(safe-area-inset-bottom))",

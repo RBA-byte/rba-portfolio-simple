@@ -43,11 +43,21 @@ export default function Header({ section }: { section: SectionId }) {
   return (
     <header className="pointer-events-none fixed inset-x-0 top-0 z-40 flex justify-center pt-[calc(env(safe-area-inset-top)+1.1rem)]">
       <div
-        className="glass-pill pointer-events-auto rounded-full px-6 py-2.5 sm:px-8 sm:py-3"
+        className={`pointer-events-auto rounded-full px-6 py-2.5 sm:px-8 sm:py-3 ${
+          section === "studio" ? "glass-pill-dark" : "glass-pill"
+        }`}
       >
         <div
           className="relative flex min-w-[13rem] items-center justify-center overflow-hidden sm:min-w-[16rem]"
-          style={{ textShadow: "0 1px 10px rgba(0,0,0,0.35)" }}
+          style={{
+            // The dark, opaque Visit Us pill already gives enough contrast
+            // on its own — adding the drop-shadow on top of it produced a
+            // faint extra smudge around the text. Only apply it on the
+            // lighter/photo-backed sections where it's actually needed
+            // for legibility.
+            textShadow:
+              section === "studio" ? "none" : "0 1px 10px rgba(0,0,0,0.35)",
+          }}
         >
           <AnimatePresence mode="popLayout" initial={false}>
             <motion.div

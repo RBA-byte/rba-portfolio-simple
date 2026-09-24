@@ -55,7 +55,7 @@ export const heroImages: HeroSlide[] = [
 ];
 
 export const brand = {
-  titleLine1: "CINEMATIC WEDDINGS",
+  titleLine1: "Cinematic Weddings",
   titleLine2: "by RBA Films & Photography",
   aboutLabel: "ABOUT US",
   contactLabel: "CONTACT",

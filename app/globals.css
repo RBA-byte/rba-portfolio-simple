@@ -37,7 +37,13 @@ body {
 
 .scroll-story > section {
   scroll-snap-align: start;
-  scroll-snap-stop: always;
+  /* "always" forces a hard stop at every section even during a fast
+     flick/fling, which is what made jumping several sections (e.g. to
+     Visit Us) feel like it paused at each one in between before
+     continuing. "normal" (the default) lets a strong scroll glide
+     straight to its target while still snapping normally on a single
+     scroll. */
+  scroll-snap-stop: normal;
 }
 
 /* Hero's own horizontal carousel scrolls independently of the story */
@@ -68,13 +74,22 @@ body {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
-/* Shared frosted-glass treatment for every floating pill/circle button
+/* Shared frosted-glass treatment for the floating pill/circle buttons
    (header title, contact pill, carousel arrows, go-to-top, blog header).
-   Uses a dark tint rather than a white one so white icons/text stay
-   legible whether it's sitting over a photo or a light section like
-   About/Studio. One class keeps all of them visually consistent. */
+   White tint — used everywhere except the Visit Us section, which uses
+   .glass-pill-dark instead (that background is too bright for a white
+   tint to stay legible). */
 .glass-pill {
-  background: rgba(19, 18, 16, 0.4);
+  background: rgba(255, 255, 255, 0.08);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.28);
+  transform: translateZ(0);
+}
+
+/* Dark variant, used only where the section behind it is light (Visit Us). */
+.glass-pill-dark {
+  background: rgba(19, 18, 16, 0.42);
   -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(12px);
   box-shadow: 0 8px 22px rgba(0, 0, 0, 0.32);

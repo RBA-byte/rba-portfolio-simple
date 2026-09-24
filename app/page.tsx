@@ -8,6 +8,7 @@ import PackagesSection from "@/components/PackagesSection";
 import ContactSection from "@/components/ContactSection";
 import StudioSection from "@/components/StudioSection";
 import GoToTopButton from "@/components/GoToTopButton";
+import ContactPill from "@/components/ContactPill";
 import { heroImages } from "@/lib/content";
 import type { SectionId } from "@/types";
 
@@ -63,7 +64,8 @@ export default function Page() {
   return (
     <main className="relative">
       <Header section={section} />
-      <GoToTopButton visible={section !== "hero"} onClick={scrollToTop} />
+      <GoToTopButton visible={section !== "hero"} onClick={scrollToTop} tone={section === "studio" ? "dark" : "light"} />
+      <ContactPill tone={section === "studio" ? "dark" : "light"} />
       <div ref={storyRef} className="scroll-story">
         <section ref={heroRef} className="relative h-full w-full">
           <HeroCarousel

@@ -2,6 +2,7 @@
 
 import BlogHeader from "@/components/BlogHeader";
 import BlogFeaturedImage from "@/components/BlogFeaturedImage";
+import ContactPill from "@/components/ContactPill";
 import type { BlogPost } from "@/types";
 
 export default function BlogPostView({
@@ -14,6 +15,7 @@ export default function BlogPostView({
   return (
     <div className="min-h-screen bg-[#22242a] text-[#e8e8e8]">
       <BlogHeader />
+      <ContactPill />
 
       {/* Edge-to-edge on mobile; padded on both sides on desktop, same
           image aspect ratio kept at every breakpoint (see

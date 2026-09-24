@@ -22,9 +22,12 @@ function ArrowUp() {
 export default function GoToTopButton({
   visible,
   onClick,
+  tone = "light",
 }: {
   visible: boolean;
   onClick: () => void;
+  /** "dark" is for bright backgrounds (e.g. the Visit Us section). */
+  tone?: "light" | "dark";
 }) {
   return (
     <AnimatePresence>
@@ -37,7 +40,9 @@ export default function GoToTopButton({
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.8 }}
           transition={{ duration: 0.3, ease: EASE }}
-          className="glass-pill fixed z-50 flex items-center justify-center rounded-full text-white/90 transition-opacity hover:opacity-70"
+          className={`fixed z-50 flex items-center justify-center rounded-full text-white/90 transition-opacity hover:opacity-70 ${
+            tone === "dark" ? "glass-pill-dark" : "glass-pill"
+          }`}
           style={{
             left: "max(1.1rem, env(safe-area-inset-left))",
             bottom: "max(1.1rem, env(safe-area-inset-bottom))",
