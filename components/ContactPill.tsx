@@ -3,17 +3,17 @@
 import { socialLinks } from "@/lib/content";
 import { InstagramIcon, WhatsAppIcon } from "@/components/icons";
 
+/** Exported so GoToTopButton can match this exactly. */
+export const FLOATING_BUTTON_SIZE = 50;
+
 export default function ContactPill() {
   return (
     <div
-      className="fixed z-50 flex items-center overflow-hidden rounded-full"
+      className="glass-pill fixed z-50 flex items-center overflow-hidden rounded-full"
       style={{
         right: "max(1.1rem, env(safe-area-inset-right))",
         bottom: "max(1.1rem, env(safe-area-inset-bottom))",
-        background: "rgba(255,255,255,0.08)",
-        backdropFilter: "blur(12px)",
-        WebkitBackdropFilter: "blur(12px)",
-        boxShadow: "0 10px 28px rgba(0,0,0,0.35)",
+        height: FLOATING_BUTTON_SIZE,
       }}
     >
       <a
@@ -21,7 +21,7 @@ export default function ContactPill() {
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Message us on Instagram"
-        className="flex items-center justify-center p-3.5 text-white/90 transition-opacity hover:opacity-70"
+        className="flex h-full items-center justify-center px-3.5 text-white/90 transition-opacity hover:opacity-70"
       >
         <InstagramIcon className="h-[19px] w-[19px]" />
       </a>
@@ -33,7 +33,7 @@ export default function ContactPill() {
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Message us on WhatsApp"
-        className="flex items-center justify-center p-3.5 text-white/90 transition-opacity hover:opacity-70"
+        className="flex h-full items-center justify-center px-3.5 text-white/90 transition-opacity hover:opacity-70"
       >
         <WhatsAppIcon className="h-[19px] w-[19px]" />
       </a>

@@ -63,7 +63,7 @@ function Field({ label, required, error, children }: FieldProps) {
 }
 
 const inputClasses =
-  "w-full bg-transparent pb-1 text-[0.98rem] font-light text-paper placeholder:text-paper/35 focus:outline-none";
+  "w-full appearance-none bg-transparent pb-1 text-[0.98rem] font-light text-paper placeholder:text-paper/35 focus:outline-none [-webkit-appearance:none] [box-shadow:none]";
 
 export default function ContactSection({ image }: { image: ResponsiveImage }) {
   const [data, setData] = useState<ContactFormData>(initialData);

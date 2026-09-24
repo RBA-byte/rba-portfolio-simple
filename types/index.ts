@@ -1,4 +1,4 @@
-export type SectionId = "hero" | "about" | "contact" | "studio";
+export type SectionId = "hero" | "about" | "packages" | "contact" | "studio";
 
 /** A photo with a portrait crop for phones and a landscape crop for wider screens. */
 export interface ResponsiveImage {
@@ -51,5 +51,11 @@ export interface BlogPost {
   featuredImage: ResponsiveImage;
   publishedAt: string;
   blocks: BlogBlock[];
+}
+
+export interface WeddingPackage {
+  name: string;
+  price: string;
+  features: string[];
 }
 

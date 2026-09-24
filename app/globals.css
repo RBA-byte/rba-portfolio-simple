@@ -9,6 +9,10 @@
 html,
 body {
   overscroll-behavior-y: none;
+  /* Prevents the default blue/grey tap-highlight rectangle mobile
+     browsers draw on tappable elements — this was showing up as an
+     unwanted "shadow" flash on headings and form fields on mobile. */
+  -webkit-tap-highlight-color: transparent;
 }
 
 body {
@@ -52,12 +56,40 @@ body {
   scroll-snap-stop: always;
 }
 
-/* Subtle film-grain texture, used over the About/Contact backdrops */
+/* Subtle film-grain texture, used over the About/Contact/Packages backdrops.
+   translateZ(0) forces its own GPU layer so it composites cleanly with the
+   blur beneath it instead of producing faint shadow/seam artifacts on
+   mobile Safari. */
 .grain {
   pointer-events: none;
   opacity: 0.32;
   mix-blend-mode: overlay;
+  transform: translateZ(0);
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Shared frosted-glass treatment for every floating pill/circle button
+   (header title, contact pill, carousel arrows, go-to-top, blog header).
+   Uses a dark tint rather than a white one so white icons/text stay
+   legible whether it's sitting over a photo or a light section like
+   About/Studio. One class keeps all of them visually consistent. */
+.glass-pill {
+  background: rgba(19, 18, 16, 0.4);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.32);
+  transform: translateZ(0);
+}
+
+/* Hide horizontal scrollbars on touch-scrolled carousels (hero, packages)
+   while keeping native momentum + snap scrolling. */
+.no-scrollbar {
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
 }
 
 /* Visible, restrained focus state */

@@ -43,12 +43,7 @@ export default function Header({ section }: { section: SectionId }) {
   return (
     <header className="pointer-events-none fixed inset-x-0 top-0 z-40 flex justify-center pt-[calc(env(safe-area-inset-top)+1.1rem)]">
       <div
-        className="pointer-events-auto rounded-full px-6 py-2.5 sm:px-8 sm:py-3"
-        style={{
-          background: "rgba(255,255,255,0.08)",
-          backdropFilter: "blur(12px)",
-          WebkitBackdropFilter: "blur(12px)",
-        }}
+        className="glass-pill pointer-events-auto rounded-full px-6 py-2.5 sm:px-8 sm:py-3"
       >
         <div
           className="relative flex min-w-[13rem] items-center justify-center overflow-hidden sm:min-w-[16rem]"
@@ -65,6 +60,7 @@ export default function Header({ section }: { section: SectionId }) {
             >
               {section === "hero" && <HeroTitle />}
               {section === "about" && <SectionTitle label="ABOUT US" />}
+              {section === "packages" && <SectionTitle label="PACKAGES" />}
               {section === "contact" && <SectionTitle label="CONTACT" />}
               {section === "studio" && <SectionTitle label="VISIT US" />}
             </motion.div>

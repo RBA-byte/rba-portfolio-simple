@@ -1,4 +1,4 @@
-import type { HeroSlide, SocialLinks, StudioInfo } from "@/types";
+import type { HeroSlide, SocialLinks, StudioInfo, WeddingPackage } from "@/types";
 
 /**
  * All editorial copy and image references live here so the brand's
@@ -55,7 +55,7 @@ export const heroImages: HeroSlide[] = [
 ];
 
 export const brand = {
-  titleLine1: "Cinematic Weddings",
+  titleLine1: "CINEMATIC WEDDINGS",
   titleLine2: "by RBA Films & Photography",
   aboutLabel: "ABOUT US",
   contactLabel: "CONTACT",
@@ -79,6 +79,47 @@ export const contactCopy = {
     body: "Thank you for reaching out to RBA Films & Photography. Our team will contact you shortly.",
   },
 };
+
+/**
+ * Wedding coverage tiers shown in the Packages section. Edit the
+ * prices and features freely — the layout scales to however many
+ * features each package lists.
+ */
+export const weddingPackages: WeddingPackage[] = [
+  {
+    name: "Basic",
+    price: "PKR 150,000",
+    features: [
+      "6 hours of coverage",
+      "1 photographer",
+      "200+ edited photographs",
+      "Private online gallery",
+    ],
+  },
+  {
+    name: "Silver",
+    price: "PKR 280,000",
+    features: [
+      "10 hours of coverage",
+      "2 photographers",
+      "1 videographer",
+      "500+ edited photographs",
+      "Same-day highlight reel",
+    ],
+  },
+  {
+    name: "Premium",
+    price: "PKR 450,000",
+    features: [
+      "Full-day coverage",
+      "2 photographers + 2 videographers",
+      "Drone footage",
+      "1000+ edited photographs",
+      "Cinematic wedding film",
+      "Complimentary engagement session",
+    ],
+  },
+];
 
 /**
  * Edit these with your real WhatsApp number (in international format,

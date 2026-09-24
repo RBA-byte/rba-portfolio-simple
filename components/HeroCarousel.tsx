@@ -12,13 +12,20 @@ const SWIPE_VELOCITY = 300;
 /** Pointer has to move less than this (px) to still count as a tap, not a swipe. */
 const TAP_TOLERANCE = 8;
 
-function ChevronRight() {
+function ChevronRight({ className }: { className?: string }) {
   return (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <svg
+      width="16"
+      height="16"
+      viewBox="0 0 24 24"
+      fill="none"
+      aria-hidden="true"
+      className={className}
+    >
       <path
         d="M9 5l7 7-7 7"
         stroke="currentColor"
-        strokeWidth="1.4"
+        strokeWidth="1.6"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
@@ -165,20 +172,20 @@ export default function HeroCarousel({
       {/* Subtle overlay for typography legibility, not a heavy darken */}
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/25 via-transparent to-black/35" />
 
-      {/* Left arrow: hidden on first image, fades in after */}
+      {/* Left arrow: hidden on first image, fades in with a slight zoom */}
       <AnimatePresence>
         {index > 0 && (
           <motion.button
             type="button"
             aria-label="Previous photograph"
             onClick={() => goTo(index - 1)}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 0.85 }}
-            exit={{ opacity: 0 }}
+            initial={{ opacity: 0, scale: 0.75 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.75 }}
             transition={{ duration: 0.35, ease: EASE }}
-            className="absolute left-3 top-1/2 z-10 -translate-y-1/2 rotate-180 p-3 text-paper sm:left-6"
+            className="glass-pill absolute left-3 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full text-paper sm:left-6"
           >
-            <ChevronRight />
+            <ChevronRight className="-ml-0.5 rotate-180" />
           </motion.button>
         )}
       </AnimatePresence>
@@ -190,13 +197,13 @@ export default function HeroCarousel({
             type="button"
             aria-label="Next photograph"
             onClick={() => goTo(index + 1)}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 0.85 }}
-            exit={{ opacity: 0 }}
+            initial={{ opacity: 0, scale: 0.75 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.75 }}
             transition={{ duration: 0.35, ease: EASE }}
-            className="absolute right-3 top-1/2 z-10 -translate-y-1/2 p-3 text-paper sm:right-6"
+            className="glass-pill absolute right-3 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full text-paper sm:right-6"
           >
-            <ChevronRight />
+            <ChevronRight className="ml-0.5" />
           </motion.button>
         )}
       </AnimatePresence>
