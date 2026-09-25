@@ -45,13 +45,9 @@ export default function StudioSection() {
             ))}
           </address>
 
-          <a
-            href={studio.phoneHref}
-            className="mt-4 text-[0.95rem] font-light text-ink/85 underline decoration-ink/30 underline-offset-4"
-          >
-            <a
+       <a
   href={studio.phoneHref}
-  className="..."
+  className="mt-4 text-[0.95rem] font-light text-ink/85 underline decoration-ink/30 underline-offset-4"
   onClick={() => {
     window.gtag?.("event", "conversion", {
       send_to: "AW-18460277173/tbH4COr9moUdELXzxeJE",
@@ -60,8 +56,8 @@ export default function StudioSection() {
     });
   }}
 >
-            {studio.phoneDisplay}
-          </a>
+  {studio.phoneDisplay}
+</a>
 
           <a
             href={studio.mapsLink}
