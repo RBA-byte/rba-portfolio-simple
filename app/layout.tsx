@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Bodoni_Moda, Poppins } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 
 const display = Bodoni_Moda({
@@ -37,6 +38,19 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${display.variable} ${sans.variable}`}>
       <body>{children}</body>
+
+      
+      {/* Google Ads */}
+   <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-18460277173"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'AW-18460277173');
+</script>
+      
     </html>
   );
 }
