@@ -40,6 +40,13 @@ export default function ContactPill({
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Message us on WhatsApp"
+         onClick={() => {
+    window.gtag?.("event", "conversion", {
+      send_to: "AW-18460277173/GwEICMSkmYUdELXzxeJE",
+      value: 1.0,
+      currency: "PKR",
+    });
+  }}
         className="flex h-full items-center justify-center px-3.5 text-white/90 transition-opacity hover:opacity-70"
       >
         <WhatsAppIcon className="h-[19px] w-[19px]" />
