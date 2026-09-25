@@ -17,9 +17,9 @@ export default function BlogPostView({
       <BlogHeader />
       <ContactPill />
 
-      {/* Edge-to-edge on mobile; padded on both sides on desktop, same
-          image aspect ratio kept at every breakpoint (see
-          BlogFeaturedImage's aspect-[4/3] / sm:aspect-[16/10]). */}
+      {/* Edge-to-edge on mobile; padded on both sides on desktop. The
+          image's own 3/4 aspect ratio (set in BlogFeaturedImage) stays
+          the same at every breakpoint. */}
       <div className="md:mx-auto md:max-w-5xl md:px-10 md:pt-8">
         <BlogFeaturedImage image={post.featuredImage} title={post.title} />
       </div>

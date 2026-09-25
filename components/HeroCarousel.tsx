@@ -20,7 +20,7 @@ function ChevronRight({ className }: { className?: string }) {
       viewBox="0 0 24 24"
       fill="none"
       aria-hidden="true"
-      className={className}
+      className={`drop-shadow-[0_1px_2px_rgba(0,0,0,0.5)] ${className ?? ""}`}
     >
       <path
         d="M9 5l7 7-7 7"
