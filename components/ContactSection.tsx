@@ -98,6 +98,9 @@ export default function ContactSection({ image }: { image: ResponsiveImage }) {
       if (!res.ok) {
         throw new Error(body?.error || "Request failed.");
       }
+      window.gtag?.("event", "conversion", {
+  send_to: "AW-18460277173/D5nzCLSjlIUdELXzxeJE",
+});
 
       setStatus("sent");
     } catch (err) {
