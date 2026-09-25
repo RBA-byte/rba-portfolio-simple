@@ -41,7 +41,7 @@ export default function RootLayout({
 
       
       {/* Google Ads */}
-   <!-- Google tag (gtag.js) -->
+ 
 <script async src="https://www.googletagmanager.com/gtag/js?id=AW-18460277173"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
