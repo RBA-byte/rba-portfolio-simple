@@ -22,8 +22,15 @@ export interface EditorialImageMeta {
 }
 
 export interface EditorialImageProps {
-  /** The single, unedited source photo — reused for every layer. */
-  src: string;
+  /**
+   * The unedited source photo. If srcMobile/srcDesktop aren't given,
+   * this single image is used for every layer at every breakpoint.
+   */
+  src?: string;
+  /** Portrait crop shown below the md (768px) breakpoint. */
+  srcMobile?: string;
+  /** Landscape/wide crop shown at md (768px) and above. */
+  srcDesktop?: string;
   title: string;
   alt?: string;
   /** 0–100. Where the subject sits in the source photo. */
@@ -41,8 +48,10 @@ export interface EditorialImageProps {
   titleBottom?: string;
   showMeta?: boolean;
   meta?: EditorialImageMeta;
-  /** CSS aspect-ratio, e.g. "3/4" */
+  /** CSS aspect-ratio below the md breakpoint, e.g. "3/4" */
   aspectRatio?: string;
+  /** CSS aspect-ratio at md and above. Defaults to aspectRatio (no change). */
+  desktopAspectRatio?: string;
   draggableSquare?: boolean;
   /** 0–100 starting position of the square */
   initialSquareX?: number;
@@ -74,14 +83,24 @@ const KEY_STEP_LARGE = 0.08;
 
 /**
  * Procedural, monochrome film-grain layer (SVG feTurbulence data URI —
- * no texture asset needed). Opacity is the only thing that changes per
- * instance, so this stays a constant rather than being rebuilt per render.
+ * no texture asset needed).
  */
 const GRAIN_URL =
   "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")";
 
+function Grain({ opacity }: { opacity: number }) {
+  return (
+    <div
+      className="pointer-events-none absolute inset-0 mix-blend-overlay transform-gpu"
+      style={{ opacity, backgroundImage: GRAIN_URL }}
+    />
+  );
+}
+
 export default function EditorialImage({
   src,
+  srcMobile,
+  srcDesktop,
   title,
   alt,
   focalPointX = 50,
@@ -96,6 +115,7 @@ export default function EditorialImage({
   showMeta = false,
   meta,
   aspectRatio = "3/4",
+  desktopAspectRatio,
   draggableSquare = true,
   initialSquareX = 50,
   initialSquareY = 50,
@@ -106,11 +126,20 @@ export default function EditorialImage({
   titleParallax = 0.025,
   priority = false,
 }: EditorialImageProps) {
+  const mobileSrc = srcMobile ?? src;
+  const desktopSrc = srcDesktop ?? src;
+  if (!mobileSrc || !desktopSrc) {
+    throw new Error("EditorialImage needs either `src`, or both `srcMobile` and `srcDesktop`.");
+  }
+
   const containerRef = useRef<HTMLDivElement>(null);
   // Imperatively positioned — mutated directly via .style, never through
   // React state, so dragging and scrolling never trigger a re-render.
   const squareOuterRef = useRef<HTMLDivElement>(null);
-  const windowImgRef = useRef<HTMLImageElement>(null);
+  // Two window images (mobile/desktop crop) so whichever is visible at
+  // the current breakpoint stays in sync with the drag position.
+  const windowImgRefMobile = useRef<HTMLImageElement>(null);
+  const windowImgRefDesktop = useRef<HTMLImageElement>(null);
   const [size, setSize] = useState({ width: 0, height: 0 });
   const reducedMotion = useReducedMotion();
 
@@ -136,9 +165,12 @@ export default function EditorialImage({
   const squareSizePx = Math.round(size.width * (centerSquareSize / 100));
 
   // Moves the square to a normalized (x,y) position and shifts the
-  // "window" image by the exact opposite amount, so whatever the square
-  // reveals lines up pixel-for-pixel with the blurred layer beneath it —
-  // the "clear window on the same photo" effect.
+  // "window" image(s) by the exact opposite amount, so whatever the
+  // square reveals lines up pixel-for-pixel with the blurred layer
+  // beneath it — the "clear window on the same photo" effect. Both the
+  // mobile and desktop window images are kept in sync even though only
+  // one is visible at a time, so nothing is out of place if the
+  // breakpoint changes mid-interaction.
   const applyPosition = useCallback(
     (x: number, y: number) => {
       const clampedX = Math.min(1, Math.max(0, x));
@@ -153,14 +185,15 @@ export default function EditorialImage({
       if (squareOuterRef.current) {
         squareOuterRef.current.style.transform = `translate3d(${left}px, ${top}px, 0)`;
       }
-      if (windowImgRef.current) {
-        windowImgRef.current.style.transform = `translate3d(${-left}px, ${-top}px, 0)`;
-      }
+      const windowTransform = `translate3d(${-left}px, ${-top}px, 0)`;
+      if (windowImgRefMobile.current) windowImgRefMobile.current.style.transform = windowTransform;
+      if (windowImgRefDesktop.current) windowImgRefDesktop.current.style.transform = windowTransform;
     },
     [size.width, size.height, squareSizePx]
   );
 
-  // Re-clamp/re-place on measurement changes (mount, resize, orientation).
+  // Re-clamp/re-place on measurement changes (mount, resize, orientation,
+  // or switching between the mobile/desktop aspect ratio).
   useLayoutEffect(() => {
     applyPosition(posRef.current.x, posRef.current.y);
   }, [applyPosition]);
@@ -288,25 +321,44 @@ export default function EditorialImage({
   )}%)`;
 
   return (
-    <div
-      ref={containerRef}
-      className="relative w-full select-none overflow-hidden bg-ink"
-      style={{ aspectRatio }}
-    >
-      {/* 1. Blurred, black & white full-frame background */}
+    <div ref={containerRef} className="editorial-frame relative w-full select-none overflow-hidden bg-ink">
+      {/* Responsive aspect ratio: mobile below md (768px), desktop at
+          and above it. Uses a scoped stylesheet (rather than a Tailwind
+          class built from the prop) since these values are dynamic. */}
+      <style jsx>{`
+        .editorial-frame {
+          aspect-ratio: ${aspectRatio};
+        }
+        @media (min-width: 768px) {
+          .editorial-frame {
+            aspect-ratio: ${desktopAspectRatio ?? aspectRatio};
+          }
+        }
+      `}</style>
+
+      {/* 1. Blurred, black & white full-frame background, with its own
+          grain layered directly on top so it's clearly visible over the
+          blur rather than depending on the composition's overall grain. */}
       <motion.div className="absolute inset-0" style={{ y: bgY }}>
         <Image
-          src={src}
+          src={mobileSrc}
           alt=""
           fill
           priority={priority}
           sizes="100vw"
-          className="scale-[1.12] object-cover"
-          style={{
-            objectPosition: `${focalPointX}% ${focalPointY}%`,
-            filter: bgFilter,
-          }}
+          className="scale-[1.12] object-cover md:hidden"
+          style={{ objectPosition: `${focalPointX}% ${focalPointY}%`, filter: bgFilter }}
         />
+        <Image
+          src={desktopSrc}
+          alt=""
+          fill
+          priority={priority}
+          sizes="100vw"
+          className="hidden scale-[1.12] object-cover md:block"
+          style={{ objectPosition: `${focalPointX}% ${focalPointY}%`, filter: bgFilter }}
+        />
+        <Grain opacity={grainOpacity} />
       </motion.div>
 
       {/* 2. Sharp center square — a "window" revealing the same photo */}
@@ -329,13 +381,28 @@ export default function EditorialImage({
             style={{ width: squareSizePx, height: squareSizePx }}
           >
             <Image
-              ref={windowImgRef}
-              src={src}
+              ref={windowImgRefMobile}
+              src={mobileSrc}
               alt={alt || title}
               width={Math.round(size.width)}
               height={Math.round(size.height)}
-              priority={priority}
-              className="pointer-events-none absolute left-0 top-0 max-w-none"
+              className="pointer-events-none absolute left-0 top-0 max-w-none md:hidden"
+              style={{
+                width: size.width,
+                height: size.height,
+                objectFit: "cover",
+                objectPosition: `${focalPointX}% ${focalPointY}%`,
+                filter: sharpFilter,
+              }}
+              draggable={false}
+            />
+            <Image
+              ref={windowImgRefDesktop}
+              src={desktopSrc}
+              alt={alt || title}
+              width={Math.round(size.width)}
+              height={Math.round(size.height)}
+              className="pointer-events-none absolute left-0 top-0 hidden max-w-none md:block"
               style={{
                 width: size.width,
                 height: size.height,
@@ -349,11 +416,8 @@ export default function EditorialImage({
         </motion.div>
       )}
 
-      {/* 3. Procedural film grain */}
-      <div
-        className="pointer-events-none absolute inset-0 mix-blend-overlay transform-gpu"
-        style={{ opacity: grainOpacity, backgroundImage: GRAIN_URL }}
-      />
+      {/* 3. Procedural film grain over the whole composition */}
+      <Grain opacity={grainOpacity} />
 
       {/* 4. Optional, understated editorial meta labels — off by default */}
       {showMeta && meta && (
@@ -381,7 +445,8 @@ export default function EditorialImage({
         </div>
       )}
 
-      {/* 5. Large editorial title */}
+      {/* 5. Large editorial title, set in the site's own display serif
+          (the same "Vogue" masthead font used elsewhere on the site). */}
       <motion.div
         style={{ y: titleY, left: titleLeft, bottom: titleBottom }}
         initial={reducedMotion ? undefined : { opacity: 0, y: 14 }}
@@ -391,11 +456,9 @@ export default function EditorialImage({
         className="pointer-events-none absolute z-10 max-w-[92%]"
       >
         <h2
-          className="text-white"
+          className="font-display text-white"
           style={{
-            fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif',
-            fontWeight: 300,
-            letterSpacing: "-0.045em",
+            letterSpacing: "-0.01em",
             fontSize: "clamp(48px, 12vw, 150px)",
             lineHeight: 0.95,
             whiteSpace: "nowrap",

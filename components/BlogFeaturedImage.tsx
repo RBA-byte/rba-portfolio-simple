@@ -10,10 +10,12 @@ export default function BlogFeaturedImage({
 }) {
   return (
     <EditorialImage
-      src={image.desktop}
+      srcMobile={image.mobile}
+      srcDesktop={image.desktop}
       title={title}
       alt={image.alt}
       aspectRatio="3/4"
+      desktopAspectRatio="4/3"
       priority
     />
   );
