@@ -49,6 +49,17 @@ export default function StudioSection() {
             href={studio.phoneHref}
             className="mt-4 text-[0.95rem] font-light text-ink/85 underline decoration-ink/30 underline-offset-4"
           >
+            <a
+  href={studio.phoneHref}
+  className="..."
+  onClick={() => {
+    window.gtag?.("event", "conversion", {
+      send_to: "AW-18460277173/tbH4COr9moUdELXzxeJE",
+      value: 1.0,
+      currency: "PKR",
+    });
+  }}
+>
             {studio.phoneDisplay}
           </a>
 
