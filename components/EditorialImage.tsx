@@ -62,6 +62,18 @@ export interface EditorialImageProps {
   squareParallax?: number;
   titleParallax?: number;
   priority?: boolean;
+  /** Camera-style readout shown below the viewfinder frame. */
+  shutterSpeed?: string;
+  aperture?: string;
+  iso?: string;
+  /** Small center focus crosshair inside the frame. Default on. */
+  enableCrosshair?: boolean;
+  /** Brief crosshair pulse when the viewfinder is released. Default on. */
+  enableFocusAnimation?: boolean;
+  /** Optional tiny label above the settings, e.g. "AF-C". Off by default. */
+  focusMode?: string;
+  /** Optional tiny red REC indicator. Off by default; stays monochrome otherwise. */
+  recording?: boolean;
 }
 
 const EASE = [0.22, 1, 0.36, 1] as const;
@@ -80,6 +92,10 @@ const SNAP_POINTS = [
 const SNAP_THRESHOLD = 0.06;
 const KEY_STEP = 0.02;
 const KEY_STEP_LARGE = 0.08;
+/** Reserved space (px) below the frame for the settings readout, used
+ * when clamping the viewfinder's vertical drag range so the settings
+ * text never gets pushed outside the composition. */
+const SETTINGS_BLOCK_HEIGHT = 28;
 
 /**
  * Procedural, monochrome film-grain layer (SVG feTurbulence data URI —
@@ -125,6 +141,13 @@ export default function EditorialImage({
   squareParallax = 0.04,
   titleParallax = 0.025,
   priority = false,
+  shutterSpeed = "1/125",
+  aperture = "F2.8",
+  iso = "ISO 400",
+  enableCrosshair = true,
+  enableFocusAnimation = true,
+  focusMode,
+  recording = false,
 }: EditorialImageProps) {
   const mobileSrc = srcMobile ?? src;
   const desktopSrc = srcDesktop ?? src;
@@ -135,12 +158,20 @@ export default function EditorialImage({
   const containerRef = useRef<HTMLDivElement>(null);
   // Imperatively positioned — mutated directly via .style, never through
   // React state, so dragging and scrolling never trigger a re-render.
+  // Now wraps the WHOLE viewfinder group (frame + crosshair + settings),
+  // not just the square, so they all move together as one object.
   const squareOuterRef = useRef<HTMLDivElement>(null);
   // Two window images (mobile/desktop crop) so whichever is visible at
   // the current breakpoint stays in sync with the drag position.
   const windowImgRefMobile = useRef<HTMLImageElement>(null);
   const windowImgRefDesktop = useRef<HTMLImageElement>(null);
+  // Crosshair element, nudged with a brief scale pulse on release via a
+  // CSS animation class (imperative — no state per interaction).
+  const crosshairRef = useRef<HTMLDivElement>(null);
   const [size, setSize] = useState({ width: 0, height: 0 });
+  // Only flips twice per drag gesture (start/end), not per pointermove,
+  // so this is safe as state — it drives the subtle "focusing" brighten.
+  const [isDragging, setIsDragging] = useState(false);
   const reducedMotion = useReducedMotion();
 
   // Normalized 0..1 square position, kept outside React state.
@@ -178,7 +209,11 @@ export default function EditorialImage({
       posRef.current = { x: clampedX, y: clampedY };
 
       const maxLeft = Math.max(0, size.width - squareSizePx);
-      const maxTop = Math.max(0, size.height - squareSizePx);
+      // Reserve room below the frame for the settings readout — the
+      // settings count as part of the viewfinder's bounding box, so the
+      // whole group (not just the square) must stay inside the image.
+      const groupHeight = squareSizePx + SETTINGS_BLOCK_HEIGHT;
+      const maxTop = Math.max(0, size.height - groupHeight);
       const left = clampedX * maxLeft;
       const top = clampedY * maxTop;
 
@@ -225,6 +260,7 @@ export default function EditorialImage({
     if (!square) return;
     square.setPointerCapture(e.pointerId);
     draggingRef.current = true;
+    setIsDragging(true);
     square.style.transition = "none";
 
     const squareRect = square.getBoundingClientRect();
@@ -242,7 +278,8 @@ export default function EditorialImage({
     if (!container) return;
     const containerRect = container.getBoundingClientRect();
     const maxLeft = Math.max(0, size.width - squareSizePx);
-    const maxTop = Math.max(0, size.height - squareSizePx);
+    const groupHeight = squareSizePx + SETTINGS_BLOCK_HEIGHT;
+    const maxTop = Math.max(0, size.height - groupHeight);
     const left = e.clientX - containerRect.left - dragOffsetRef.current.x;
     const top = e.clientY - containerRect.top - dragOffsetRef.current.y;
     const x = maxLeft > 0 ? left / maxLeft : 0;
@@ -253,12 +290,23 @@ export default function EditorialImage({
   const finishDrag = (e: ReactPointerEvent<HTMLDivElement>) => {
     if (!draggingRef.current) return;
     draggingRef.current = false;
+    setIsDragging(false);
     const square = squareOuterRef.current;
     if (square) {
       square.style.transition = "";
       if (square.hasPointerCapture(e.pointerId)) {
         square.releasePointerCapture(e.pointerId);
       }
+    }
+    // Brief, subtle "focus lock" pulse on the crosshair — restarts the
+    // CSS animation by toggling the class off and back on, avoiding any
+    // React state/re-render for it.
+    if (enableFocusAnimation && enableCrosshair && !reducedMotion && crosshairRef.current) {
+      const el = crosshairRef.current;
+      el.classList.remove("viewfinder-focus-pulse");
+      // Force a reflow so removing/re-adding the class actually restarts it.
+      void el.offsetWidth;
+      el.classList.add("viewfinder-focus-pulse");
     }
     if (!enableSnap) return;
 
@@ -361,13 +409,16 @@ export default function EditorialImage({
         <Grain opacity={grainOpacity} />
       </motion.div>
 
-      {/* 2. Sharp center square — a "window" revealing the same photo */}
+      {/* 2. Camera viewfinder — a "window" revealing the same photo,
+          plus a center crosshair and a settings readout. The outer
+          group (squareOuterRef) is the single draggable object; the
+          frame, crosshair and settings all move with it as one unit. */}
       {size.width > 0 && (
         <motion.div style={{ y: squareY }} className="absolute inset-0">
           <div
             ref={squareOuterRef}
             role={draggableSquare ? "slider" : undefined}
-            aria-label={draggableSquare ? "Move featured image frame" : undefined}
+            aria-label={draggableSquare ? "Move camera viewfinder" : undefined}
             aria-orientation={draggableSquare ? "horizontal" : undefined}
             tabIndex={draggableSquare ? 0 : undefined}
             onPointerDown={handlePointerDown}
@@ -375,43 +426,99 @@ export default function EditorialImage({
             onPointerUp={finishDrag}
             onPointerCancel={finishDrag}
             onKeyDown={handleKeyDown}
-            className={`absolute left-0 top-0 overflow-hidden border border-white/90 ${
+            className={`absolute left-0 top-0 flex flex-col items-center ${
               draggableSquare ? "touch-none cursor-grab active:cursor-grabbing" : ""
             }`}
-            style={{ width: squareSizePx, height: squareSizePx }}
+            style={{ width: squareSizePx }}
           >
-            <Image
-              ref={windowImgRefMobile}
-              src={mobileSrc}
-              alt={alt || title}
-              width={Math.round(size.width)}
-              height={Math.round(size.height)}
-              className="pointer-events-none absolute left-0 top-0 max-w-none md:hidden"
+            {/* Frame — clips the sharp photo layers; only this part has
+                the border, so it still reads as a clean square. */}
+            <div
+              className="relative overflow-hidden border transition-colors duration-200"
               style={{
-                width: size.width,
-                height: size.height,
-                objectFit: "cover",
-                objectPosition: `${focalPointX}% ${focalPointY}%`,
-                filter: sharpFilter,
+                width: squareSizePx,
+                height: squareSizePx,
+                borderColor: isDragging ? "rgba(255,255,255,0.95)" : "rgba(255,255,255,0.85)",
+                borderWidth: 1,
               }}
-              draggable={false}
-            />
-            <Image
-              ref={windowImgRefDesktop}
-              src={desktopSrc}
-              alt={alt || title}
-              width={Math.round(size.width)}
-              height={Math.round(size.height)}
-              className="pointer-events-none absolute left-0 top-0 hidden max-w-none md:block"
-              style={{
-                width: size.width,
-                height: size.height,
-                objectFit: "cover",
-                objectPosition: `${focalPointX}% ${focalPointY}%`,
-                filter: sharpFilter,
-              }}
-              draggable={false}
-            />
+            >
+              <Image
+                ref={windowImgRefMobile}
+                src={mobileSrc}
+                alt={alt || title}
+                width={Math.round(size.width)}
+                height={Math.round(size.height)}
+                className="pointer-events-none absolute left-0 top-0 max-w-none md:hidden"
+                style={{
+                  width: size.width,
+                  height: size.height,
+                  objectFit: "cover",
+                  objectPosition: `${focalPointX}% ${focalPointY}%`,
+                  filter: sharpFilter,
+                }}
+                draggable={false}
+              />
+              <Image
+                ref={windowImgRefDesktop}
+                src={desktopSrc}
+                alt={alt || title}
+                width={Math.round(size.width)}
+                height={Math.round(size.height)}
+                className="pointer-events-none absolute left-0 top-0 hidden max-w-none md:block"
+                style={{
+                  width: size.width,
+                  height: size.height,
+                  objectFit: "cover",
+                  objectPosition: `${focalPointX}% ${focalPointY}%`,
+                  filter: sharpFilter,
+                }}
+                draggable={false}
+              />
+
+              {/* Center focus crosshair — thin, stationary relative to
+                  the frame, moves with the group. */}
+              {enableCrosshair && (
+                <div
+                  ref={crosshairRef}
+                  aria-hidden="true"
+                  className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transition-opacity duration-200"
+                  style={{ width: 18, height: 18, opacity: isDragging ? 0.95 : 0.8 }}
+                >
+                  <span
+                    className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-white"
+                    style={{ width: 18, height: 1 }}
+                  />
+                  <span
+                    className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-white"
+                    style={{ width: 1, height: 18 }}
+                  />
+                </div>
+              )}
+            </div>
+
+            {/* Optional tiny label (e.g. "AF-C") + REC indicator, off by default */}
+            {(focusMode || recording) && (
+              <div
+                className="mt-1 flex items-center gap-1.5 font-mono text-[8px] uppercase tracking-[0.14em] text-white/70 transition-opacity duration-200"
+                style={{ opacity: isDragging ? 0.9 : 0.7 }}
+              >
+                {recording && (
+                  <span className="flex items-center gap-1">
+                    <span className="h-1.5 w-1.5 rounded-full bg-red-500" />
+                    REC
+                  </span>
+                )}
+                {focusMode && <span>{focusMode}</span>}
+              </div>
+            )}
+
+            {/* Camera settings readout — shutter speed / aperture / ISO */}
+            <div
+              className="mt-1.5 select-none whitespace-nowrap font-mono text-[9px] tracking-[0.1em] text-white transition-opacity duration-200 sm:text-[10px]"
+              style={{ opacity: isDragging ? 0.9 : 0.75 }}
+            >
+              {shutterSpeed}&nbsp;&nbsp;&nbsp;{aperture}&nbsp;&nbsp;&nbsp;{iso}
+            </div>
           </div>
         </motion.div>
       )}
