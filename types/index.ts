@@ -44,13 +44,28 @@ export type BlogBlock =
   | { type: "heading"; text: string }
   | { type: "paragraph"; text: string };
 
+export interface BlogFaq {
+  question: string;
+  answer: string;
+}
+
 export interface BlogPost {
   slug: string;
   title: string;
   metaDescription: string;
+  /** Short summary used on related-post cards. */
+  excerpt: string;
   featuredImage: ResponsiveImage;
   publishedAt: string;
   blocks: BlogBlock[];
+  faqs?: BlogFaq[];
+}
+
+export interface PhotographerBio {
+  name: string;
+  role: string;
+  bio: string;
+  avatar: string;
 }
 
 export interface WeddingPackage {
