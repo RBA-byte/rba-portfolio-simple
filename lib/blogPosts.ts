@@ -263,6 +263,13 @@ export const blogPosts: BlogPost[] = [
         answer:
           "Booking your wedding photography with RBA Films & Photography starts with checking the availability of your date. Share your wedding date, venue and events with us, and we'll discuss your requirements and recommend suitable coverage. Once you decide to proceed, your date is secured according to the booking terms provided by our studio.",
       },
+
+       {
+        question: "Do you provide wedding albums?",
+        answer:
+          "Yes. Premium wedding albums can be included in selected RBA Films & Photography packages. Our album process includes image selection, design and professional printing, with the final format and specifications discussed according to your package.",
+      },
+      
     ],
   },
 ];
