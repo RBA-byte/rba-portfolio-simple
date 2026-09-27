@@ -1,6 +1,6 @@
 "use client";
 
-import { studio } from "@/lib/content";
+import { heroImages, socialLinks, studio } from "@/lib/content";
 
 export default function StudioSection() {
   const jsonLd = {
@@ -14,6 +14,10 @@ export default function StudioSection() {
       addressLocality: studio.addressLines.slice(1).join(", "),
     },
     url: studio.mapsLink,
+    image: "https://www.rbaweddingfilms.com" + heroImages[0].desktop,
+    priceRange: "PKR 30,000 - PKR 90,000",
+    sameAs: [socialLinks.instagram],
+    geo: {"@type": "GeoCoordinates",latitude: 31.4968307,longitude: 74.2742321,},
   };
 
   return (
