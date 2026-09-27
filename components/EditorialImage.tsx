@@ -31,6 +31,7 @@ export interface EditorialImageProps {
   srcMobile?: string;
   /** Landscape/wide crop shown at md (768px) and above. */
   srcDesktop?: string;
+  decorativeTitle?: string
   title: string;
   alt?: string;
   /** 0–100. Where the subject sits in the source photo. */
@@ -74,6 +75,7 @@ export interface EditorialImageProps {
   focusMode?: string;
   /** Optional tiny red REC indicator. Off by default; stays monochrome otherwise. */
   recording?: boolean;
+
 }
 
 const EASE = [0.22, 1, 0.36, 1] as const;
@@ -117,6 +119,7 @@ export default function EditorialImage({
   src,
   srcMobile,
   srcDesktop,
+  decorativeTitle,
   title,
   alt,
   focalPointX = 50,
@@ -232,7 +235,7 @@ export default function EditorialImage({
       document.fonts.ready.then(measure).catch(() => {});
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [title, size.width]);
+  }, [decorativeTitle, title, size.width]);
 
   // Moves the square to a normalized (x,y) position and shifts the
   // "window" image(s) by the exact opposite amount, so whatever the
@@ -616,7 +619,7 @@ export default function EditorialImage({
             visibility: titleFontSize ? "visible" : "hidden",
           }}
         >
-          {title}
+          {decorativeTitle ?? title}
         </p>
       </motion.div>
     </div>
