@@ -26,6 +26,7 @@ function heroImage(slug: string) {
 export const blogPosts: BlogPost[] = [
     {
     slug: "luxury-cinematic-wedding-photography-lahore",
+      decorativeTitle: "Golden Hour",
     title: "The Details That Matter",
     metaDescription:
       "Why RBA Films & Photography spends the first hour of every wedding on details most guests never notice.",
