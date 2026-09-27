@@ -28,7 +28,7 @@ export default function BlogPostView({
           image's own 3/4 aspect ratio (set in BlogFeaturedImage) stays
           the same at every breakpoint. */}
       <div className="md:mx-auto md:max-w-5xl md:px-10 md:pt-8">
-        <BlogFeaturedImage image={post.featuredImage} title={post.title} />
+        <BlogFeaturedImage image={post.featuredImage} title={post.title} decorativeTitle={post.decorativeTitle} />
       </div>
 
       <article className="mx-auto max-w-2xl px-6 py-12 sm:px-10 sm:py-16">
