@@ -16,8 +16,9 @@ export default function StudioSection() {
     url: studio.mapsLink,
     image: "https://www.rbaweddingfilms.com" + heroImages[0].desktop,
     priceRange: "PKR 30,000 - PKR 90,000",
-    sameAs: [socialLinks.instagram],
+    sameAs: [socialLinks.instagram, "http://facebook.com/refractionsbyammar"],
     geo: {"@type": "GeoCoordinates",latitude: 31.4968307,longitude: 74.2742321,},
+    openingHoursSpecification: [` ` {` ` "@type": "OpeningHoursSpecification",` ` dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],` ` opens: "09:00",` ` closes: "21:00",` ` },` ` ],
   };
 
   return (
