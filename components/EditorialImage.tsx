@@ -169,6 +169,11 @@ export default function EditorialImage({
   // CSS animation class (imperative — no state per interaction).
   const crosshairRef = useRef<HTMLDivElement>(null);
   const [size, setSize] = useState({ width: 0, height: 0 });
+  // The decorative title's font-size, auto-fit to the measured text so a
+  // long title never overflows the frame (see the measurement effect
+  // below). Null until the first measurement completes.
+  const titleTextRef = useRef<HTMLParagraphElement>(null);
+  const [titleFontSize, setTitleFontSize] = useState<number | null>(null);
   // Only flips twice per drag gesture (start/end), not per pointermove,
   // so this is safe as state — it drives the subtle "focusing" brighten.
   const [isDragging, setIsDragging] = useState(false);
@@ -194,6 +199,40 @@ export default function EditorialImage({
   }, []);
 
   const squareSizePx = Math.round(size.width * (centerSquareSize / 100));
+
+  // Auto-fits the decorative title to the container's actual width so a
+  // long title can never overflow the frame — the old approach (a
+  // viewport-relative clamp() with white-space: nowrap) had no way to
+  // account for the specific string length, so longer titles could spill
+  // past the edge. This measures the real rendered width at a candidate
+  // size and scales it down if needed, matching the "one line, shrink
+  // rather than wrap" behavior from the original brief.
+  useEffect(() => {
+    const el = titleTextRef.current;
+    if (!el || size.width === 0) return;
+
+    const measure = () => {
+      // Start from the same scale the old clamp() used, but relative to
+      // this component's own measured width rather than the viewport —
+      // more correct once this can sit inside a padded desktop wrapper.
+      const candidate = Math.min(150, Math.max(48, size.width * 0.12));
+      el.style.fontSize = `${candidate}px`;
+      const available = size.width * 0.92; // matches the max-w-[92%] wrapper
+      const natural = el.scrollWidth;
+      const fitted =
+        natural > available ? Math.max(24, candidate * (available / natural)) : candidate;
+      setTitleFontSize(fitted);
+    };
+
+    measure();
+    // Re-measure once the real display font has actually loaded — before
+    // that, the browser measures against a fallback font and the fit
+    // can be slightly off.
+    if (typeof document !== "undefined" && "fonts" in document) {
+      document.fonts.ready.then(measure).catch(() => {});
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [title, size.width]);
 
   // Moves the square to a normalized (x,y) position and shifts the
   // "window" image(s) by the exact opposite amount, so whatever the
@@ -552,27 +591,33 @@ export default function EditorialImage({
         </div>
       )}
 
-      {/* 5. Large editorial title, set in the site's own display serif
-          (the same "Vogue" masthead font used elsewhere on the site). */}
+      {/* 5. Large editorial title — purely decorative. It repeats the
+          real page heading visually over the photo (Vogue-style), but
+          is aria-hidden and not a real <h1>/<h2> so it doesn't collide
+          with the actual document heading structure; the caller (the
+          blog template) renders the real, crawlable <h1> separately. */}
       <motion.div
         style={{ y: titleY, left: titleLeft, bottom: titleBottom }}
         initial={reducedMotion ? undefined : { opacity: 0, y: 14 }}
         whileInView={reducedMotion ? undefined : { opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.6 }}
         transition={{ duration: 0.9, ease: EASE, delay: 0.15 }}
-        className="pointer-events-none absolute z-10 max-w-[92%]"
+        className="pointer-events-none absolute z-10 max-w-[92%] overflow-hidden"
       >
-        <h2
+        <p
+          ref={titleTextRef}
+          aria-hidden="true"
           className="font-display text-white"
           style={{
             letterSpacing: "-0.01em",
-            fontSize: "clamp(48px, 12vw, 150px)",
+            fontSize: titleFontSize ? `${titleFontSize}px` : "clamp(48px, 12vw, 150px)",
             lineHeight: 0.95,
             whiteSpace: "nowrap",
+            visibility: titleFontSize ? "visible" : "hidden",
           }}
         >
           {title}
-        </h2>
+        </p>
       </motion.div>
     </div>
   );
