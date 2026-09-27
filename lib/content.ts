@@ -107,8 +107,9 @@ export const brand = {
 export const aboutCopy = {
   heading: "ABOUT US",
   paragraphs: [
-    "RBA Films & Photography documents weddings the way a film director frames a story — through light, restraint and the moments that happen when no one is performing for the camera.",
-    "Based between Lahore and destinations across Pakistan, the studio works with a small number of weddings each season, shooting on a blend of film and digital to keep every frame quiet, considered and unmistakably real.",
+    "RBA Films & Photography is a Lahore-based studio built around one idea: a wedding should be photographed the way a film is directed, through light, restraint, and the moments that happen when no one is performing for the camera.",
+    "Behind the camera is Ammar — a trained security systems engineer whose real education happened elsewhere, behind a lens since childhood, chasing color, light, and the split-second honesty of a candid moment. What began as a personal obsession became a full-time craft over 6+ years photographing weddings across Lahore, blending an engineer's precision with an artist's eye for emotion.",
+    "That obsession with light and detail has been recognized beyond the studio, including the Sony Best Retoucher Award, presented by renowned photographer and Sony brand ambassador Mr Kashif Rashid, and two-time Best Photographer honors at the All Pakistan Photography Competition. For couples searching for a luxury wedding photographer in Lahore who treats every frame like a film still, this is the standard RBA Films & Photography brings to every wedding.",
   ],
 };
 
@@ -201,8 +202,8 @@ export const studio: StudioInfo = {
  * this kind of content. Replace with your own details and a real photo.
  */
 export const photographerBio: PhotographerBio = {
-  name: "RBA",
-  role: "Lead Photographer, RBA Films & Photography",
-  bio: "RBA has shot weddings across Lahore and beyond for over a decade, working across film and digital to bring an editorial, cinematic eye to every celebration.",
-  avatar: "https://picsum.photos/seed/rba-photographer/400/400",
+  name: "Syed Ammar",
+  role: "Founder & Lead Photographer, RBA Films & Photography",
+  bio: "A Sony Best Retoucher Award winner and two-time Best Photographer honoree at the All Pakistan Photography Competition, Ammar has spent 6+ years photographing candid, cinematic weddings across Lahore.",
+  avatar: "/images/rba-syed-ammar-bio-studio-owner.webp",
 };
