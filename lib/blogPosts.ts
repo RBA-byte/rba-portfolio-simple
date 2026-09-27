@@ -207,9 +207,61 @@ export const blogPosts: BlogPost[] = [
           "We often accompany couples on venue visits once they've narrowed it down to a few options, purely from a light and photography standpoint.",
       },
       {
-        question: "Do you charge extra for architectural or venue-detail shots?",
+        question: "How much does wedding photography cost in Lahore?",
         answer:
-          "No — venue and architectural detail is part of standard wedding coverage across all our packages.",
+          "Wedding photography prices in Lahore depend on the number of events, hours of coverage, team size, photography and cinematography requirements, albums, and other deliverables. At RBA Films & Photography, we create packages around your wedding rather than offering a one-size-fits-all solution. Contact us with your wedding dates and events for a customized quote.",
+      },
+       {
+        question: "How far in advance should I book a wedding photographer in Lahore?",
+        answer:
+          "We recommend booking your wedding photographer in Lahore as early as possible once your wedding dates are confirmed. Popular dates, particularly during the October–March wedding season, can be reserved several months in advance. If your date is already fixed, get in touch with us to check availability.,
+      },
+       {
+        question: "What is included in your wedding photography packages?",
+        answer:
+          "Our wedding photography packages can include photography, cinematic wedding films, multiple photographers and videographers, bridal and couple portraits, edited photographs, highlight films and premium albums, depending on the package selected. We can also customize coverage around your Mehndi, Nikah, Baraat and Walima.",
+      },
+       {
+        question: "Do you cover Mehndi, Nikah, Baraat and Walima?",
+        answer:
+          "Yes. RBA Films & Photography provides wedding photography and cinematography for Mehndi, Mayun, Nikah, Baraat, Walima, Rukhsati and other wedding celebrations. We can cover individual events or create a complete visual story across multiple days.",
+      },
+       {
+        question: "Do you provide both wedding photography and cinematic wedding videography?",
+        answer:
+          "Yes. RBA Films & Photography offers both wedding photography and cinematic wedding films. Our photography focuses on genuine moments, portraits and details, while our films combine visual storytelling, movement, music and the atmosphere of your celebration into a cinematic wedding story.",
+      },
+       {
+        question: "What photography style do you specialize in?",
+        answer:
+          "Our approach combines candid wedding photography, refined portraits and cinematic visual storytelling. We aim to capture genuine interactions while also creating carefully composed portraits and atmospheric images that feel timeless rather than overly posed or heavily stylized.",
+      },
+       {
+        question: "Will the photographer personally shoot my wedding?",
+        answer:
+          "We believe the creative vision should remain consistent from the first consultation to the wedding day. Your photography coverage is handled by our professional RBA team according to the package and requirements agreed upon during booking. We discuss the assigned team with you before your wedding so there are no surprises.",
+      },
+       {
+        question: "How many photographers and videographers will cover my wedding?",
+        answer:
+          "The number of photographers and videographers depends on the size of your wedding, number of events and coverage requirements. Smaller celebrations may require a more intimate team, while larger multi-event weddings benefit from additional shooters to capture simultaneous moments, family interactions and different perspectives.",
+      },
+       {
+        question: "How long does it take to receive wedding photographs and videos?",
+        answer:
+          "After your wedding, our team carefully selects and edits your photographs and films. Final delivery time depends on the number of events and selected package. Your agreed delivery timeline will be discussed and confirmed during booking.",
+      },
+
+      {
+        question: "Do you offer pre-wedding and couple photography in Lahore?",
+        answer:
+          "Yes. We offer pre-wedding and couple photography sessions in Lahore. These sessions give couples an opportunity to create more relaxed portraits outside the pace of the wedding day, with locations, styling, lighting and visual direction planned around your preferred aesthetic.",
+      },
+
+      {
+        question: "How do I book RBA Films & Photography for my wedding?",
+        answer:
+          "Booking your wedding photography with RBA Films & Photography starts with checking the availability of your date. Share your wedding date, venue and events with us, and we'll discuss your requirements and recommend suitable coverage. Once you decide to proceed, your date is secured according to the booking terms provided by our studio.",
       },
     ],
   },
