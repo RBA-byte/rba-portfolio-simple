@@ -12,7 +12,8 @@ export default function BlogFeaturedImage({
     <EditorialImage
       srcMobile={image.mobile}
       srcDesktop={image.desktop}
-      title={title}
+      //title={title}
+      decorativeTitle?: string
       alt={image.alt}
       aspectRatio="3/4"
       desktopAspectRatio="4/3"
