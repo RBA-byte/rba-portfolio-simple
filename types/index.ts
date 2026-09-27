@@ -51,6 +51,7 @@ export interface BlogFaq {
 
 export interface BlogPost {
   slug: string;
+  decorativeTitle?: string;
   title: string;
   metaDescription: string;
   /** Short summary used on related-post cards. */
