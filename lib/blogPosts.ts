@@ -214,7 +214,7 @@ export const blogPosts: BlogPost[] = [
        {
         question: "How far in advance should I book a wedding photographer in Lahore?",
         answer:
-          "We recommend booking your wedding photographer in Lahore as early as possible once your wedding dates are confirmed. Popular dates, particularly during the October–March wedding season, can be reserved several months in advance. If your date is already fixed, get in touch with us to check availability.,
+          "We recommend booking your wedding photographer in Lahore as early as possible once your wedding dates are confirmed. Popular dates, particularly during the October–March wedding season, can be reserved several months in advance. If your date is already fixed, get in touch with us to check availability.",
       },
        {
         question: "What is included in your wedding photography packages?",
