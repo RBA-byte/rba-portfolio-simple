@@ -29,70 +29,70 @@ import type {
 
 export const heroImages: HeroSlide[] = [
   {
-    slug: "luxury-cinematic-wedding-photography-lahore",
+    slug: "ezza-hammad-walima-shoot-quaid-e-azam-library",
     mobile: "/images/rba-bride-groom-waleema-cinematic-wedding-lahore.webp",
     desktop: "/images/rba-bride-groom-waleema-cinematic-wedding-lahore-landscape.webp",
-    alt: "Luxury Walima couple embracing in smoke during a cinematic wedding portrait in Lahore",
+    alt: "Ezza and Hammad embracing in smoke during their cinematic walima portrait shoot at Quaid-e-Azam Library, Lahore",
   },
   {
-    slug: "the-details-that-matter",
+    slug: "ezza-hammad-cinematic-walima-portraits-lahore",
     mobile: "/images/rba-bride-groom-waleema-cinematic-wedding-lahore-02.webp",
     desktop: "/images/rba-bride-groom-waleema-cinematic-wedding-lahore-landscape-02.webp",
-    alt: "Close detail of a bridal bouquet and hand",
+    alt: "A second angle of Ezza and Hammad's cinematic walima portraits among the columns of Quaid-e-Azam Library, Lahore",
   },
   {
-    slug: "an-evening-in-lahore",
+    slug: "zainab-bridal-reception-portrait-glass-rim-light",
     mobile: "/images/rba-beautiful-bride-cinematic-wedding-shoot.webp",
     desktop: "/images/rba-beautiful-bride-cinematic-wedding-shoot-landscape.webp",
-    alt: "Wide shot of a wedding venue at dusk",
+    alt: "Bride Zainab lit by rim light passing through a glass flower vase before her wedding reception in Lahore",
   },
   {
-    slug: "candid-and-unposed",
+    slug: "faisal-farrah-mehndi-couple-shoot-lahore",
     mobile: "/images/rba-beautiful-bride-groom-mehndi-cinematic-wedding-lahore.webp",
     desktop: "/images/rba-beautiful-bride-groom-mehndi-cinematic-wedding-lahore-landscape.webp",
-    alt: "Candid portrait of the couple laughing together",
+    alt: "Groom Faisal seated on a decorated swing with bride Farrah resting on his lap during their mehndi couple shoot in Lahore",
   },
   {
-    slug: "the-venue-we-fell-for",
+    slug: "samie-khadija-baraat-couple-shoot-h-square-studio",
     mobile: "/images/rba-beautiful-bride-groom-baraat-shoot-cinematic-wedding-lahore.webp",
     desktop: "/images/rba-beautiful-bride-groom-baraat-shoot-cinematic-wedding-lahore-landscape.webp",
-    alt: "Architectural detail of the ceremony setting",
+    alt: "Samie and Khadija posing for their baraat couple shoot inside H-Square Production's studio in Lahore",
   },
-   {
-    slug: "the-venue-we-fell-for-2",
+  {
+    slug: "samie-khadija-walima-shoot-aureum-grand-bahria-town",
     mobile: "/images/rba-beautiful-bride-groom-waleema-outdoor-shoot-cinematic-wedding-lahore.webp",
     desktop: "/images/rba-beautiful-bride-groom-waleema-outdoor-shoot-cinematic-wedding-lahore-landscape.webp",
-    alt: "Architectural detail of the ceremony setting",
+    alt: "Samie and Khadija's walima couple portrait outside Aureum Grand in Bahria Town, Lahore",
   },
-   {
-    slug: "the-venue-we-fell-for-3",
+  {
+    slug: "maria-faisal-baraat-couple-shoot-gs-productions",
     mobile: "/images/rba-beautiful-bride-groom-baraat-gs-production-cinematic-wedding-lahore.webp",
     desktop: "/images/rba-beautiful-bride-groom-baraat-gs-production-cinematic-wedding-lahore-landscape.webp",
-    alt: "Architectural detail of the ceremony setting",
+    alt: "An intimate baraat couple portrait of Maria and Faisal at GS Productions in Gulberg, Lahore",
   },
-   {
-    slug: "the-venue-we-fell-for-4",
+  {
+    slug: "maria-faisal-library-portraits-gs-productions",
     mobile: "/images/rba-beautiful-bride-baraat-gs-production-cinematic-wedding-lahore.webp",
     desktop: "/images/rba-beautiful-couple-baraat-gs-production-cinematic-wedding-lahore-landscape.webp",
-    alt: "Architectural detail of the ceremony setting",
+    alt: "Maria and Faisal posing in the library-themed studio set at GS Productions, Lahore",
   },
-   {
-    slug: "the-venue-we-fell-for-5",
+  {
+    slug: "mahnoor-aliee-mehndi-sunset-shoot-kabeer-studio",
     mobile: "/images/rba-beautiful-bride-groom-mehndi-outdoor-intimate-shoot-cinematic-weddings-lahore.webp",
     desktop: "/images/rba-beautiful-bride-groom-mehndi-outdoor-intimate-shoot-cinematic-weddings-lahore-landscape.webp",
-    alt: "Architectural detail of the ceremony setting",
+    alt: "Mahnoor and Aliee's mehndi couple portrait lit by sunset light through the trees at Kabeer Studio, Lahore",
   },
-   {
-    slug: "the-venue-we-fell-for-6",
+  {
+    slug: "hafsa-bridal-campaign-shoot-lahore",
     mobile: "/images/rba-beautiful-bride-baraat-shoot-cinematic-weddings-lahore.webp",
     desktop: "/images/rba-beautiful-bride-baraat-shoot-cinematic-weddings-lahore-landscape.webp",
-    alt: "Architectural detail of the ceremony setting",
+    alt: "Bridal campaign portrait of model Hafsa, styled and lit for a baraat shoot in Lahore",
   },
-   {
-    slug: "the-venue-we-fell-for-7",
+  {
+    slug: "mahnoor-aliee-baraat-shoot-gs-productions",
     mobile: "/images/rba-beautiful-bride-groom-baraat-outdoor-intimate-shoot-cinematic-weddings-lahore.webp",
     desktop: "/images/rba-beautiful-bride-groom-baraat-outdoor-intimate-shoot-cinematic-weddings-lahore-landscape.webp",
-    alt: "Architectural detail of the ceremony setting",
+    alt: "Mahnoor and Aliee posing for their baraat shoot at GS Productions in Gulberg, Lahore",
   },
 ];
 
@@ -136,7 +136,7 @@ export const weddingPackages: WeddingPackage[] = [
       "4 hours of coverage",
       "1 photographer",
 	  "1 videographer",
-      "Unlimied Softcopies",
+      "Unlimited Softcopies",
       "Edited Event Video",
 	  "Event Highlights",
     ],

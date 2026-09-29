@@ -69,3 +69,13 @@ types/
   correctly under iOS/Android browser chrome.
 - The hero carousel uses `dragDirectionLock` so horizontal swiping never
   blocks vertical page scrolling.
+
+
+## SEO & Journal (added)
+
+- `/blog` — Journal index grouped by topic cluster; `/faq` — all FAQs; `/sitemap.xml` and `/robots.txt` are generated automatically.
+- `lib/blog/*.ts` — the posts, one file per cluster. Each cluster has one **pillar** post and several **support** posts (`pillarSlug`) that link up to it. See the header of `lib/blogPosts.ts`.
+- `lib/faqs.ts` — every FAQ, in one place. `/faq` shows all of them; each blog post shows 3–4 random ones (re-drawn about hourly) that link to `/faq#question`.
+- `lib/site.ts` — the production domain (`SITE_URL`). Set `NEXT_PUBLIC_SITE_URL` in your host if the domain differs from `https://www.rbaweddingfilms.com`.
+- Placeholder blog images live in `public/images/blog/` (`<slug>.webp` portrait, `<slug>-landscape.webp` landscape). Replace them with your own files using the same names.
+- `docs/SEO-KEYWORD-MAP.md` — keyword-to-page map and the next posts to write.

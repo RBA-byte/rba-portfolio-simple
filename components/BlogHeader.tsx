@@ -10,7 +10,12 @@ import { brand } from "@/lib/content";
 const SHADOW_SCROLL_RANGE = 70;
 const GAP = "1.1rem"; // equal gap: edge→button, button→title, title→edge
 
-export default function BlogHeader() {
+export default function BlogHeader({
+  label = brand.journalLabel,
+}: {
+  /** Left-hand label in the pill — defaults to JOURNAL. */
+  label?: string;
+}) {
   const { scrollY } = useScroll();
   const shadowStrength = useTransform(scrollY, [0, SHADOW_SCROLL_RANGE], [0, 0.32]);
   const boxShadow = useMotionTemplate`0 10px 24px rgba(10,10,10,${shadowStrength})`;
@@ -49,7 +54,7 @@ export default function BlogHeader() {
         <div style={glass} className="absolute inset-0 -z-10 rounded-full" />
         <div className="flex items-baseline gap-2 truncate">
           <span className="font-sans text-[0.68rem] font-medium tracking-[0.22em] text-paper sm:text-[0.78rem]">
-            {brand.journalLabel}
+            {label}
           </span>
           <span className="text-paper/40">|</span>
           <span className="truncate font-sans text-[0.68rem] font-light tracking-[0.18em] text-paper/75 sm:text-[0.78rem]">

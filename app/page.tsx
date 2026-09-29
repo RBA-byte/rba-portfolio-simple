@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
 import Header from "@/components/Header";
 import HeroCarousel from "@/components/HeroCarousel";
 import AboutSection from "@/components/AboutSection";
@@ -10,6 +11,7 @@ import StudioSection from "@/components/StudioSection";
 import GoToTopButton from "@/components/GoToTopButton";
 import ContactPill from "@/components/ContactPill";
 import { heroImages } from "@/lib/content";
+import { homepageCrawlLinks } from "@/lib/site";
 import type { SectionId } from "@/types";
 
 export default function Page() {
@@ -63,6 +65,22 @@ export default function Page() {
 
   return (
     <main className="relative">
+      {/* SEO: the homepage is a full-screen carousel with no visible text
+          heading or links. These two blocks are visually hidden (screen-reader
+          accessible) so search engines get a real <h1> and crawlable links to
+          the Journal and FAQ. Nothing here changes what visitors see. */}
+      <h1 className="sr-only">
+        Cinematic Wedding Photographer in Lahore — RBA Films &amp; Photography
+      </h1>
+      <nav aria-label="Journal and FAQ" className="sr-only">
+        <ul>
+          {homepageCrawlLinks.map((link) => (
+            <li key={link.href}>
+              <Link href={link.href}>{link.label}</Link>
+            </li>
+          ))}
+        </ul>
+      </nav>
       <Header section={section} />
       <GoToTopButton visible={section !== "hero"} onClick={scrollToTop} tone={section === "studio" ? "dark" : "light"} />
       <ContactPill tone={section === "studio" ? "dark" : "light"} />

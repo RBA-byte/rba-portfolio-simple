@@ -1,23 +1,42 @@
-"use client";
-
 import Link from "next/link";
 import Image from "next/image";
 import BlogHeader from "@/components/BlogHeader";
 import BlogFeaturedImage from "@/components/BlogFeaturedImage";
 import ContactPill from "@/components/ContactPill";
 import RelatedPosts from "@/components/RelatedPosts";
+import RichText from "@/components/RichText";
+import FaqBlock from "@/components/FaqBlock";
 import { photographerBio, socialLinks, studio } from "@/lib/content";
-import { getRelatedPosts } from "@/lib/blogPosts";
-import type { BlogPost } from "@/types";
+import type { BlogPost, FaqItem } from "@/types";
 
+function slugify(text: string) {
+  return text
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
+/**
+ * Server component: the post data, related posts and the randomly picked
+ * FAQs are all resolved in app/blog/[slug]/page.tsx and passed in, so the
+ * full blog library is never shipped to the browser.
+ */
 export default function BlogPostView({
   post,
   publishedDisplay,
+  related,
+  faqs,
+  pillar,
 }: {
   post: BlogPost;
   publishedDisplay: string;
+  related: BlogPost[];
+  faqs: FaqItem[];
+  /** For support posts: the pillar guide this post belongs to. */
+  pillar?: BlogPost;
 }) {
-  const related = getRelatedPosts(post.slug, 4);
+  const headings = post.blocks.filter((block) => block.type === "heading");
+  const showToc = post.role === "pillar" && headings.length >= 5;
 
   return (
     <div className="min-h-screen bg-[#22242a] text-[#e8e8e8]">
@@ -38,7 +57,9 @@ export default function BlogPostView({
             Home
           </Link>
           <span className="mx-2">/</span>
-          <span>Journal</span>
+          <Link href="/blog" className="hover:text-[#e8e8e8]">
+            Journal
+          </Link>
         </nav>
 
         {/* The real, crawlable page heading — the large text on the
@@ -49,44 +70,90 @@ export default function BlogPostView({
 
         <p className="mb-8 mt-4 text-[0.72rem] font-light uppercase tracking-[0.16em] text-[#e8e8e8]/50">
           <time dateTime={post.publishedAt}>{publishedDisplay}</time>
+          <span className="mx-2">·</span>
+          <span>{post.cluster}</span>
         </p>
 
-        {post.blocks.map((block, i) =>
-          block.type === "heading" ? (
-            <h2
-              key={i}
-              className="mb-4 mt-10 font-display text-2xl leading-snug text-[#e8e8e8] first:mt-0 sm:text-[1.7rem]"
+        {/* Support posts point up to their pillar guide */}
+        {pillar && (
+          <p className="mb-8 border-l border-white/20 pl-4 text-[0.85rem] font-light leading-relaxed text-[#e8e8e8]/70">
+            Part of our guide:{" "}
+            <Link
+              href={`/blog/${pillar.slug}`}
+              className="underline decoration-white/30 underline-offset-4 hover:text-[#e8e8e8]"
             >
-              {block.text}
-            </h2>
-          ) : (
-            <p
-              key={i}
-              className="mb-5 text-[0.98rem] font-light leading-relaxed text-[#e8e8e8]/85"
-            >
-              {block.text}
-            </p>
-          )
+              {pillar.title}
+            </Link>
+          </p>
         )}
 
-        {/* FAQs — visible, and mirrored as FAQPage schema in page.tsx */}
-        {post.faqs && post.faqs.length > 0 && (
-          <div className="mt-12 border-t border-white/10 pt-10">
-            <h2 className="font-display text-2xl leading-snug text-[#e8e8e8] sm:text-[1.7rem]">
-              Frequently Asked Questions
-            </h2>
-            <div className="mt-6 flex flex-col gap-6">
-              {post.faqs.map((faq) => (
-                <div key={faq.question}>
-                  <h3 className="text-[0.98rem] font-medium text-[#e8e8e8]">{faq.question}</h3>
-                  <p className="mt-1.5 text-[0.92rem] font-light leading-relaxed text-[#e8e8e8]/75">
-                    {faq.answer}
-                  </p>
-                </div>
+        {/* "In this guide" — jump links for the long pillar posts */}
+        {showToc && (
+          <nav aria-label="In this guide" className="mb-10 border border-white/10 px-5 py-5">
+            <p className="text-[0.68rem] font-medium uppercase tracking-[0.22em] text-[#e8e8e8]/60">
+              In this guide
+            </p>
+            <ol className="mt-3 flex flex-col gap-1.5 text-[0.88rem] font-light text-[#e8e8e8]/80">
+              {headings.map((block) => (
+                <li key={block.text}>
+                  <a
+                    href={`#${slugify(block.text)}`}
+                    className="underline decoration-transparent underline-offset-4 transition-colors hover:decoration-white/40"
+                  >
+                    {block.text}
+                  </a>
+                </li>
               ))}
-            </div>
-          </div>
+            </ol>
+          </nav>
         )}
+
+        {post.blocks.map((block, i) => {
+          switch (block.type) {
+            case "heading":
+              return (
+                <h2
+                  key={i}
+                  id={slugify(block.text)}
+                  className="mb-4 mt-10 scroll-mt-24 font-display text-2xl leading-snug text-[#e8e8e8] first:mt-0 sm:text-[1.7rem]"
+                >
+                  {block.text}
+                </h2>
+              );
+            case "subheading":
+              return (
+                <h3 key={i} className="mb-3 mt-7 font-display text-xl leading-snug text-[#e8e8e8]">
+                  {block.text}
+                </h3>
+              );
+            case "list": {
+              const ListTag = block.ordered ? "ol" : "ul";
+              return (
+                <ListTag
+                  key={i}
+                  className={`mb-6 flex flex-col gap-2.5 pl-5 text-[0.98rem] font-light leading-relaxed text-[#e8e8e8]/85 marker:text-[#e8e8e8]/40 ${
+                    block.ordered ? "list-decimal" : "list-disc"
+                  }`}
+                >
+                  {block.items.map((item) => (
+                    <li key={item}>
+                      <RichText text={item} />
+                    </li>
+                  ))}
+                </ListTag>
+              );
+            }
+            default:
+              return (
+                <p key={i} className="mb-5 text-[0.98rem] font-light leading-relaxed text-[#e8e8e8]/85">
+                  <RichText text={block.text} />
+                </p>
+              );
+          }
+        })}
+
+        {/* 3–4 random FAQs, each linking to the full /faq page */}
+        <FaqBlock faqs={faqs} />
 
         {/* Internal links — packages, contact, address, and a direct
             enquiry, so every post feeds back into a booking. */}

@@ -1,20 +1,26 @@
 "use client";
 
 import { heroImages, socialLinks, studio } from "@/lib/content";
+import { SITE_URL } from "@/lib/site";
 
 export default function StudioSection() {
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
+    "@id": `${SITE_URL}/#business`,
     name: studio.name,
+    description:
+      "Luxury cinematic wedding photography and wedding films in Lahore, Pakistan.",
+    areaServed: { "@type": "City", name: "Lahore" },
     telephone: studio.phoneDisplay,
     address: {
       "@type": "PostalAddress",
       streetAddress: studio.addressLines[0],
       addressLocality: studio.addressLines.slice(1).join(", "),
     },
-    url: studio.mapsLink,
-    image: "https://www.rbaweddingfilms.com" + heroImages[0].desktop,
+    url: SITE_URL,
+    hasMap: studio.mapsLink,
+    image: SITE_URL + heroImages[0].desktop,
     priceRange: "PKR 30,000 - PKR 90,000",
     sameAs: [socialLinks.instagram, "http://facebook.com/refractionsbyammar"],
     geo: {

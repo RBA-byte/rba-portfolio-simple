@@ -42,24 +42,64 @@ export interface StudioInfo {
 
 export type BlogBlock =
   | { type: "heading"; text: string }
-  | { type: "paragraph"; text: string };
+  | { type: "subheading"; text: string }
+  | { type: "paragraph"; text: string }
+  | { type: "list"; items: string[]; ordered?: boolean };
 
-export interface BlogFaq {
+/** A single question/answer shown on /faq and (randomly) inside blog posts. */
+export interface FaqItem {
+  /** URL-safe id — used as the #anchor on the /faq page. */
+  id: string;
+  category: FaqCategory;
   question: string;
   answer: string;
+  /** Topic tags used to prefer relevant questions inside blog posts. */
+  tags: string[];
 }
+
+export type FaqCategory =
+  | "Booking & Pricing"
+  | "Coverage & Team"
+  | "Photography Style"
+  | "Films & Videography"
+  | "Wedding Events"
+  | "Locations & Venues"
+  | "Delivery & Albums"
+  | "Pre-Wedding & Couple Shoots";
+
+export type BlogCluster =
+  | "Choosing a Photographer"
+  | "Wedding Photography"
+  | "Luxury Weddings"
+  | "Cinematic Films"
+  | "Lahore Locations"
+  | "Studio Stories";
 
 export interface BlogPost {
   slug: string;
   decorativeTitle?: string;
   title: string;
+  /** Shorter <title> tag (aim for 60 characters or fewer). Falls back to `title`. */
+  seoTitle?: string;
   metaDescription: string;
   /** Short summary used on related-post cards. */
   excerpt: string;
   featuredImage: ResponsiveImage;
   publishedAt: string;
+  updatedAt?: string;
   blocks: BlogBlock[];
-  faqs?: BlogFaq[];
+  /** Topic cluster this post belongs to. */
+  cluster: BlogCluster;
+  /** "pillar" = long-form hub page; "support" = narrower article that links up to a pillar. */
+  role: "pillar" | "support" | "story";
+  /** For support posts: slug of the pillar they belong to. */
+  pillarSlug?: string;
+  /** Hand-picked related posts (shown first in "More from the Journal"). */
+  relatedSlugs?: string[];
+  /** The single keyword this page is meant to rank for. Never reuse across posts. */
+  primaryKeyword?: string;
+  /** Used to pick relevant FAQs for the random FAQ block. */
+  faqTags?: string[];
 }
 
 export interface PhotographerBio {

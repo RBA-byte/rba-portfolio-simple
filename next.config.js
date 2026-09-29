@@ -1,7 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  poweredByHeader: false,
   images: {
+    formats: ["image/avif", "image/webp"],
     // Remote pattern used only for the placeholder editorial photography.
     // Once you drop your own files into /public/images, you can delete
     // this block entirely and swap the heroImages / aboutImage paths in

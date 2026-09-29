@@ -129,19 +129,25 @@ export default function HeroCarousel({
         transition={{ duration: 0.6, ease: EASE }}
       >
         {heroImages.map((image, i) => (
-          <div
+          // A real <a href> so search engines can follow the link to each
+          // post. Taps and swipes are still handled by the pointer handlers
+          // below; the default click navigation is suppressed so behaviour
+          // is identical to before.
+          <a
             key={image.slug}
+            href={`/blog/${image.slug}`}
+            draggable={false}
+            onClick={(e) => e.preventDefault()}
             onPointerDown={handlePointerDown}
             onPointerUp={handlePointerUp(image.slug)}
-            role="link"
-            tabIndex={0}
             aria-label={`Read the story behind this photograph: ${image.alt}`}
             onKeyDown={(e) => {
               if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
                 router.push(`/blog/${image.slug}`);
               }
             }}
-            className="relative h-full w-full flex-shrink-0 cursor-pointer"
+            className="relative block h-full w-full flex-shrink-0 cursor-pointer"
           >
             {/* Portrait crop for phones */}
             <Image
@@ -165,7 +171,7 @@ export default function HeroCarousel({
               className="pointer-events-none hidden object-cover md:block"
               draggable={false}
             />
-          </div>
+          </a>
         ))}
       </motion.div>
 
