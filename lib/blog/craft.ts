@@ -5,8 +5,10 @@ const PILLAR = "wedding-photography-in-lahore-styles-seasons";
 
 export const craftPosts: BlogPost[] = [
   // ─────────────────────────── PILLAR ───────────────────────────
-  {
-    /**slug: PILLAR,
+  
+    /**
+    {
+    slug: PILLAR,
     cluster: "Wedding Photography",
     role: "pillar",
     primaryKeyword: "wedding photography Lahore",
