@@ -189,7 +189,15 @@ export const socialLinks: SocialLinks = {
  */
 export const studio: StudioInfo = {
   name: "RBA Films & Photography Studio",
-  addressLines: ["27a Hadayatullah Block", "Mustafa Town, Lahore, Pakistan"],
+  addressLines: ["27a, Hadayatullah Block", "Mustafa Town, Lahore, Pakistan"],
+	 // Used for the address schema (StudioSection.tsx) — kept separate from
+  // addressLines above so the JSON-LD always has proper, distinct fields
+  // instead of parsing the display string.
+  neighborhood: "Mustafa Town",
+  addressLocality: "Lahore",
+  addressRegion: "Punjab",
+  addressCountry: "PK",
+  postalCode: "54000",
   phoneDisplay: "+92 33 567 26627 (AMMAR)",
   phoneHref: "tel:+923356726627",
   mapEmbedSrc:
