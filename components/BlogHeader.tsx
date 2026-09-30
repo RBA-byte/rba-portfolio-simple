@@ -54,7 +54,7 @@ export default function BlogHeader({
         <div style={glass} className="absolute inset-0 -z-10 rounded-full" />
           <div className="flex items-baseline gap-2 truncate">
           <span
-            style={{ textShadow: "0 1px 3px rgba(0,0,0,0.55)" }}
+            style={{ textShadow: "0 1px 2px rgba(0,0,0,0.55)" }}
             className="font-sans text-[0.68rem] font-medium tracking-[0.22em] text-paper sm:text-[0.78rem]"
           >
             {label}
