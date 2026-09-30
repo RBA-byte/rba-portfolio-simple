@@ -2,8 +2,9 @@ import Link from "next/link";
 import type { FaqItem } from "@/types";
 
 /**
- * A short FAQ block for blog posts. The questions are chosen at random on the
- * server (see pickFaqs in lib/faqs.ts) and each links to its answer on /faq.
+ * A short FAQ block for blog posts. The questions are chosen deterministically
+ * on the server, ranked by relevance to the post's topic (see pickFaqs in
+ * lib/faqs.ts), and each links to its answer on /faq.
  */
 export default function FaqBlock({ faqs }: { faqs: FaqItem[] }) {
   if (faqs.length === 0) return null;
