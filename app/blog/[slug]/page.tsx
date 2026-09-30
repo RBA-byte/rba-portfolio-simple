@@ -8,8 +8,10 @@ import BlogPostView from "@/components/BlogPostView";
 
 /**
  * Pages are pre-built, then re-generated in the background at most once an
- * hour. Each regeneration draws a fresh random set of FAQs, so the questions
- * rotate over time while the visible text and the FAQPage schema always match.
+ * hour so edits to post content, FAQs, or faqTags go live without a full
+ * redeploy. FAQ selection itself is deterministic (see pickFaqs in
+ * lib/faqs.ts) — a regeneration reproduces the exact same FAQs, not a new
+ * random set, so the visible text and the FAQPage schema always match.
  */
 export const revalidate = 3600;
 
