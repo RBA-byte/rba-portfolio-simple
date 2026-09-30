@@ -646,43 +646,7 @@ p(
   "If you are planning a wedding in Lahore, send us your dates, events and venues through our [contact page](/#contact). We can discuss the coverage, team and photography style that fits your wedding."
 ),
 
-h("Frequently asked questions about wedding photography in Lahore"),
 
-h3("What style of wedding photography is most common in Lahore?"),
-
-p(
-  "Most modern wedding coverage combines candid, traditional and cinematic or editorial elements. Formal family photographs remain important, while candid coverage and directed couple portraits are commonly combined to create a complete gallery."
-),
-
-h3("What months are best for wedding photography in Lahore?"),
-
-p(
-  "The cooler months from October through March are popular for weddings and outdoor photography, but every season can be photographed successfully with the right timing and venue plan. Weather, daylight and the actual wedding schedule matter more than a single 'best' month."
-),
-
-h3("How long should couple portraits take?"),
-
-p(
-  "A short, dedicated portrait window can be enough for a strong set of photographs. Around 30 to 45 minutes gives a photographer useful flexibility, but the exact requirement depends on the venue, light, outfits and schedule."
-),
-
-h3("Do I need a second photographer?"),
-
-p(
-  "Not necessarily for every wedding. A second photographer becomes particularly useful when several important things are happening simultaneously, when the venue is large or when the wedding has a large guest count and multiple events."
-),
-
-h3("Should I hire photography and videography separately?"),
-
-p(
-  "If you want both photographs and a cinematic wedding film, it is generally better to have dedicated photography and film teams. Each requires continuous attention, and one person trying to do both can miss important moments."
-),
-
-h3("Should wedding photography include family photographs?"),
-
-p(
-  "Yes. Even couples who prefer candid or cinematic photography often want formal photographs with parents, grandparents, siblings and extended family. Discuss the essential groupings before the wedding so they can be completed efficiently."
-),
 
 p(
   "For more questions, visit our [Wedding Photography FAQ](/faq), or read the complete [Wedding Photographer in Lahore Guide](/blog/wedding-photographer-in-lahore-guide)."
