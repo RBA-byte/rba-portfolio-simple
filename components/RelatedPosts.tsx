@@ -23,7 +23,7 @@ export default function RelatedPosts({ posts }: { posts: BlogPost[] }) {
                 alt={post.featuredImage.alt}
                 fill
                 sizes="(min-width: 640px) 340px, 78vw"
-                className="object-cover grayscale transition-transform duration-500 group-hover:scale-105"
+                className="object-cover  transition-transform duration-500 group-hover:scale-105"
               />
             </div>
             <h3 className="mt-4 font-display text-lg leading-snug text-[#e8e8e8]">
