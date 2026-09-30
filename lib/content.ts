@@ -197,7 +197,7 @@ export const studio: StudioInfo = {
   addressLocality: "Lahore",
   addressRegion: "Punjab",
   addressCountry: "PK",
-  postalCode: "54000",
+  postalCode: "54790",
   phoneDisplay: "+92 33 567 26627 (AMMAR)",
   phoneHref: "tel:+923356726627",
   mapEmbedSrc:
