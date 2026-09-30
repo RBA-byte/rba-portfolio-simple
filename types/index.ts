@@ -32,6 +32,16 @@ export interface SocialLinks {
 export interface StudioInfo {
   name: string;
   addressLines: string[];
+  /** Neighborhood/area only — e.g. "Mustafa Town". Folded into streetAddress in the schema. */
+  neighborhood: string;
+  /** City only — e.g. "Lahore". Used for the address schema's addressLocality. */
+  addressLocality: string;
+  /** Province/state only — e.g. "Punjab". Used for addressRegion. */
+  addressRegion: string;
+  /** ISO 3166-1 alpha-2 country code — e.g. "PK". Used for addressCountry. */
+  addressCountry: string;
+  /** Optional: add once confirmed (sources disagree for Mustafa Town). */
+  postalCode?: string;
   phoneDisplay: string;
   phoneHref: string;
   /** Google Maps "embed" URL used inside an <iframe>. */
