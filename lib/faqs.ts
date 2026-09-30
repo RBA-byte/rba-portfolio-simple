@@ -2,15 +2,18 @@ import { weddingPackages } from "@/lib/content";
 import type { FaqCategory, FaqItem } from "@/types";
 
 /**
- * Every FAQ lives here — this is the only place to add or edit them.
+ * Picks up to `max` FAQs for a blog post, deterministically — same post,
+ * same `faqTags`, same FAQs, every time. No randomness, so the questions on
+ * the page and in the FAQPage structured data stay fixed and topically tied
+ * to what the post is actually about (a pricing post keeps showing pricing
+ * questions, not whatever a shuffle landed on).
  *
- *  - /faq shows all of them, grouped by `category`.
- *  - Each blog post shows 3–4 random ones (see pickFaqs) that link back to /faq.
- *  - `tags` make the random pick favour relevant questions. A post's `faqTags`
- *    (lib/blog/*.ts) are matched against these.
- *
- * These answers speak for the studio — please read them once and adjust
- * anything that doesn't match how you actually work.
+ * Ranking: each FAQ scores by how many of its `tags` overlap the post's
+ * `faqTags`; higher overlap sorts first. Ties (including "no tags given" or
+ * "nothing matched") fall back to each FAQ's fixed position in the `faqs`
+ * array above — never Math.random — so the order never shifts between runs.
+ * Edit `faqTags` on a post (lib/blog/*.ts) or a FAQ's `tags` here to change
+ * which questions a page surfaces.
  */
 
 const packageSummary = weddingPackages
@@ -317,6 +320,7 @@ export const faqs: FaqItem[] = [
   },
 ];
 
+/** replaced the random FAQ display with specific FAQs according to blog post.
 export const faqsByCategory = faqCategories
   .map((category) => ({
     category,
@@ -331,7 +335,7 @@ function shuffle<T>(input: T[]): T[] {
     [arr[i], arr[j]] = [arr[j], arr[i]];
   }
   return arr;
-}
+}*/
 
 /**
  * Picks 3 or 4 random FAQs for a blog post, preferring ones whose tags
@@ -342,11 +346,20 @@ function shuffle<T>(input: T[]): T[] {
  * FAQ text on the page and the FAQPage structured data always match.
  */
 export function pickFaqs(tags: string[] = [], max = 4): FaqItem[] {
-  const count = Math.random() < 0.5 ? 3 : Math.min(4, max);
   const wanted = new Set(tags);
-  const relevant = shuffle(
-    faqs.filter((faq) => faq.tags.some((tag) => wanted.has(tag)))
-  );
-  const rest = shuffle(faqs.filter((faq) => !relevant.includes(faq)));
-  return [...relevant, ...rest].slice(0, count);
+  const scored = faqs.map((faq, index) => ({
+    faq,
+    index,
+    score: faq.tags.filter((tag) => wanted.has(tag)).length,
+  }));
+
+  const relevant = scored.filter((entry) => entry.score > 0);
+  // If nothing matched (or the post set no faqTags), fall back to every FAQ
+  // in its fixed array order rather than showing an empty block.
+  const pool = relevant.length > 0 ? relevant : scored;
+
+  return pool
+    .sort((a, b) => b.score - a.score || a.index - b.index)
+    .slice(0, max)
+    .map((entry) => entry.faq);
 }
