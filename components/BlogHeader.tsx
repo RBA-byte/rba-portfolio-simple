@@ -52,12 +52,23 @@ export default function BlogHeader({
         className="relative my-3 flex min-w-0 flex-1 items-center justify-center rounded-full px-5 py-2.5"
       >
         <div style={glass} className="absolute inset-0 -z-10 rounded-full" />
-        <div className="flex items-baseline gap-2 truncate">
-          <span className="font-sans text-[0.68rem] font-medium tracking-[0.22em] text-paper sm:text-[0.78rem]">
+          <div className="flex items-baseline gap-2 truncate">
+          <span
+            style={{ textShadow: "0 1px 3px rgba(0,0,0,0.55)" }}
+            className="font-sans text-[0.68rem] font-medium tracking-[0.22em] text-paper sm:text-[0.78rem]"
+          >
             {label}
           </span>
-          <span className="text-paper/40">|</span>
-          <span className="truncate font-sans text-[0.68rem] font-light tracking-[0.18em] text-paper/75 sm:text-[0.78rem]">
+          <span
+            style={{ textShadow: "0 1px 3px rgba(0,0,0,0.55)" }}
+            className="text-paper/40"
+          >
+            |
+          </span>
+          <span
+            style={{ textShadow: "0 1px 3px rgba(0,0,0,0.55)" }}
+            className="truncate font-sans text-[0.68rem] font-light tracking-[0.18em] text-paper/75 sm:text-[0.78rem]"
+          >
             {brand.titleLine2.toUpperCase()}
           </span>
         </div>
