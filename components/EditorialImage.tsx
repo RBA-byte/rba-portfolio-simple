@@ -404,7 +404,7 @@ export default function EditorialImage({
     parallaxActive ? [`${-titleParallax * 100}%`, `${titleParallax * 100}%`] : ["0%", "0%"]
   );
 
-  const sharpFilter = `${grayscale ? "grayscale(100%) " : ""}contrast(${contrast}%)`;
+  const sharpFilter = `${grayscale ? "grayscale(0%) " : ""}contrast(${contrast}%)`;
   const bgFilter = `${grayscale ? "grayscale(100%) " : ""}blur(${blur}px) contrast(${Math.max(
     100,
     contrast - 3
