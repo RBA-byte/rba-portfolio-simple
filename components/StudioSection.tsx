@@ -1,6 +1,6 @@
 "use client";
 
-import { heroImages, socialLinks, studio } from "@/lib/content";
+import { heroImages, photographerBio, socialLinks, studio } from "@/lib/content";
 import { SITE_URL } from "@/lib/site";
 
 export default function StudioSection() {
@@ -9,6 +9,11 @@ export default function StudioSection() {
     "@type": "LocalBusiness",
     "@id": `${SITE_URL}/#business`,
     name: studio.name,
+    // Our Google Business Profile is still listed under the old studio name.
+    // Keep this until the GMB listing itself is renamed to match — removing
+    // it before then would make Google's business records disagree with
+    // each other. Delete this line once the GMB profile is updated.
+    alternateName: ["Refractions By Ammar", "The Refractions Studio"],
     description:
       "Luxury cinematic wedding photography and wedding films in Lahore, Pakistan.",
     areaServed: { "@type": "City", name: "Lahore" },
@@ -36,6 +41,45 @@ export default function StudioSection() {
         closes: "21:00",
       },
     ],
+    // Spells out the two services the studio offers, each scoped to Lahore.
+    // This doesn't feed Google's Local Business rich-result fields directly,
+    // but it gives Google (and AI-search systems that read schema more
+    // broadly) a clearer picture of what the business actually does.
+    hasOfferCatalog: {
+      "@type": "OfferCatalog",
+      name: "Wedding Photography & Film Services",
+      itemListElement: [
+        {
+          "@type": "Offer",
+          itemOffered: {
+            "@type": "Service",
+            name: "Wedding Photography in Lahore",
+            serviceType: "Wedding Photography",
+            areaServed: { "@type": "City", name: "Lahore" },
+          },
+        },
+        {
+          "@type": "Offer",
+          itemOffered: {
+            "@type": "Service",
+            name: "Cinematic Wedding Films in Lahore",
+            serviceType: "Wedding Videography",
+            areaServed: { "@type": "City", name: "Lahore" },
+          },
+        },
+      ],
+    },
+    // Connects the business to its founder — same person as the byline on
+    // every blog post (lib/content.ts → photographerBio).
+    founder: {
+      "@type": "Person",
+      "@id": `${SITE_URL}/#ammar`,
+      name: photographerBio.name,
+      jobTitle: "Founder & Lead Photographer",
+      image: SITE_URL + photographerBio.avatar,
+      sameAs: [socialLinks.instagram],
+      worksFor: { "@id": `${SITE_URL}/#business` },
+    },
   };
 
   return (
