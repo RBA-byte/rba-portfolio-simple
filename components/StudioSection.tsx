@@ -20,8 +20,16 @@ export default function StudioSection() {
     telephone: studio.phoneDisplay,
     address: {
       "@type": "PostalAddress",
-      streetAddress: studio.addressLines[0],
-      addressLocality: studio.addressLines.slice(1).join(", "),
+      // addressLines above is just the visible, human-formatted address.
+      // These structured fields (set in lib/content.ts) are what the
+      // schema actually needs: a proper street, and city/region/country
+      // as their own distinct properties — not one field with everything
+      // crammed in.
+       streetAddress: `${studio.addressLines[0]}, ${studio.neighborhood}`,
+            addressLocality: studio.addressLocality,
+      addressRegion: studio.addressRegion,
+      addressCountry: studio.addressCountry,
+      postalCode: studio.postalCode,
     },
     url: SITE_URL,
     hasMap: studio.mapsLink,
