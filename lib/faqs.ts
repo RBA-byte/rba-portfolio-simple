@@ -320,7 +320,7 @@ export const faqs: FaqItem[] = [
   },
 ];
 
-/** replaced the random FAQ display with specific FAQs according to blog post.
+
 export const faqsByCategory = faqCategories
   .map((category) => ({
     category,
@@ -328,6 +328,7 @@ export const faqsByCategory = faqCategories
   }))
   .filter((group) => group.items.length > 0);
 
+/** replaced the random FAQ display with specific FAQs according to blog post.
 function shuffle<T>(input: T[]): T[] {
   const arr = [...input];
   for (let i = arr.length - 1; i > 0; i--) {
