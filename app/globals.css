@@ -145,3 +145,35 @@ body {
     scroll-behavior: auto !important;
   }
 }
+
+/* ---- Content protection ---- */
+.no-copy {
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+}
+.no-copy input,
+.no-copy textarea {
+  -webkit-user-select: text;
+  user-select: text;
+}
+
+/* Images site-wide */
+img {
+  -webkit-user-drag: none;
+  user-drag: none;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+}
+a:has(> img),
+a:has(> span > img) {
+  -webkit-touch-callout: none;
+}
+
+/* Printing / Save as PDF shouldn't expose the photos */
+@media print {
+  img {
+    display: none !important;
+  }
+}
