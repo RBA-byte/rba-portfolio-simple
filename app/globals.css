@@ -35,6 +35,10 @@ body {
   -webkit-overflow-scrolling: touch;
 }
 
+.scroll-story.keyboard-open {
+  scroll-snap-type: none;
+}
+
 .scroll-story > section {
   scroll-snap-align: start;
   /* "always" forces a hard stop at every section even during a fast
