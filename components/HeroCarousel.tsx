@@ -72,7 +72,7 @@ export default function HeroCarousel({
       }
     });
     observer.observe(el);
-    setWidth(el.getBoundingClientRect().width);
+    
     return () => observer.disconnect();
   }, []);
 
