@@ -39,7 +39,7 @@ export default function BlogPostView({
   const showToc = post.role === "pillar" && headings.length >= 5;
 
   return (
-    <div className="min-h-screen bg-[#22242a] text-[#e8e8e8]">
+    <div className="no-copy min-h-screen bg-[#22242a] text-[#e8e8e8]">
       <BlogHeader />
       <ContactPill />
 
