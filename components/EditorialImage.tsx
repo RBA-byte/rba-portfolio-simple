@@ -98,6 +98,27 @@ const KEY_STEP_LARGE = 0.08;
  * when clamping the viewfinder's vertical drag range so the settings
  * text never gets pushed outside the composition. */
 const SETTINGS_BLOCK_HEIGHT = 28;
+/** Viewfinder frame height as a multiple of its width.
+ * Both mobile and desktop use the same landscape 4:3 frame. */
+const SQUARE_RATIO_MOBILE = 3 / 4;
+const SQUARE_RATIO_DESKTOP = 3 / 4;
+/** Extra px of breathing room kept on each side of the settings text
+ * when working out the smallest allowed frame width. */
+const TEXT_SIDE_PADDING = 6;
+/** The viewfinder can only grow/shrink a modest amount around its default
+ * width (`centerSquareSize`): 0.75 = 75% of default, 1.25 = 125%. */
+const MIN_SCALE = 0.75;
+const MAX_SCALE = 1.25;
+/** How much of the viewfinder's scale change carries over to the crosshair
+ * and the camera text. 1 = fully proportional. The border stays at 1px. */
+const CROSSHAIR_SCALE_FOLLOW = 0.85;
+const TEXT_SCALE_FOLLOW = 0.6;
+/** Base crosshair length (px) at the default viewfinder size. */
+const CROSSHAIR_BASE = 18;
+/** Mouse-wheel zoom sensitivity. While the pointer is over the featured
+ * image the wheel ONLY zooms the viewfinder (the page never scrolls);
+ * scrolling the page works as normal everywhere outside the image. */
+const WHEEL_SENSITIVITY = 0.0015;
 
 /**
  * Procedural, monochrome film-grain layer (SVG feTurbulence data URI —
@@ -201,7 +222,84 @@ export default function EditorialImage({
     return () => observer.disconnect();
   }, []);
 
-  const squareSizePx = Math.round(size.width * (centerSquareSize / 100));
+  // Desktop (md+) uses a landscape 4:3 frame, mobile a portrait 3:4 one.
+  const [isDesktop, setIsDesktop] = useState(false);
+  useLayoutEffect(() => {
+    const mq = window.matchMedia("(min-width: 768px)");
+    const update = () => setIsDesktop(mq.matches);
+    update();
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
+  }, []);
+  const heightFactor = isDesktop ? SQUARE_RATIO_DESKTOP : SQUARE_RATIO_MOBILE;
+
+  // Frame width as a fraction of the container width; changed by pinch /
+  // wheel. Stored as a fraction so it scales naturally on resize.
+  const [widthFrac, setWidthFrac] = useState(centerSquareSize / 100);
+  // Width of the settings text at 100% text scale (px), so the frame never
+  // gets narrower than its own text.
+  const settingsRef = useRef<HTMLDivElement>(null);
+  const [textBaseWidth, setTextBaseWidth] = useState(0);
+
+  // The viewfinder's default width; scale 1 = this size.
+  const baseW = size.width * (centerSquareSize / 100);
+  // Largest width that still keeps the whole group (frame + settings line)
+  // inside the featured image.
+  const fitMaxW =
+    size.width > 0
+      ? Math.max(
+          1,
+          Math.min(size.width, (size.height - SETTINGS_BLOCK_HEIGHT) / heightFactor)
+        )
+      : 0;
+  // Smallest width at which the (shrinking) text still fits. The text width
+  // is B * (1 - k + k * w / baseW), so solve  that + padding <= w  for w.
+  const B = textBaseWidth;
+  const k = TEXT_SCALE_FOLLOW;
+  const textDenominator = baseW > 0 ? 1 - (B * k) / baseW : 0;
+  const textMinW =
+    B > 0 && textDenominator > 0.05
+      ? (B * (1 - k) + TEXT_SIDE_PADDING * 2) / textDenominator
+      : 60;
+  const maxSquareW = Math.min(fitMaxW, baseW * MAX_SCALE);
+  const minSquareW = Math.min(maxSquareW, Math.max(baseW * MIN_SCALE, textMinW));
+  const squareSizePx = Math.round(
+    Math.min(maxSquareW, Math.max(minSquareW, size.width * widthFrac))
+  );
+  const squareHeightPx = Math.round(squareSizePx * heightFactor);
+
+  // Subtle, non-proportional scaling of the crosshair and camera text.
+  const viewfinderScale = baseW > 0 ? squareSizePx / baseW : 1;
+  const crosshairScale = 1 + (viewfinderScale - 1) * CROSSHAIR_SCALE_FOLLOW;
+  const textScale = 1 + (viewfinderScale - 1) * TEXT_SCALE_FOLLOW;
+  const textScaleRef = useRef(textScale);
+  textScaleRef.current = textScale;
+
+  // Latest values for the native (non-React) gesture listeners below.
+  const gestureRef = useRef({
+    size,
+    squareSizePx,
+    heightFactor,
+    minSquareW,
+    maxSquareW,
+  });
+  gestureRef.current = { size, squareSizePx, heightFactor, minSquareW, maxSquareW };
+  const pinchingRef = useRef(false);
+
+  // Measure the settings text (and re-measure once the mono font loads).
+  // Divided by the current text scale so we always store its 100% width.
+  useEffect(() => {
+    const el = settingsRef.current;
+    if (!el) return;
+    const measure = () =>
+      setTextBaseWidth(
+        Math.ceil(el.getBoundingClientRect().width / textScaleRef.current)
+      );
+    measure();
+    if (typeof document !== "undefined" && "fonts" in document) {
+      document.fonts.ready.then(measure).catch(() => {});
+    }
+  }, [size.width, shutterSpeed, aperture, iso]);
 
   // Auto-fits the decorative title to the container's actual width so a
   // long title can never overflow the frame — the old approach (a
@@ -254,7 +352,7 @@ export default function EditorialImage({
       // Reserve room below the frame for the settings readout — the
       // settings count as part of the viewfinder's bounding box, so the
       // whole group (not just the square) must stay inside the image.
-      const groupHeight = squareSizePx + SETTINGS_BLOCK_HEIGHT;
+      const groupHeight = squareHeightPx + SETTINGS_BLOCK_HEIGHT;
       const maxTop = Math.max(0, size.height - groupHeight);
       const left = clampedX * maxLeft;
       const top = clampedY * maxTop;
@@ -266,7 +364,7 @@ export default function EditorialImage({
       if (windowImgRefMobile.current) windowImgRefMobile.current.style.transform = windowTransform;
       if (windowImgRefDesktop.current) windowImgRefDesktop.current.style.transform = windowTransform;
     },
-    [size.width, size.height, squareSizePx]
+    [size.width, size.height, squareSizePx, squareHeightPx]
   );
 
   // Re-clamp/re-place on measurement changes (mount, resize, orientation,
@@ -296,6 +394,83 @@ export default function EditorialImage({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [size.width]);
 
+  // Resize the frame to `nextW` px (clamped), keeping its centre fixed.
+  const resizeTo = useCallback((nextW: number) => {
+    const g = gestureRef.current;
+    const w = Math.min(g.maxSquareW, Math.max(g.minSquareW, nextW));
+    if (g.size.width <= 0 || Math.abs(w - g.squareSizePx) < 0.5) return false;
+
+    const curH = g.squareSizePx * g.heightFactor;
+    const curLeft = posRef.current.x * Math.max(0, g.size.width - g.squareSizePx);
+    const curTop =
+      posRef.current.y * Math.max(0, g.size.height - (curH + SETTINGS_BLOCK_HEIGHT));
+    const cx = curLeft + g.squareSizePx / 2;
+    const cy = curTop + curH / 2;
+
+    const newH = w * g.heightFactor;
+    const newMaxLeft = g.size.width - w;
+    const newMaxTop = g.size.height - (newH + SETTINGS_BLOCK_HEIGHT);
+    const x = newMaxLeft > 0 ? (cx - w / 2) / newMaxLeft : 0;
+    const y = newMaxTop > 0 ? (cy - newH / 2) / newMaxTop : 0;
+    posRef.current = {
+      x: Math.min(1, Math.max(0, x)),
+      y: Math.min(1, Math.max(0, y)),
+    };
+    setWidthFrac(w / g.size.width);
+    return true;
+  }, []);
+
+  // Pinch (touch) and mouse-wheel resizing, on the whole featured image.
+  // Native listeners because React's touch/wheel handlers are passive and
+  // can't cancel the page scroll / browser zoom.
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el || !draggableSquare) return;
+
+    let startDist = 0;
+    let startWidth = 0;
+    const dist = (t: TouchList) =>
+      Math.hypot(t[0].clientX - t[1].clientX, t[0].clientY - t[1].clientY);
+
+    const onTouchStart = (e: TouchEvent) => {
+      if (e.touches.length === 2) {
+        pinchingRef.current = true;
+        draggingRef.current = false;
+        setIsDragging(false);
+        startDist = dist(e.touches) || 1;
+        startWidth = gestureRef.current.squareSizePx;
+      }
+    };
+    const onTouchMove = (e: TouchEvent) => {
+      if (!pinchingRef.current || e.touches.length !== 2) return;
+      e.preventDefault();
+      resizeTo(startWidth * (dist(e.touches) / startDist));
+    };
+    const onTouchEnd = (e: TouchEvent) => {
+      if (e.touches.length < 2) pinchingRef.current = false;
+    };
+    const onWheel = (e: WheelEvent) => {
+      // Always claim the wheel while over the image, even at the min/max
+      // size, so the page never scrolls underneath the viewfinder.
+      e.preventDefault();
+      const delta = e.deltaMode === 1 ? e.deltaY * 16 : e.deltaY;
+      resizeTo(gestureRef.current.squareSizePx * Math.exp(-delta * WHEEL_SENSITIVITY));
+    };
+
+    el.addEventListener("touchstart", onTouchStart, { passive: true });
+    el.addEventListener("touchmove", onTouchMove, { passive: false });
+    el.addEventListener("touchend", onTouchEnd, { passive: true });
+    el.addEventListener("touchcancel", onTouchEnd, { passive: true });
+    el.addEventListener("wheel", onWheel, { passive: false });
+    return () => {
+      el.removeEventListener("touchstart", onTouchStart);
+      el.removeEventListener("touchmove", onTouchMove);
+      el.removeEventListener("touchend", onTouchEnd);
+      el.removeEventListener("touchcancel", onTouchEnd);
+      el.removeEventListener("wheel", onWheel);
+    };
+  }, [draggableSquare, resizeTo]);
+
   const handlePointerDown = (e: ReactPointerEvent<HTMLDivElement>) => {
     if (!draggableSquare) return;
     const square = squareOuterRef.current;
@@ -315,12 +490,12 @@ export default function EditorialImage({
   };
 
   const handlePointerMove = (e: ReactPointerEvent<HTMLDivElement>) => {
-    if (!draggingRef.current) return;
+    if (!draggingRef.current || pinchingRef.current) return;
     const container = containerRef.current;
     if (!container) return;
     const containerRect = container.getBoundingClientRect();
     const maxLeft = Math.max(0, size.width - squareSizePx);
-    const groupHeight = squareSizePx + SETTINGS_BLOCK_HEIGHT;
+    const groupHeight = squareHeightPx + SETTINGS_BLOCK_HEIGHT;
     const maxTop = Math.max(0, size.height - groupHeight);
     const left = e.clientX - containerRect.left - dragOffsetRef.current.x;
     const top = e.clientY - containerRect.top - dragOffsetRef.current.y;
@@ -411,7 +586,13 @@ export default function EditorialImage({
   )}%)`;
 
   return (
-    <div ref={containerRef} className="editorial-frame relative w-full select-none overflow-hidden bg-ink">
+    <div
+      ref={containerRef}
+      className="editorial-frame relative w-full select-none overflow-hidden bg-ink"
+      // Lets the page still scroll with one finger but stops the browser
+      // from zooming the whole page on a two-finger pinch over the image.
+      style={draggableSquare ? { touchAction: "pan-x pan-y" } : undefined}
+    >
       {/* Responsive aspect ratio: mobile below md (768px), desktop at
           and above it. Uses a scoped stylesheet (rather than a Tailwind
           class built from the prop) since these values are dynamic. */}
@@ -479,7 +660,7 @@ export default function EditorialImage({
               className="relative overflow-hidden border transition-colors duration-200"
               style={{
                 width: squareSizePx,
-                height: squareSizePx,
+                height: squareHeightPx,
                 borderColor: isDragging ? "rgba(255,255,255,0.95)" : "rgba(255,255,255,0.85)",
                 borderWidth: 1,
               }}
@@ -524,15 +705,19 @@ export default function EditorialImage({
                   ref={crosshairRef}
                   aria-hidden="true"
                   className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transition-opacity duration-200"
-                  style={{ width: 18, height: 18, opacity: isDragging ? 0.95 : 0.8 }}
+                  style={{
+                    width: CROSSHAIR_BASE * crosshairScale,
+                    height: CROSSHAIR_BASE * crosshairScale,
+                    opacity: isDragging ? 0.95 : 0.8,
+                  }}
                 >
                   <span
                     className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-white"
-                    style={{ width: 18, height: 1 }}
+                    style={{ width: CROSSHAIR_BASE * crosshairScale, height: 1 }}
                   />
                   <span
                     className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-white"
-                    style={{ width: 1, height: 18 }}
+                    style={{ width: 1, height: CROSSHAIR_BASE * crosshairScale }}
                   />
                 </div>
               )}
@@ -556,8 +741,14 @@ export default function EditorialImage({
 
             {/* Camera settings readout — shutter speed / aperture / ISO */}
             <div
-              className="mt-1.5 select-none whitespace-nowrap font-mono text-[9px] tracking-[0.1em] text-white transition-opacity duration-200 sm:text-[10px]"
-              style={{ opacity: isDragging ? 0.9 : 0.75 }}
+              ref={settingsRef}
+              className="mt-1.5 select-none whitespace-nowrap font-mono text-[length:calc(9px*var(--ts))] tracking-[0.1em] text-white transition-opacity duration-200 sm:text-[length:calc(10px*var(--ts))]"
+              style={
+                {
+                  opacity: isDragging ? 0.9 : 0.75,
+                  "--ts": textScale,
+                } as React.CSSProperties
+              }
             >
               {shutterSpeed}&nbsp;&nbsp;&nbsp;{aperture}&nbsp;&nbsp;&nbsp;{iso}
             </div>
