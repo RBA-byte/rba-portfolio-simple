@@ -14,6 +14,9 @@ import { heroImages } from "@/lib/content";
 import { homepageCrawlLinks } from "@/lib/site";
 import type { SectionId } from "@/types";
 
+/** Remembers which hero slide the visitor was on (per browser tab). */
+const HERO_INDEX_KEY = "rba:heroIndex";
+
 export default function Page() {
   const storyRef = useRef<HTMLDivElement>(null);
   const heroRef = useRef<HTMLElement>(null);
@@ -26,9 +29,30 @@ export default function Page() {
   // Lifted up (rather than kept local to HeroCarousel) so About/Packages/
   // Contact can show the same photo the visitor was last looking at, and
   // so it survives scrolling away and back to the hero.
-  const [heroIndex, setHeroIndex] = useState(0);
+  const [heroIndex, setHeroIndexState] = useState(0);
   const activeImage = heroImages[heroIndex];
 
+  // Save the slide whenever it changes, and restore it when the visitor
+  // comes back (Back button, Home button, logo link) after opening a story.
+  const setHeroIndex = (next: number) => {
+    setHeroIndexState(next);
+    try {
+      sessionStorage.setItem(HERO_INDEX_KEY, String(next));
+    } catch {
+      /* storage unavailable (private mode etc.) — just don't remember */
+    }
+  };
+
+  useEffect(() => {
+    try {
+      const saved = Number(sessionStorage.getItem(HERO_INDEX_KEY));
+      if (Number.isInteger(saved) && saved > 0 && saved < heroImages.length) {
+        setHeroIndexState(saved);
+      }
+    } catch {
+      /* ignore */
+    }
+  }, []);
   useEffect(() => {
     const root = storyRef.current;
     const targets: [SectionId, HTMLElement | null][] = [
