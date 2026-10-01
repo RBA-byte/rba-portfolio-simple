@@ -77,7 +77,7 @@ export default function RootLayout({
 
         <Script
           async
-          src="https://www.googletagmanager.com/gtag/js?id=AW-18460277173"
+          src="https://www.googletagmanager.com/gtag/js?id=AW-18460277173" strategy="lazyOnload"
         />
 
         <Script id="google-ads-tag">
