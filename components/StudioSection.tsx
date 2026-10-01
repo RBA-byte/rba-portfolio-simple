@@ -1,9 +1,14 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { heroImages, photographerBio, socialLinks, studio } from "@/lib/content";
 import { SITE_URL } from "@/lib/site";
 
-export default function StudioSection() {
+export default function StudioSection({ active }: { active: boolean }) {
+  const [loadMap, setLoadMap] = useState(false);
+  useEffect(() => {
+    if (active) setLoadMap(true);
+  }, [active]);
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
@@ -143,14 +148,15 @@ export default function StudioSection() {
           </a>
         </div>
 
-        <div className="relative order-1 aspect-[4/3] w-full overflow-hidden sm:order-2">
-          <iframe
-            src={studio.mapEmbedSrc}
-            className="absolute inset-0 h-full w-full border-0"
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-            title={`Map showing the location of ${studio.name}`}
-          />
+                <div className="relative order-1 aspect-[4/3] w-full overflow-hidden bg-ink/5 sm:order-2">
+          {loadMap && (
+            <iframe
+              src={studio.mapEmbedSrc}
+              className="absolute inset-0 h-full w-full border-0"
+              referrerPolicy="no-referrer-when-downgrade"
+              title={`Map showing the location of ${studio.name}`}
+            />
+          )}
         </div>
       </div>
     </section>
