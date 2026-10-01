@@ -4,6 +4,7 @@ import { Bodoni_Moda, Poppins } from "next/font/google";
 import "./globals.css";
 import { SITE_NAME, SITE_URL } from "@/lib/site";
 import { heroImages } from "@/lib/content";
+import ContentProtection from "@/components/ContentProtection";
 
 const display = Bodoni_Moda({
   subsets: ["latin"],
@@ -71,6 +72,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${display.variable} ${sans.variable}`}>
       <body>
+        <ContentProtection />
         {children}
 
         <Script
