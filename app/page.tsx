@@ -126,7 +126,7 @@ export default function Page() {
           <ContactSection image={activeImage} />
         </section>
         <section ref={studioRef} className="h-full w-full">
-          <StudioSection />
+          <StudioSection active={section === "contact" || section === "studio"} />
         </section>
       </div>
     </main>
