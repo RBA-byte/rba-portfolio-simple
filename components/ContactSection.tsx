@@ -1,6 +1,15 @@
 "use client";
 
-import { useEffect, useRef, useState, type FormEvent } from "react";
+import {
+  cloneElement,
+  isValidElement,
+  useEffect,
+  useId,
+  useRef,
+  useState,
+  type FormEvent,
+  type ReactElement,
+} from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import SectionBackdrop from "@/components/SectionBackdrop";
 import ThankYou from "@/components/ThankYou";
@@ -37,13 +46,18 @@ interface FieldProps {
 }
 
 function Field({ label, required, error, children }: FieldProps) {
+  const id = useId();
   return (
     <div className="w-full">
-      <label className="block text-[0.68rem] font-medium tracking-[0.16em] text-paper/65">
+            <label htmlFor={id} className="block text-[0.68rem] font-medium tracking-[0.16em] text-paper/65">
         {label}
         {required ? " *" : ""}
       </label>
-      <div className="mt-2">{children}</div>
+            <div className="mt-2">
+        {isValidElement(children)
+          ? cloneElement(children as ReactElement<{ id?: string }>, { id })
+          : children}
+      </div>
       <div className="mt-1.5 h-px w-full bg-paper/25 transition-colors duration-300 focus-within:bg-paper" />
       <AnimatePresence>
         {error && (
