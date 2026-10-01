@@ -76,6 +76,17 @@ export default function HeroCarousel({
     return () => observer.disconnect();
   }, []);
 
+    // The very first placement (e.g. restoring a remembered slide) should be
+  // instant, not a visible slide-in from the first photo. Normal animated
+  // transitions switch on right after the first layout measurement.
+  const [instant, setInstant] = useState(true);
+  useEffect(() => {
+    if (width <= 0) return;
+    const id = requestAnimationFrame(() => setInstant(false));
+    return () => cancelAnimationFrame(id);
+  }, [width]);
+
+  
   const lastIndex = heroImages.length - 1;
 
   const goTo = (next: number) => {
@@ -126,7 +137,7 @@ export default function HeroCarousel({
         dragElastic={0.06}
         onDragEnd={handleDragEnd}
         animate={{ x: -index * width }}
-        transition={{ duration: 0.6, ease: EASE }}
+        transition={{ duration: instant ? 0 : 0.6, ease: EASE }}
       >
         {heroImages.map((image, i) => (
           // A real <a href> so search engines can follow the link to each
