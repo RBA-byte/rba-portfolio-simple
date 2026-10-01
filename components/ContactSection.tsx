@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useEffect, useRef, useState, type FormEvent } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import SectionBackdrop from "@/components/SectionBackdrop";
 import ThankYou from "@/components/ThankYou";
@@ -73,6 +73,44 @@ export default function ContactSection({ image }: { image: ResponsiveImage }) {
   );
   const [errorMessage, setErrorMessage] = useState<string>("");
 
+    const sectionRef = useRef<HTMLElement>(null);
+
+  // Pause page snapping / pin height while a field is focused (keyboard open)
+  useEffect(() => {
+    const section = sectionRef.current;
+    const story = document.querySelector<HTMLElement>(".scroll-story");
+    if (!section || !story) return;
+
+    const isField = (t: EventTarget | null) =>
+      t instanceof HTMLInputElement ||
+      t instanceof HTMLTextAreaElement ||
+      t instanceof HTMLSelectElement;
+
+    const lock = () => {
+      if (story.classList.contains("keyboard-open")) return;
+      story.style.height = `${story.offsetHeight}px`;
+      story.classList.add("keyboard-open");
+    };
+    const unlock = () => {
+      story.classList.remove("keyboard-open");
+      story.style.height = "";
+    };
+    const onFocusIn = (e: FocusEvent) => {
+      if (isField(e.target)) lock();
+    };
+    const onFocusOut = (e: FocusEvent) => {
+      if (!isField(e.relatedTarget)) unlock();
+    };
+
+    section.addEventListener("focusin", onFocusIn);
+    section.addEventListener("focusout", onFocusOut);
+    return () => {
+      section.removeEventListener("focusin", onFocusIn);
+      section.removeEventListener("focusout", onFocusOut);
+      unlock();
+    };
+  }, []);
+
   const update = (field: keyof ContactFormData) => (
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
@@ -113,6 +151,7 @@ export default function ContactSection({ image }: { image: ResponsiveImage }) {
 
   return (
     <section
+      ref={sectionRef}
       id="contact"
       className="relative flex h-full w-full items-center justify-center overflow-y-auto px-6 text-paper sm:px-10"
     >
