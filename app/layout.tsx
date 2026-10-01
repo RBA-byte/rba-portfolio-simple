@@ -8,14 +8,14 @@ import ContentProtection from "@/components/ContentProtection";
 
 const display = Bodoni_Moda({
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
+  weight: ["400"],
   variable: "--font-display",
   display: "swap",
 });
 
 const sans = Poppins({
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600"],
+  weight: ["300", "400", "500"],
   variable: "--font-sans",
   display: "swap",
 });
