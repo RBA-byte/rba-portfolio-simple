@@ -76,6 +76,14 @@ function Field({ label, required, error, children }: FieldProps) {
   );
 }
 
+/** Re-enable the page's scroll snapping after the keyboard-open lock. */
+function releaseStoryLock() {
+  const story = document.querySelector<HTMLElement>(".scroll-story");
+  if (!story) return;
+  story.classList.remove("keyboard-open");
+  story.style.height = "";
+}
+
 const inputClasses =
   "w-full appearance-none bg-transparent pb-1 text-[0.98rem] font-light text-paper placeholder:text-paper/35 focus:outline-none [-webkit-appearance:none] [box-shadow:none]";
 
@@ -89,11 +97,15 @@ export default function ContactSection({ image }: { image: ResponsiveImage }) {
 
     const sectionRef = useRef<HTMLElement>(null);
 
-  // Pause page snapping / pin height while a field is focused (keyboard open)
+  // Mobile keyboard fix: pause snapping and pin the scroller's height while
+  // a field is focused; restore both as soon as the keyboard closes.
   useEffect(() => {
     const section = sectionRef.current;
     const story = document.querySelector<HTMLElement>(".scroll-story");
     if (!section || !story) return;
+    const vv = window.visualViewport;
+    let baseline = 0;
+    let shrunk = false;
 
     const isField = (t: EventTarget | null) =>
       t instanceof HTMLInputElement ||
@@ -102,28 +114,42 @@ export default function ContactSection({ image }: { image: ResponsiveImage }) {
 
     const lock = () => {
       if (story.classList.contains("keyboard-open")) return;
+      baseline = window.innerHeight;
+      shrunk = false;
       story.style.height = `${story.offsetHeight}px`;
       story.classList.add("keyboard-open");
-    };
-    const unlock = () => {
-      story.classList.remove("keyboard-open");
-      story.style.height = "";
     };
     const onFocusIn = (e: FocusEvent) => {
       if (isField(e.target)) lock();
     };
     const onFocusOut = (e: FocusEvent) => {
-      if (!isField(e.relatedTarget)) unlock();
+      if (!isField(e.relatedTarget)) releaseStoryLock();
+    };
+    // Some phones close the keyboard without blurring the field.
+    const onViewportResize = () => {
+      if (!vv || !story.classList.contains("keyboard-open")) return;
+      if (vv.height < baseline - 120) shrunk = true;
+      else if (shrunk) releaseStoryLock();
     };
 
     section.addEventListener("focusin", onFocusIn);
     section.addEventListener("focusout", onFocusOut);
+    vv?.addEventListener("resize", onViewportResize);
+    window.addEventListener("pagehide", releaseStoryLock);
     return () => {
       section.removeEventListener("focusin", onFocusIn);
       section.removeEventListener("focusout", onFocusOut);
-      unlock();
+      vv?.removeEventListener("resize", onViewportResize);
+      window.removeEventListener("pagehide", releaseStoryLock);
+      releaseStoryLock();
     };
   }, []);
+
+  // Submitting removes the focused field without a blur event, so release
+  // the lock explicitly.
+  useEffect(() => {
+    if (status === "submitting" || status === "sent") releaseStoryLock();
+  }, [status]);
 
   const update = (field: keyof ContactFormData) => (
     e: React.ChangeEvent<HTMLInputElement>
@@ -164,12 +190,15 @@ export default function ContactSection({ image }: { image: ResponsiveImage }) {
   };
 
   return (
-    <section
+      <section
       ref={sectionRef}
       id="contact"
-      className="relative flex h-full w-full items-center justify-center overflow-y-auto px-6 text-paper sm:px-10"
+      className="relative h-full w-full overflow-hidden text-paper"
     >
       <SectionBackdrop image={image} />
+
+      {/* Scrolling happens in this inner layer so the backdrop stays pinned */}
+      <div className="relative z-10 flex h-full w-full items-center justify-center overflow-y-auto px-6 sm:px-10">
 
       <div className="relative z-10 my-auto w-full max-w-md py-16">
         <div
@@ -267,6 +296,7 @@ export default function ContactSection({ image }: { image: ResponsiveImage }) {
           </AnimatePresence>
         </div>
       </div>
+         </div>
     </section>
   );
 }
