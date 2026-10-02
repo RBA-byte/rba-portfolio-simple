@@ -189,7 +189,7 @@ export const socialLinks: SocialLinks = {
  */
 export const studio: StudioInfo = {
   name: "RBA Films & Photography Studio",
-  addressLines: ["27a, Hadayatullah Block", "Mustafa Town, Lahore, Pakistan"],
+  addressLines: ["27-A, Hadayatullah Block", "Mustafa Town, Lahore, Pakistan"],
 	 // Used for the address schema (StudioSection.tsx) — kept separate from
   // addressLines above so the JSON-LD always has proper, distinct fields
   // instead of parsing the display string.
