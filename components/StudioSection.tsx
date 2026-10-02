@@ -18,7 +18,7 @@ export default function StudioSection({ active }: { active: boolean }) {
     // Keep this until the GMB listing itself is renamed to match — removing
     // it before then would make Google's business records disagree with
     // each other. Delete this line once the GMB profile is updated.
-    alternateName: ["Refractions By Ammar", "The Refractions Studio"],
+    alternateName: ["Refractions By Ammar", "The Refractions Studio", "The Refractions Studio | Refractions By Ammar"],
     description:
       "Luxury cinematic wedding photography and wedding films in Lahore, Pakistan.",
     areaServed: { "@type": "City", name: "Lahore" },
