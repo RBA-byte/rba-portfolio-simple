@@ -6,10 +6,14 @@ import type { ResponsiveImage } from "@/types";
 
 export default function AboutSection({ image }: { image: ResponsiveImage }) {
   return (
-    <section
+        <section
       id="about"
-      className="relative flex h-full w-full items-center justify-center overflow-y-auto px-6 text-paper sm:px-10"
+      className="relative h-full w-full overflow-hidden text-paper"
     >
+      <SectionBackdrop image={image} />
+
+      {/* Scrolling happens in this inner layer so the backdrop stays pinned */}
+      <div className="relative z-10 flex h-full w-full items-center justify-center overflow-y-auto px-6 sm:px-10">
       <SectionBackdrop image={image} />
 
       <div className="relative z-10 my-auto flex w-full max-w-md flex-col items-center py-16 text-center">
@@ -28,6 +32,7 @@ export default function AboutSection({ image }: { image: ResponsiveImage }) {
           ))}
         </div>
       </div>
+         </div>
     </section>
   );
 }
