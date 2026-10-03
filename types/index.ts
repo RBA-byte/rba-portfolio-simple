@@ -15,6 +15,7 @@ export interface HeroSlide extends ResponsiveImage {
 export interface ContactFormData {
   name: string;
   phone: string;
+  email: string;
   eventDate: string;
   location: string;
 }
