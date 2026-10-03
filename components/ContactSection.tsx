@@ -21,9 +21,20 @@ const EASE = [0.22, 1, 0.36, 1] as const;
 const initialData: ContactFormData = {
   name: "",
   phone: "",
+  email: "",
   eventDate: "",
   location: "",
 };
+
+function normalizePhoneNumber(phone: string): string {
+  const cleaned = phone.trim().replace(/[^\d+]/g, "");
+
+  if (cleaned.startsWith("+")) return cleaned;
+  if (cleaned.startsWith("0")) return `+92${cleaned.slice(1)}`;
+  if (cleaned.startsWith("92")) return `+${cleaned}`;
+
+  return cleaned;
+}
 
 function validate(data: ContactFormData): ContactFormErrors {
   const errors: ContactFormErrors = {};
@@ -35,6 +46,14 @@ function validate(data: ContactFormData): ContactFormErrors {
   } else if (!/^[0-9+()\-\s]{7,}$/.test(data.phone.trim())) {
     errors.phone = "That number doesn't look right.";
   }
+
+  if (
+    data.email.trim() &&
+    !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email.trim())
+  ) {
+    errors.email = "That email doesn't look right.";
+  }
+
   return errors;
 }
 
@@ -176,11 +195,31 @@ export default function ContactSection({ image }: { image: ResponsiveImage }) {
       if (!res.ok) {
         throw new Error(body?.error || "Request failed.");
       }
-      window.gtag?.("event", "conversion", {
+
+      const normalizedEmail = data.email.trim().toLowerCase();
+const normalizedPhone = normalizePhoneNumber(data.phone);
+
+const userData: {
+  email?: string;
+  phone_number?: string;
+} = {};
+
+if (normalizedEmail) {
+  userData.email = normalizedEmail;
+}
+
+if (normalizedPhone) {
+  userData.phone_number = normalizedPhone;
+}
+
+window.gtag?.("set", "user_data", userData);
+
+window.gtag?.("event", "conversion", {
   send_to: "AW-18460277173/D5nzCLSjlIUdELXzxeJE",
 });
 
-      setStatus("sent");
+setStatus("sent");
+      
     } catch (err) {
       setStatus("error");
       setErrorMessage(
@@ -257,6 +296,17 @@ export default function ContactSection({ image }: { image: ResponsiveImage }) {
                       autoComplete="tel"
                     />
                   </Field>
+
+                  <Field label="Email" error={errors.email}>
+  <input
+    type="email"
+    value={data.email}
+    onChange={update("email")}
+    className={inputClasses}
+    autoComplete="email"
+    inputMode="email"
+  />
+</Field>
 
                   <Field label="Expected Event Date">
                     <input
