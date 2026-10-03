@@ -6,13 +6,14 @@ function isValidPayload(body: unknown): body is ContactFormData {
   if (typeof body !== "object" || body === null) return false;
   const b = body as Record<string, unknown>;
   return (
-    typeof b.name === "string" &&
-    b.name.trim().length > 0 &&
-    typeof b.phone === "string" &&
-    b.phone.trim().length > 0 &&
-    typeof b.eventDate === "string" &&
-    typeof b.location === "string"
-  );
+  typeof b.name === "string" &&
+  b.name.trim().length > 0 &&
+  typeof b.phone === "string" &&
+  b.phone.trim().length > 0 &&
+  typeof b.email === "string" &&
+  typeof b.eventDate === "string" &&
+  typeof b.location === "string"
+);
 }
 
 export async function POST(request: NextRequest) {
