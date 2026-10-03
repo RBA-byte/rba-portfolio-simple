@@ -23,6 +23,7 @@ export interface ContactFormData {
 export interface ContactFormErrors {
   name?: string;
   phone?: string;
+  email?: string;
 }
 
 export interface SocialLinks {
