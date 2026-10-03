@@ -2,6 +2,12 @@ interface Window {
   gtag: (
     command: string,
     action: string,
-    params?: Record<string, string | number | boolean>
+    params?: Record<
+      string,
+      | string
+      | number
+      | boolean
+      | Record<string, string | number | boolean>
+    >
   ) => void;
 }
