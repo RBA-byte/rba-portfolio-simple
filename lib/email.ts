@@ -9,6 +9,7 @@ function buildEmailBody(data: ContactFormData, submittedAt: string) {
     "",
     `Name: ${data.name}`,
     `Contact Number: ${data.phone}`,
+    `Email: ${data.email || "Not provided"}`,
     `Expected Event Date: ${data.eventDate || "Not provided"}`,
     `Location: ${data.location || "Not provided"}`,
     "",
@@ -20,6 +21,7 @@ function buildEmailBody(data: ContactFormData, submittedAt: string) {
       <h2 style="font-weight: 600;">New Wedding Photography Inquiry</h2>
       <p><strong>Name:</strong> ${escapeHtml(data.name)}</p>
       <p><strong>Contact Number:</strong> ${escapeHtml(data.phone)}</p>
+      <p><strong>Email:</strong> ${escapeHtml(data.email || "Not provided")}</p>
       <p><strong>Expected Event Date:</strong> ${escapeHtml(
         data.eventDate || "Not provided"
       )}</p>
