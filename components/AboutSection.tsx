@@ -8,13 +8,13 @@ export default function AboutSection({ image }: { image: ResponsiveImage }) {
   return (
         <section
       id="about"
-      className="relative h-full w-full overflow-hidden text-paper"
+      className="relative min-h-[100dvh] w-full overflow-hidden text-paper"
     >
       <SectionBackdrop image={image} />
 
       {/* Scrolling happens in this inner layer so the backdrop stays pinned */}
-      <div className="relative z-10 flex h-full w-full items-center justify-center overflow-y-auto px-6 sm:px-10">
-      <SectionBackdrop image={image} />
+      <div className="relative z-10 flex min-h-[100dvh] w-full items-center justify-center overflow-y-auto px-6 sm:px-10">
+      
 
       <div className="relative z-10 my-auto flex w-full max-w-md flex-col items-center py-16 text-center">
         <h2 className="font-display text-3xl leading-tight sm:text-4xl">
