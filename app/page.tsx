@@ -116,13 +116,13 @@ export default function Page() {
             onContinue={scrollToAbout}
           />
         </section>
-        <section ref={aboutRef} className="min-h-full w-full">
+        <section ref={aboutRef} className="h-full w-full">
           <AboutSection image={activeImage} />
         </section>
         <section ref={packagesRef} className="h-full w-full">
           <PackagesSection image={activeImage} />
         </section>
-        <section ref={contactRef} className="min-h-full w-full">
+        <section ref={contactRef} className="h-full w-full">
           <ContactSection image={activeImage} />
         </section>
         <section ref={studioRef} className="h-full w-full">
