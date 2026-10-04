@@ -25,13 +25,13 @@ export default function PackagesSection({ image }: { image: ResponsiveImage }) {
   return (
         <section
       id="packages"
-      className="relative h-full w-full overflow-hidden text-paper"
+      className="relative min-h-[100dvh] w-full overflow-hidden text-paper"
     >
       <SectionBackdrop image={image} />
 
       {/* Scrolling happens in this inner layer so the backdrop stays pinned */}
-      <div className="relative z-10 flex h-full w-full items-center justify-center overflow-y-auto px-6 sm:px-10">
-      <SectionBackdrop image={image} />
+      <div className="relative z-10 flex min-h-[100dvh] w-full items-center justify-center px-6 sm:px-10">
+
 
       <div className="relative z-10 my-auto w-full max-w-md py-16">
         <div
