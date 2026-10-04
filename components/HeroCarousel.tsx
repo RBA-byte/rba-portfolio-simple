@@ -59,6 +59,8 @@ export default function HeroCarousel({
   const containerRef = useRef<HTMLDivElement>(null);
   const [width, setWidth] = useState(0);
   const router = useRouter();
+  const [isVisible, setIsVisible] = useState(false);
+const [isPaused, setIsPaused] = useState(false);
   // Tracked natively (not via Framer's drag events) so a tap can be told
   // apart from a swipe regardless of which slide is currently active.
   const pointerStart = useRef<{ x: number; y: number } | null>(null);
@@ -93,6 +95,40 @@ export default function HeroCarousel({
     onIndexChange(Math.max(0, Math.min(lastIndex, next)));
   };
 
+  // Automatically advance the hero carousel every 2 seconds.
+useEffect(() => {
+  if (!isVisible || isPaused) return;
+
+  // Respect visitors who prefer reduced motion.
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    return;
+  }
+
+  const timer = window.setTimeout(() => {
+    const nextIndex = index >= lastIndex ? 0 : index + 1;
+    onIndexChange(nextIndex);
+  }, 2000);
+
+  return () => window.clearTimeout(timer);
+}, [index, lastIndex, isVisible, isPaused, onIndexChange]);
+
+  useEffect(() => {
+  const el = containerRef.current;
+  if (!el) return;
+
+  const observer = new IntersectionObserver(
+    ([entry]) => {
+      setIsVisible(entry.isIntersecting);
+    },
+    { threshold: 0.1 }
+  );
+
+  observer.observe(el);
+
+  return () => observer.disconnect();
+}, []);
+
+  
   const handleDragEnd = (
     _event: MouseEvent | TouchEvent | PointerEvent,
     info: PanInfo
@@ -128,7 +164,17 @@ export default function HeroCarousel({
   };
 
   return (
-    <div ref={containerRef} className="relative h-full w-full overflow-hidden bg-ink">
+     <div
+    ref={containerRef}
+    className="relative h-full w-full overflow-hidden bg-ink"
+    onMouseEnter={() => setIsPaused(true)}
+    onMouseLeave={() => setIsPaused(false)}
+    onFocusCapture={() => setIsPaused(true)}
+    onBlurCapture={() => setIsPaused(false)}
+    onPointerDown={() => setIsPaused(true)}
+    onPointerUp={() => setIsPaused(false)}
+    onPointerCancel={() => setIsPaused(false)}
+  >
       <motion.div
         className="flex h-full cursor-grab touch-pan-y active:cursor-grabbing"
         drag="x"
