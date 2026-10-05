@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import Script from "next/script";
 import { Bodoni_Moda, Poppins } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 import { SITE_NAME, SITE_URL } from "@/lib/site";
 import { heroImages } from "@/lib/content";
@@ -74,6 +75,7 @@ export default function RootLayout({
       <body>
         <ContentProtection />
         {children}
+        <Analytics />
 
         <Script
           async
