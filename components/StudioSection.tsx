@@ -13,7 +13,7 @@ export default function StudioSection({ active }: { active: boolean }) {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
     "@id": `${SITE_URL}/#business`,
-    name: studio.name,
+    name: "RBA Films & Photography",
     // Our Google Business Profile is still listed under the old studio name.
     // Keep this until the GMB listing itself is renamed to match — removing
     // it before then would make Google's business records disagree with
@@ -22,7 +22,7 @@ export default function StudioSection({ active }: { active: boolean }) {
     description:
       "Luxury cinematic wedding photography and wedding films in Lahore, Pakistan.",
     areaServed: { "@type": "City", name: "Lahore" },
-    telephone: studio.phoneDisplay,
+    telephone: "+923356726627",
     address: {
       "@type": "PostalAddress",
       // addressLines above is just the visible, human-formatted address.
@@ -37,10 +37,13 @@ export default function StudioSection({ active }: { active: boolean }) {
       postalCode: studio.postalCode,
     },
     url: SITE_URL,
+    logo: `${SITE_URL}/rba-logo.png`,
     hasMap: studio.mapsLink,
     image: SITE_URL + heroImages[0].desktop,
     priceRange: "PKR 30,000 - PKR 90,000",
-    sameAs: [socialLinks.instagram, "http://facebook.com/refractionsbyammar"],
+    sameAs: [socialLinks.instagram, 
+             "https://www.facebook.com/refractionsbyammar"
+            ],
     geo: {
       "@type": "GeoCoordinates",
       latitude: 31.4968307,
