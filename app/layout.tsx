@@ -5,6 +5,7 @@ import "./globals.css";
 import { SITE_NAME, SITE_URL } from "@/lib/site";
 import { heroImages } from "@/lib/content";
 import ContentProtection from "@/components/ContentProtection";
+import { Analytics } from "@vercel/analytics/next";
 
 const display = Bodoni_Moda({
   subsets: ["latin"],
@@ -74,6 +75,7 @@ export default function RootLayout({
       <body>
         <ContentProtection />
         {children}
+        <Analytics />
 
         <Script
           async
