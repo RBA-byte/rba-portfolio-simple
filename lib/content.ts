@@ -114,9 +114,9 @@ export const aboutCopy = {
 };
 
 export const contactCopy = {
-  heading: "LET'S CREATE SOMETHING BEAUTIFUL",
+  heading: "GET YOUR CUSTOMIZED WEDDING PHOTOGRAPHY PACKAGE",
   subheading:
-    "Tell us a little about your day. We reply personally, usually within 48 hours.",
+    "Tell us a little about your day. We reply personally, usually within 24 hours.",
   thankYou: {
     heading: "THANK YOU",
     body: "Thank you for reaching out to RBA Films & Photography. Our team will contact you shortly.",
