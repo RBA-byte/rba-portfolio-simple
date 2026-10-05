@@ -10,7 +10,7 @@ import ContactSection from "@/components/ContactSection";
 import StudioSection from "@/components/StudioSection";
 import GoToTopButton from "@/components/GoToTopButton";
 import ContactPill from "@/components/ContactPill";
-import { heroImages } from "@/lib/content";
+import { heroImages, socialLinks, studio  } from "@/lib/content";
 import { homepageCrawlLinks } from "@/lib/site";
 import type { SectionId } from "@/types";
 
