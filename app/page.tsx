@@ -11,11 +11,46 @@ import StudioSection from "@/components/StudioSection";
 import GoToTopButton from "@/components/GoToTopButton";
 import ContactPill from "@/components/ContactPill";
 import { heroImages, socialLinks, studio  } from "@/lib/content";
-import { homepageCrawlLinks } from "@/lib/site";
+import { absoluteUrl, homepageCrawlLinks, SITE_NAME  } from "@/lib/site";
 import type { SectionId } from "@/types";
 
 /** Remembers which hero slide the visitor was on (per browser tab). */
 const HERO_INDEX_KEY = "rba:heroIndex";
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": `${absoluteUrl("/") }#website`,
+      url: absoluteUrl("/"),
+      name: SITE_NAME,
+      alternateName: "The Refractions Studio | Refractions By Ammar",
+    },
+    {
+      "@type": "LocalBusiness",
+      "@id": `${absoluteUrl("/")}#localbusiness`,
+      name: "RBA Films & Photography",
+      alternateName: "The Refractions Studio | Refractions By Ammar",
+      url: absoluteUrl("/"),
+      logo: absoluteUrl("/rba-logo.png"),
+      image: absoluteUrl(heroImages[0].desktop),
+      telephone: "+923356726627",
+      priceRange: "PKR",
+      address: {
+        "@type": "PostalAddress",
+        streetAddress: "27-A, Hadayatullah Block",
+        addressLocality: "Lahore",
+        addressRegion: "Punjab",
+        postalCode: "54790",
+        addressCountry: "PK",
+      },
+      sameAs: [
+        socialLinks.instagram,
+      ],
+    },
+  ],
+};
 
 export default function Page() {
   const storyRef = useRef<HTMLDivElement>(null);
@@ -89,6 +124,12 @@ export default function Page() {
 
   return (
     <main className="relative">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(structuredData),
+        }}
+      />
       {/* SEO: the homepage is a full-screen carousel with no visible text
           heading or links. These two blocks are visually hidden (screen-reader
           accessible) so search engines get a real <h1> and crawlable links to
