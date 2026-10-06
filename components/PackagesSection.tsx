@@ -5,7 +5,13 @@ import SectionBackdrop from "@/components/SectionBackdrop";
 import { weddingPackages } from "@/lib/content";
 import type { ResponsiveImage } from "@/types";
 
-export default function PackagesSection({ image }: { image: ResponsiveImage }) {
+export default function PackagesSection({
+  image,
+  onBookPackage,
+}: {
+  image: ResponsiveImage;
+  onBookPackage: (packageName: string) => void;
+}) {
   const trackRef = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(0);
 
@@ -96,6 +102,21 @@ export default function PackagesSection({ image }: { image: ResponsiveImage }) {
               />
             ))}
           </div>
+        </div>
+
+        <div className="mt-4 flex justify-end">
+          <button
+            type="button"
+            onClick={() => onBookPackage(weddingPackages[active].name)}
+            className="border border-paper px-5 py-3 text-[0.72rem] font-medium tracking-[0.2em] text-paper transition-colors duration-300 hover:bg-paper hover:text-ink"
+            style={{
+              background: "rgba(19,18,16,0.42)",
+              backdropFilter: "blur(6px)",
+              WebkitBackdropFilter: "blur(6px)",
+            }}
+          >
+            BOOK THIS PACKAGE
+          </button>
         </div>
       </div>
         </div>

@@ -13,7 +13,7 @@ import {
 import { AnimatePresence, motion } from "framer-motion";
 import SectionBackdrop from "@/components/SectionBackdrop";
 import ThankYou from "@/components/ThankYou";
-import { contactCopy } from "@/lib/content";
+import { contactCopy, weddingPackages } from "@/lib/content";
 import type { ContactFormData, ContactFormErrors, ResponsiveImage } from "@/types";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
@@ -106,7 +106,15 @@ function releaseStoryLock() {
 const inputClasses =
   "w-full appearance-none bg-transparent pb-1 text-[0.98rem] font-light text-paper placeholder:text-paper/35 focus:outline-none [-webkit-appearance:none] [box-shadow:none]";
 
-export default function ContactSection({ image }: { image: ResponsiveImage }) {
+export default function ContactSection({
+  image,
+  selectedPackage,
+  onPackageChange,
+}: {
+  image: ResponsiveImage;
+  selectedPackage: string;
+  onPackageChange: (packageName: string) => void;
+}) {
   const [data, setData] = useState<ContactFormData>(initialData);
   const [errors, setErrors] = useState<ContactFormErrors>({});
   const [status, setStatus] = useState<"idle" | "submitting" | "sent" | "error">(
@@ -187,7 +195,7 @@ export default function ContactSection({ image }: { image: ResponsiveImage }) {
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+        body: JSON.stringify({ ...data, packageName: selectedPackage }),
       });
 
       const body = await res.json().catch(() => null);
@@ -277,6 +285,32 @@ setStatus("sent");
                   noValidate
                   className="mt-10 flex flex-col gap-7"
                 >
+                  <fieldset className="w-full">
+                    <legend className="block text-[0.68rem] font-medium tracking-[0.16em] text-paper/65">
+                      Package
+                    </legend>
+                    <div className="mt-3 flex items-center justify-between gap-3">
+                      {weddingPackages.map((pkg) => (
+                        <label
+                          key={pkg.name}
+                          className="flex cursor-pointer items-center gap-2 text-[0.88rem] font-light text-paper"
+                        >
+                          <input
+                            type="radio"
+                            name="package"
+                            value={pkg.name}
+                            checked={selectedPackage === pkg.name}
+                            onChange={() => onPackageChange(pkg.name)}
+                            className="peer sr-only"
+                          />
+                          <span className="flex h-[14px] w-[14px] items-center justify-center rounded-full border border-paper/60 transition-colors duration-300 peer-checked:border-paper peer-checked:bg-paper peer-focus-visible:ring-1 peer-focus-visible:ring-paper peer-focus-visible:ring-offset-2 peer-focus-visible:ring-offset-ink/50" />
+                          {pkg.name}
+                        </label>
+                      ))}
+                    </div>
+                    <div className="mt-3 h-px w-full bg-paper/25" />
+                  </fieldset>
+
                   <Field label="Name" required error={errors.name}>
                     <input
                       type="text"
@@ -338,7 +372,7 @@ setStatus("sent");
                     disabled={status === "submitting"}
                     className="mt-3 w-full border border-paper py-3.5 text-[0.75rem] font-medium tracking-[0.2em] text-paper transition-colors duration-300 hover:bg-paper hover:text-ink disabled:opacity-50"
                   >
-                    {status === "submitting" ? "SENDING\u2026" : "SUBMIT"}
+                    {status === "submitting" ? "SENDING\u2026" : "ENQUIRE"}
                   </button>
                 </form>
               </motion.div>

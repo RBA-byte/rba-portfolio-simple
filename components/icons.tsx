@@ -46,3 +46,20 @@ export function HomeIcon({ className }: { className?: string }) {
     </svg>
   );
 }
+
+export function PhoneIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.6"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+      aria-hidden="true"
+    >
+      <path d="M21 16.5v3a1.5 1.5 0 0 1-1.64 1.5A18.5 18.5 0 0 1 3 4.64 1.5 1.5 0 0 1 4.5 3h3a1.5 1.5 0 0 1 1.5 1.29c.1.8.3 1.58.58 2.32a1.5 1.5 0 0 1-.34 1.58L7.9 9.4a12 12 0 0 0 6.7 6.7l1.2-1.34a1.5 1.5 0 0 1 1.58-.34c.74.28 1.52.48 2.32.58A1.5 1.5 0 0 1 21 16.5z" />
+    </svg>
+  );
+}
