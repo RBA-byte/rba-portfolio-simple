@@ -127,15 +127,28 @@ export default function StudioSection({ active }: { active: boolean }) {
             ))}
           </address>
 
-       <a
+<a
   href={studio.phoneHref}
   className="mt-4 text-[0.95rem] font-light text-ink/85 underline decoration-ink/30 underline-offset-4"
-  onClick={() => {
-    window.gtag?.("event", "conversion", {
-      send_to: "AW-18460277173/tbH4COr9moUdELXzxeJE",
-      value: 1.0,
-      currency: "PKR",
-    });
+  onClick={(event) => {
+    event.preventDefault();
+
+    const callback = () => {
+      window.location.href = studio.phoneHref;
+    };
+
+    if (typeof window.gtag === "function") {
+      window.gtag("event", "conversion", {
+        send_to: "AW-18460277173/tbH4COr9moUdELXzxeJE",
+        value: 1.0,
+        currency: "PKR",
+        event_callback: callback,
+      });
+
+      setTimeout(callback, 1000);
+    } else {
+      callback();
+    }
   }}
 >
   {studio.phoneDisplay}
