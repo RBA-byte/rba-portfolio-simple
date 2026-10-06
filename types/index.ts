@@ -18,6 +18,8 @@ export interface ContactFormData {
   email: string;
   eventDate: string;
   location: string;
+  /** Package picked in the form (Basic / Silver / Premium). Optional. */
+  packageName?: string;
 }
 
 export interface ContactFormErrors {
