@@ -1,4 +1,10 @@
-export type SectionId = "hero" | "about" | "packages" | "contact" | "studio";
+export type SectionId =
+  | "hero"
+  | "about"
+  | "packages"
+  | "testimonials"
+  | "contact"
+  | "studio";
 
 /** A photo with a portrait crop for phones and a landscape crop for wider screens. */
 export interface ResponsiveImage {
@@ -129,3 +135,13 @@ export interface WeddingPackage {
   features: string[];
 }
 
+export interface Testimonial {
+  /** Shown in the large Vogue-style heading on the photo, e.g. "Hira & Usman". */
+  name: string;
+  /** 1-5 */
+  rating: number;
+  quote: string;
+  /** Client photo (portrait works best). */
+  image: string;
+  alt: string;
+}
