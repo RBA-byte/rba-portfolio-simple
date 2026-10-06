@@ -63,7 +63,7 @@ export const testimonials: Testimonial[] = [
     rating: 5,
     quote:
       "My engagement coverage was flawless. Honestly the most trusted wedding photographers in Lahore.",
-    image: "/images/testimonials/faisa-imran-rba-cinematic-wedding-testimonial.webp",
+    image: "/images/testimonials/aaima-engagement-rba-cinematic-wedding-testimonial.webp",
     alt: "Aaima, Engagement photography clients in Lahore",
   },
 ];
