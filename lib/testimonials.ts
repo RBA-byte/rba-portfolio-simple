@@ -23,7 +23,7 @@ export const testimonials: Testimonial[] = [
     rating: 5,
     quote:
       "...the experience was completely different. First of all, their previous work was genuinely exceptional. More importantly, Ammar understood exactly what we wanted and was willing to accommodate our requirements...",
-    image: heroImages[0].mobile,
+    image: "/images/testimonials/samie-khadija-rba-cinematic-wedding-testimonial.webp",
     alt: "Samie and Khadija, walima wedding photography clients in Lahore",
   },
   {
@@ -31,7 +31,7 @@ export const testimonials: Testimonial[] = [
     rating: 5,
     quote:
       "They captured more than just moments - they preserved the emotions and memories of the day. The quality of both the videos and pictures exceeded expectations and was truly outstanding.",
-    image: heroImages[3].mobile,
+    image: "/images/testimonials/faisal-maria-rba-cinematic-wedding-testimonial.webp",
     alt: "Faisal and Maria, cinematic wedding film clients in Lahore",
   },
   {
@@ -39,7 +39,7 @@ export const testimonials: Testimonial[] = [
     rating: 5,
     quote:
       "Mehndi to Walima, every candid moment was captured. Our wedding photography album is pure art.",
-    image: heroImages[5].mobile,
+    image: "/images/testimonials/sonia-nasir-rba-cinematic-wedding-testimonial.webp",
     alt: "Sonia and Nasir, Mehndi and Walima photography clients in Lahore",
   },
   {
@@ -47,7 +47,7 @@ export const testimonials: Testimonial[] = [
     rating: 4,
     quote:
       "Luxury wedding videography in Lahore without the fuss. Delivered early and beautifully edited.",
-    image: heroImages[8].mobile,
+    image: "/images/testimonials/faisal-farrah-rba-cinematic-wedding-testimonial.webp",
     alt: "Faisal and Farah, wedding videography clients in Lahore",
   },
   {
@@ -55,15 +55,15 @@ export const testimonials: Testimonial[] = [
     rating: 5,
     quote:
       "They captured the pictures and videos beautifully and even the albums were made very nicely.",
-    image: heroImages[9].mobile,
+    image: "/images/testimonials/aafia-umair-rba-cinematic-wedding-testimonial.webp",
     alt: "Aafia and Umair, wedding shoot clients in Lahore",
   },
   {
-    name: "Faiza & Imran",
+    name: "Aaima",
     rating: 5,
     quote:
-      "Our Nikah and Baraat coverage was flawless. Honestly the most trusted wedding photographers in Lahore.",
-    image: heroImages[6].mobile,
-    alt: "Faiza and Imran, Nikah and Baraat photography clients in Lahore",
+      "My engagement coverage was flawless. Honestly the most trusted wedding photographers in Lahore.",
+    image: "/images/testimonials/faisa-imran-rba-cinematic-wedding-testimonial.webp",
+    alt: "Aaima, Engagement photography clients in Lahore",
   },
 ];
