@@ -19,12 +19,12 @@ export const GOOGLE_REVIEWS_URL = studio.mapsLink;
  */
 export const testimonials: Testimonial[] = [
   {
-    name: "Hira & Usman",
+    name: "Samie & Khadija",
     rating: 5,
     quote:
-      "The best wedding photographer in Lahore. Our Baraat and Walima photos feel like stills from a film.",
+      "...the experience was completely different. First of all, their previous work was genuinely exceptional. More importantly, Ammar understood exactly what we wanted and was willing to accommodate our requirements...",
     image: heroImages[0].mobile,
-    alt: "Hira and Usman, wedding photography clients in Lahore",
+    alt: "Samie and Khadija, walima wedding photography clients in Lahore",
   },
   {
     name: "Sana & Bilal",
