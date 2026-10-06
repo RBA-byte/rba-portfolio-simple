@@ -60,6 +60,7 @@ export default function Page() {
   const contactRef = useRef<HTMLElement>(null);
   const studioRef = useRef<HTMLElement>(null);
   const [section, setSection] = useState<SectionId>("hero");
+  const [selectedPackage, setSelectedPackage] = useState("");
 
   // Lifted up (rather than kept local to HeroCarousel) so About/Packages/
   // Contact can show the same photo the visitor was last looking at, and
@@ -118,6 +119,18 @@ export default function Page() {
     aboutRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
+  const bookPackage = (packageName: string) => {
+    setSelectedPackage(packageName);
+    contactRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  // Arriving from another page (blog/FAQ) via the BOOK NOW link: /#contact
+  useEffect(() => {
+    if (window.location.hash === "#contact") {
+      contactRef.current?.scrollIntoView();
+    }
+  }, []);
+
   const scrollToTop = () => {
     heroRef.current?.scrollIntoView({ behavior: "smooth" });
   };
@@ -161,10 +174,14 @@ export default function Page() {
           <AboutSection image={activeImage} />
         </section>
         <section ref={packagesRef} className="w-full">
-          <PackagesSection image={activeImage} />
+          <PackagesSection image={activeImage} onBookPackage={bookPackage} />
         </section>
         <section ref={contactRef} className="w-full">
-          <ContactSection image={activeImage} />
+          <ContactSection
+            image={activeImage}
+            selectedPackage={selectedPackage}
+            onPackageChange={setSelectedPackage}
+          />
         </section>
         <section ref={studioRef} className="h-full w-full">
           <StudioSection active={section === "contact" || section === "studio"} />
