@@ -58,4 +58,12 @@ export const testimonials: Testimonial[] = [
     image: heroImages[9].mobile,
     alt: "Noor and Ahmed, wedding shoot clients in Lahore",
   },
+  {
+    name: "Zainab & Hassan",
+    rating: 5,
+    quote:
+      "Our Nikah and Baraat coverage was flawless. Honestly the most trusted wedding photographers in Lahore.",
+    image: heroImages[6].mobile,
+    alt: "Zainab and Hassan, Nikah and Baraat photography clients in Lahore",
+  },
 ];
