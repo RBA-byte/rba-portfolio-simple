@@ -53,7 +53,7 @@ export default function PackagesSection({
               WEDDING PACKAGES
             </h2>
             <p className="mx-auto mt-4 max-w-[30ch] text-[0.85rem] font-light text-paper/70">
-              Three ways to work with us — swipe to compare coverage.
+              Swipe to compare our wedding packages.
             </p>
           </div>
 
