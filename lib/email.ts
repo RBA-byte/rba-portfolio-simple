@@ -7,6 +7,7 @@ function buildEmailBody(data: ContactFormData, submittedAt: string) {
   const text = [
     "New Wedding Photography Inquiry",
     "",
+    `Package: ${data.packageName || "Not selected"}`,
     `Name: ${data.name}`,
     `Contact Number: ${data.phone}`,
     `Email: ${data.email || "Not provided"}`,
@@ -19,6 +20,7 @@ function buildEmailBody(data: ContactFormData, submittedAt: string) {
   const html = `
     <div style="font-family: sans-serif; color: #131210; line-height: 1.6;">
       <h2 style="font-weight: 600;">New Wedding Photography Inquiry</h2>
+      <p><strong>Package:</strong> ${escapeHtml(data.packageName || "Not selected")}</p>
       <p><strong>Name:</strong> ${escapeHtml(data.name)}</p>
       <p><strong>Contact Number:</strong> ${escapeHtml(data.phone)}</p>
       <p><strong>Email:</strong> ${escapeHtml(data.email || "Not provided")}</p>
