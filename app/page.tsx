@@ -6,6 +6,7 @@ import Header from "@/components/Header";
 import HeroCarousel from "@/components/HeroCarousel";
 import AboutSection from "@/components/AboutSection";
 import PackagesSection from "@/components/PackagesSection";
+import TestimonialsSection from "@/components/TestimonialsSection";
 import ContactSection from "@/components/ContactSection";
 import StudioSection from "@/components/StudioSection";
 import GoToTopButton from "@/components/GoToTopButton";
@@ -57,6 +58,7 @@ export default function Page() {
   const heroRef = useRef<HTMLElement>(null);
   const aboutRef = useRef<HTMLElement>(null);
   const packagesRef = useRef<HTMLElement>(null);
+  const testimonialsRef = useRef<HTMLElement>(null);
   const contactRef = useRef<HTMLElement>(null);
   const studioRef = useRef<HTMLElement>(null);
   const [section, setSection] = useState<SectionId>("hero");
@@ -95,6 +97,7 @@ export default function Page() {
       ["hero", heroRef.current],
       ["about", aboutRef.current],
       ["packages", packagesRef.current],
+      ["testimonials", testimonialsRef.current],
       ["contact", contactRef.current],
       ["studio", studioRef.current],
     ];
@@ -175,6 +178,9 @@ export default function Page() {
         </section>
         <section ref={packagesRef} className="w-full">
           <PackagesSection image={activeImage} onBookPackage={bookPackage} />
+        </section>
+        <section ref={testimonialsRef} className="w-full">
+          <TestimonialsSection image={activeImage} />
         </section>
         <section ref={contactRef} className="w-full">
           <ContactSection
