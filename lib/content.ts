@@ -108,7 +108,7 @@ export const aboutCopy = {
   heading: "ABOUT US",
   paragraphs: [
     "RBA Films & Photography is a Lahore-based wedding photography studio built around one idea: weddings should be photographed like films, through light, restraint, and the moments that happen when no one is performing for the camera.",
-    "Behind the camera is Ammar, a security systems engineer by profession and photographer by passion. Capturing light, color, and candid moments since childhood, he has spent 6+ years documenting weddings across Lahore, blending an engineer’s precision with an artist’s eye for emotion.",
+    "Behind the camera is Ammar, an engineer by profession and photographer by passion. Capturing light, color, and candid moments since childhood, he has spent 6+ years documenting weddings across Lahore, blending an engineer’s precision with an artist’s eye for emotion.",
     "His work has earned the Sony Best Retoucher Award, presented by photographer and Sony ambassador Mr. Kashif Rashid, along with two-time Best Photographer honors at the All Pakistan Photography Competition. Today, RBA creates refined wedding photography and cinematic wedding films for couples celebrating luxury weddings in Lahore.",
   ],
 };
