@@ -142,7 +142,7 @@ export default function StudioSection({ active }: { active: boolean }) {
         send_to: "AW-18460277173/tbH4COr9moUdELXzxeJE",
         value: 1.0,
         currency: "PKR",
-        event_callback: callback,
+          event_callback: callback as unknown as string,
       });
 
       setTimeout(callback, 1000);
