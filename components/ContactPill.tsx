@@ -34,8 +34,13 @@ export default function ContactPill({
       <a
         href="/#contact"
         onClick={goToContact}
-        className="mb-1.5 text-[0.62rem] font-medium tracking-[0.2em] text-white transition-opacity hover:opacity-70"
-        style={{ textShadow: "0 1px 4px rgba(0,0,0,0.45)" }}
+        className={`mb-1.5 text-[0.62rem] font-medium tracking-[0.2em] transition-opacity hover:opacity-70 ${
+          tone === "dark" ? "text-ink" : "text-white"
+        }`}
+        style={{
+          textShadow:
+            tone === "dark" ? "none" : "0 1px 4px rgba(0,0,0,0.45)",
+        }}
       >
         BOOK NOW
       </a>

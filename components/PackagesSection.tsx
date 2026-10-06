@@ -102,18 +102,11 @@ export default function PackagesSection({
               />
             ))}
           </div>
-        </div>
 
-        <div className="mt-4 flex justify-end">
           <button
             type="button"
             onClick={() => onBookPackage(weddingPackages[active].name)}
-            className="border border-paper px-5 py-3 text-[0.72rem] font-medium tracking-[0.2em] text-paper transition-colors duration-300 hover:bg-paper hover:text-ink"
-            style={{
-              background: "rgba(19,18,16,0.42)",
-              backdropFilter: "blur(6px)",
-              WebkitBackdropFilter: "blur(6px)",
-            }}
+            className="mt-7 w-full border border-paper py-3.5 text-[0.75rem] font-medium tracking-[0.2em] text-paper transition-colors duration-300 hover:bg-paper hover:text-ink"
           >
             BOOK THIS PACKAGE
           </button>
