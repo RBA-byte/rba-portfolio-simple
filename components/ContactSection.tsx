@@ -191,11 +191,16 @@ export default function ContactSection({
     if (Object.keys(validationErrors).length > 0) return;
 
     setStatus("submitting");
+    const eventId = crypto.randomUUID();
     try {
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...data, packageName: selectedPackage }),
+        body: JSON.stringify({
+  ...data,
+  packageName: selectedPackage,
+  eventId,
+}),
       });
 
       const body = await res.json().catch(() => null);
@@ -225,8 +230,9 @@ window.gtag?.("set", "user_data", userData);
 window.gtag?.("event", "conversion", {
   send_to: "AW-18460277173/D5nzCLSjlIUdELXzxeJE",
 });
-      // Meta Pixel: successful wedding enquiry
-window.fbq?.("track", "Lead");
+   // Meta Pixel: successful wedding enquiry.
+// The same event ID is sent by the server to Meta CAPI.
+window.fbq?.("track", "Lead", {}, { eventID: eventId });
 
 
 setStatus("sent");
