@@ -12,7 +12,7 @@ declare global {
 }
 
 export default function MetaPixel() {
-  const pixelId = process.env.NEXT_PUBLIC_META_PIXEL_ID;
+ const pixelId = process.env.NEXT_PUBLIC_META_PIXEL_ID || "661247305392171";
   const pathname = usePathname();
   const [initialized, setInitialized] = useState(false);
   const lastPath = useRef(pathname);
