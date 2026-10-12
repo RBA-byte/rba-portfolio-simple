@@ -160,6 +160,7 @@ async function sendMetaLead(
   } catch (error) {
     console.error("Meta CAPI network error:", error);
   }
+}
 
 export async function POST(request: NextRequest) {
   let body: unknown;
