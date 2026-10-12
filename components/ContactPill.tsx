@@ -74,6 +74,8 @@ export default function ContactPill({
       value: 1.0,
       currency: "PKR",
     });
+            // Meta Pixel: WhatsApp contact click
+  window.fbq?.("track", "Contact");
   }}
         className="flex h-full items-center justify-center px-3.5 text-white/90 transition-opacity hover:opacity-70"
       >
