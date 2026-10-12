@@ -1,9 +1,8 @@
-
 "use client";
 
 import Script from "next/script";
 import { usePathname } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 
 declare global {
   interface Window {
@@ -12,22 +11,16 @@ declare global {
 }
 
 export default function MetaPixel() {
- const pixelId = process.env.NEXT_PUBLIC_META_PIXEL_ID || "661247305392171";
+  const pixelId = process.env.NEXT_PUBLIC_META_PIXEL_ID?.trim();
   const pathname = usePathname();
-  const [initialized, setInitialized] = useState(false);
   const lastPath = useRef(pathname);
 
   useEffect(() => {
-    if (!initialized) {
-      lastPath.current = pathname;
-      return;
-    }
-
     if (lastPath.current !== pathname) {
       window.fbq?.("track", "PageView");
       lastPath.current = pathname;
     }
-  }, [pathname, initialized]);
+  }, [pathname]);
 
   if (!pixelId) return null;
 
@@ -46,13 +39,12 @@ export default function MetaPixel() {
           t.src=v;s=b.getElementsByTagName(e)[0];
           s.parentNode.insertBefore(t,s)}(window, document,'script',
           'https://connect.facebook.net/en_US/fbevents.js');
+
+          fbq('init', ${JSON.stringify(pixelId)});
+          fbq('track', 'PageView');
         `,
-      }}
-      onReady={() => {
-        window.fbq?.("init", pixelId);
-        window.fbq?.("track", "PageView");
-        setInitialized(true);
       }}
     />
   );
 }
+```
