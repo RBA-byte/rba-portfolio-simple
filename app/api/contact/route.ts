@@ -119,6 +119,7 @@ async function sendMetaLead(
     }
   }
 
+  
   try {
     const response = await fetch(
       `https://graph.facebook.com/v25.0/${encodeURIComponent(pixelId)}/events`,
@@ -144,19 +145,21 @@ async function sendMetaLead(
       }
     );
 
+    const responseText = await response.text();
+
+    console.log("Meta CAPI HTTP status:", response.status);
+    console.log("Meta CAPI response:", responseText);
+
     if (!response.ok) {
-      const errorDetails = await response.text();
       console.error(
         "Meta CAPI request failed:",
         response.status,
-        errorDetails
+        responseText
       );
     }
   } catch (error) {
-    // Meta tracking errors must never block the enquiry.
     console.error("Meta CAPI network error:", error);
   }
-}
 
 export async function POST(request: NextRequest) {
   let body: unknown;
