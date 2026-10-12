@@ -225,6 +225,10 @@ window.gtag?.("set", "user_data", userData);
 window.gtag?.("event", "conversion", {
   send_to: "AW-18460277173/D5nzCLSjlIUdELXzxeJE",
 });
+      // Meta Pixel: successful wedding enquiry
+window.fbq?.("track", "Lead");
+
+setStatus("sent");
 
 setStatus("sent");
       
