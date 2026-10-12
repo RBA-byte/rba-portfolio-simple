@@ -74,6 +74,7 @@ export default function RootLayout({
     <html lang="en" className={`${display.variable} ${sans.variable}`}>
       <body>
         <ContentProtection />
+          <MetaPixel />
         {children}
 
         <Script
