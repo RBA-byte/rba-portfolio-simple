@@ -5,6 +5,7 @@ import "./globals.css";
 import { SITE_NAME, SITE_URL } from "@/lib/site";
 import { heroImages } from "@/lib/content";
 import ContentProtection from "@/components/ContentProtection";
+import MetaPixel from "@/components/MetaPixel";
 
 const display = Bodoni_Moda({
   subsets: ["latin"],
