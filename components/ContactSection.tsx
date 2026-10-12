@@ -228,7 +228,6 @@ window.gtag?.("event", "conversion", {
       // Meta Pixel: successful wedding enquiry
 window.fbq?.("track", "Lead");
 
-setStatus("sent");
 
 setStatus("sent");
       
