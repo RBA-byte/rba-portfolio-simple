@@ -90,6 +90,10 @@ export default function ContactPill({
         onClick={(event) => {
           event.preventDefault();
 
+          
+  // Meta Pixel: phone button click
+  window.fbq?.("track", "Contact");
+
           const callback = () => {
             window.location.href = studio.phoneHref;
           };
