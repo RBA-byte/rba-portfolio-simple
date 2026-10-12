@@ -1,11 +1,12 @@
 import type { Metadata, Viewport } from "next";
 import Script from "next/script";
-import MetaPixel from "@/components/MetaPixel";
 import { Bodoni_Moda, Poppins } from "next/font/google";
 import "./globals.css";
 import { SITE_NAME, SITE_URL } from "@/lib/site";
 import { heroImages } from "@/lib/content";
+import MetaPixel from "@/components/MetaPixel";
 import ContentProtection from "@/components/ContentProtection";
+
 
 const display = Bodoni_Moda({
   subsets: ["latin"],
