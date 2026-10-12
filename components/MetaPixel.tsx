@@ -1,3 +1,4 @@
+
 "use client";
 
 import Script from "next/script";
@@ -10,8 +11,9 @@ declare global {
   }
 }
 
+const PIXEL_ID = "661247305392171";
+
 export default function MetaPixel() {
-  const pixelId = process.env.NEXT_PUBLIC_META_PIXEL_ID?.trim();
   const pathname = usePathname();
   const lastPath = useRef(pathname);
 
@@ -21,8 +23,6 @@ export default function MetaPixel() {
       lastPath.current = pathname;
     }
   }, [pathname]);
-
-  if (!pixelId) return null;
 
   return (
     <Script
@@ -40,7 +40,7 @@ export default function MetaPixel() {
           s.parentNode.insertBefore(t,s)}(window, document,'script',
           'https://connect.facebook.net/en_US/fbevents.js');
 
-          fbq('init', ${JSON.stringify(pixelId)});
+          fbq('init', '${PIXEL_ID}');
           fbq('track', 'PageView');
         `,
       }}
