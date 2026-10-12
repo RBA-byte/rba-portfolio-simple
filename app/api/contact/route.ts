@@ -130,6 +130,7 @@ async function sendMetaLead(
         },
         body: JSON.stringify({
           access_token: accessToken,
+          test_event_code: "TEST93405",
           data: [
             {
               event_name: "Lead",
