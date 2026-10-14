@@ -230,6 +230,9 @@ window.gtag?.("set", "user_data", userData);
 window.gtag?.("event", "conversion", {
   send_to: "AW-18460277173/D5nzCLSjlIUdELXzxeJE",
 });
+window.gtag?.("event", "generate_lead", {
+  method: "website_form",
+});
    // Meta Pixel: successful wedding enquiry.
 // The same event ID is sent by the server to Meta CAPI.
 window.fbq?.("track", "Lead", {}, { eventID: eventId });
