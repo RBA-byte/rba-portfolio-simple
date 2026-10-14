@@ -132,6 +132,9 @@ export default function StudioSection({ active }: { active: boolean }) {
   className="mt-4 text-[0.95rem] font-light text-ink/85 underline decoration-ink/30 underline-offset-4"
   onClick={(event) => {
     event.preventDefault();
+    window.gtag?.("event", "contact", {
+  method: "phone",
+});
     window.fbq?.("track", "Contact");
 
     const callback = () => {
