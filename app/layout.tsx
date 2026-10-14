@@ -6,6 +6,7 @@ import { SITE_NAME, SITE_URL } from "@/lib/site";
 import { heroImages } from "@/lib/content";
 import MetaPixel from "@/components/MetaPixel";
 import ContentProtection from "@/components/ContentProtection";
+import { Analytics } from "@vercel/analytics/next";
 
 
 const display = Bodoni_Moda({
@@ -77,6 +78,7 @@ export default function RootLayout({
         <ContentProtection />
           <MetaPixel />
         {children}
+        <Analytics />
 
         <Script
           async
