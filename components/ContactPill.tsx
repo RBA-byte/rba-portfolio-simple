@@ -105,6 +105,9 @@ export default function ContactPill({
             window.location.href = studio.phoneHref;
           };
 
+          window.gtag?.("event", "contact", {
+  method: "phone",
+});
           if (typeof window.gtag === "function") {
             window.gtag("event", "conversion", {
               send_to: "AW-18460277173/tbH4COr9moUdELXzxeJE",
