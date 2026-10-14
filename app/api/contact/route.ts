@@ -7,6 +7,7 @@ import type { ContactFormData } from "@/types";
 type ContactRequestBody = ContactFormData & {
   eventId?: unknown;
   packageName?: unknown;
+  turnstileToken?: unknown;
 };
 
 function isValidPayload(body: unknown): body is ContactRequestBody {
@@ -162,6 +163,54 @@ async function sendMetaLead(
   }
 }
 
+async function verifyTurnstile(token: unknown): Promise<boolean> {
+  const secret = process.env.TURNSTILE_SECRET_KEY;
+
+  if (
+    !secret ||
+    typeof token !== "string" ||
+    token.length === 0 ||
+    token.length > 2048
+  ) {
+    return false;
+  }
+
+  try {
+    const response = await fetch(
+      "https://challenges.cloudflare.com/turnstile/v0/siteverify",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: new URLSearchParams({
+          secret,
+          response: token,
+        }),
+        signal: AbortSignal.timeout(8000),
+        cache: "no-store",
+      }
+    );
+
+    if (!response.ok) return false;
+
+    const result = await response.json();
+
+    const allowedHostnames = [
+      "rbaweddingfilms.com",
+      "www.rbaweddingfilms.com",
+    ];
+
+    return (
+      result.success === true &&
+      allowedHostnames.includes(result.hostname)
+    );
+  } catch (error) {
+    console.error("Turnstile verification failed:", error);
+    return false;
+  }
+}
+
 export async function POST(request: NextRequest) {
   let body: unknown;
 
@@ -180,6 +229,14 @@ export async function POST(request: NextRequest) {
       { status: 400 }
     );
   }
+  const verified = await verifyTurnstile(body.turnstileToken);
+
+if (!verified) {
+  return NextResponse.json(
+    { error: "Spam verification failed. Please try again." },
+    { status: 403 }
+  );
+}
 
   try {
     // First, make sure the enquiry email was sent successfully.
