@@ -69,11 +69,18 @@ export default function ContactPill({
         rel="noopener noreferrer"
         aria-label="Message us on WhatsApp"
          onClick={() => {
+    //Google Ads
     window.gtag?.("event", "conversion", {
       send_to: "AW-18460277173/GwEICMSkmYUdELXzxeJE",
       value: 1.0,
       currency: "PKR",
     });
+  //Google Analytics         
+  window.gtag?.("event", "contact", {
+    method: "whatsapp",
+});
+           
+           
             // Meta Pixel: WhatsApp contact click
   window.fbq?.("track", "Contact");
   }}
