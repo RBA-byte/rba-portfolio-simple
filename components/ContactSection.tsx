@@ -15,6 +15,7 @@ import SectionBackdrop from "@/components/SectionBackdrop";
 import ThankYou from "@/components/ThankYou";
 import { contactCopy, weddingPackages } from "@/lib/content";
 import type { ContactFormData, ContactFormErrors, ResponsiveImage } from "@/types";
+import { Turnstile } from "@marsidev/react-turnstile";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
@@ -122,6 +123,10 @@ export default function ContactSection({
   );
   const [errorMessage, setErrorMessage] = useState<string>("");
 
+  // Cloudflare Turnstile state
+const [turnstileToken, setTurnstileToken] = useState("");
+const [turnstileResetKey, setTurnstileResetKey] = useState(0);
+
     const sectionRef = useRef<HTMLElement>(null);
 
   // Mobile keyboard fix: pause snapping and pin the scroller's height while
@@ -190,6 +195,12 @@ export default function ContactSection({
     setErrors(validationErrors);
     if (Object.keys(validationErrors).length > 0) return;
 
+    if (!turnstileToken) {
+  setErrorMessage("Please complete the spam verification.");
+  setStatus("error");
+  return;
+}
+
     setStatus("submitting");
     const eventId = crypto.randomUUID();
     try {
@@ -200,6 +211,7 @@ export default function ContactSection({
   ...data,
   packageName: selectedPackage,
   eventId,
+  turnstileToken,        
 }),
       });
 
@@ -240,13 +252,18 @@ window.fbq?.("track", "Lead", {}, { eventID: eventId });
 
 setStatus("sent");
       
+   
     } catch (err) {
       setStatus("error");
       setErrorMessage(
         err instanceof Error ? err.message : "Something went wrong."
       );
+    } finally {
+      setTurnstileToken("");
+      setTurnstileResetKey((key) => key + 1);
     }
   };
+
 
   return (
       <section
@@ -378,6 +395,22 @@ setStatus("sent");
                       {errorMessage || "We couldn't send your inquiry. Please try again."}
                     </p>
                   )}
+
+                   <div className="flex justify-center">
+                    <Turnstile
+                      key={turnstileResetKey}
+                      siteKey={
+                        process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY!
+                      }
+                      onSuccess={(token) => {
+                        setTurnstileToken(token);
+                        setErrorMessage("");
+                      }}
+                      onExpire={() => setTurnstileToken("")}
+                      onError={() => setTurnstileToken("")}
+                      options={{ theme: "dark" }}
+                    />
+                  </div>
 
                   <button
                     type="submit"
