@@ -136,6 +136,47 @@ export const storyPosts: BlogPost[] = [
       "Same couple, same afternoon, a completely different frame — a second look at Ezza and Hammad's library portraits.",
     featuredImage: heroImage("ezza-hammad-cinematic-walima-portraits-lahore"),
     publishedAt: "2026-09-24",
+
+     gallery: [
+    {
+    src: "/images/blog/gallery/ezza-hammad-cinematic-walima-portraits-lahore-01.webp",
+    alt: "Beautiful Ezza and Hammad waleema couple shoot at Quaid e Azam Library, Lahore",
+    caption: "//Lost in Love.",
+  },
+         {
+    src: "/images/blog/gallery/ezza-hammad-cinematic-walima-portraits-lahore-02.webp",
+    alt: "Beautiful Ezza and Hammad waleema couple shoot at Quaid e Azam Library, Lahore",
+    caption: "//Lost in Love.",
+  },
+
+         {
+    src: "/images/blog/gallery/ezza-hammad-cinematic-walima-portraits-lahore-03.webp",
+    alt: "Beautiful Ezza and Hammad waleema couple shoot at Quaid e Azam Library, Lahore",
+    caption: "//Lost in Love.",
+  },
+
+         {
+    src: "/images/blog/gallery/ezza-hammad-cinematic-walima-portraits-lahore-04.webp",
+    alt: "Beautiful Ezza and Hammad waleema couple shoot at Quaid e Azam Library, Lahore",
+    caption: "//Lost in Love.",
+  },
+         {
+    src: "/images/blog/gallery/ezza-hammad-cinematic-walima-portraits-lahore-05.webp",
+    alt: "Beautiful Ezza and Hammad waleema couple shoot at Quaid e Azam Library, Lahore",
+    caption: "//Lost in Love.",
+  },
+
+         {
+    src: "/images/blog/gallery/ezza-hammad-cinematic-walima-portraits-lahore-06.webp",
+    alt: "Beautiful Ezza and Hammad waleema couple shoot at Quaid e Azam Library, Lahore",
+    caption: "//Lost in Love.",
+  },
+     
+
+      
+      
+  // views and likes are optional: leave them out and a steady number is generated per photo
+],
     relatedSlugs: [
       "ezza-hammad-walima-shoot-quaid-e-azam-library",
       "what-makes-a-wedding-film-cinematic",
