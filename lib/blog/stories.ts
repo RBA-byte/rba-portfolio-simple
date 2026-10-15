@@ -59,6 +59,50 @@ export const storyPosts: BlogPost[] = [
         type: "paragraph",
         text: "Once the light was mapped, we brought in smoke. A slow bomb behind the couple, timed to drift rather than billow, turned the depth of the hallway into something closer to a stage than a corridor — the kind of frame that reads as cinematic wedding photography in Lahore without needing much explanation.",
       },
+      
+      gallery: [
+    {
+    src: "/images/blog/gallery/ezza-hammad-cinematic-walima-portraits-lahore-01.webp",
+    alt: "Beautiful Ezza and Hammad waleema couple shoot at Quaid e Azam Library, Lahore",
+    caption: "//Lost in Love.",
+  },
+         {
+    src: "/images/blog/gallery/ezza-hammad-cinematic-walima-portraits-lahore-02.webp",
+    alt: "Beautiful Ezza and Hammad waleema couple shoot at Quaid e Azam Library, Lahore",
+    caption: "//Lost in Love.",
+  },
+
+         {
+    src: "/images/blog/gallery/ezza-hammad-cinematic-walima-portraits-lahore-03.webp",
+    alt: "Beautiful Ezza and Hammad waleema couple shoot at Quaid e Azam Library, Lahore",
+    caption: "//Lost in Love.",
+  },
+
+         {
+    src: "/images/blog/gallery/ezza-hammad-cinematic-walima-portraits-lahore-04.webp",
+    alt: "Beautiful Ezza and Hammad waleema couple shoot at Quaid e Azam Library, Lahore",
+    caption: "//Lost in Love.",
+  },
+         {
+    src: "/images/blog/gallery/ezza-hammad-cinematic-walima-portraits-lahore-05.webp",
+    alt: "Beautiful Ezza and Hammad waleema couple shoot at Quaid e Azam Library, Lahore",
+    caption: "//Lost in Love.",
+  },
+
+         {
+    src: "/images/blog/gallery/ezza-hammad-cinematic-walima-portraits-lahore-06.webp",
+    alt: "Beautiful Ezza and Hammad waleema couple shoot at Quaid e Azam Library, Lahore",
+    caption: "//Lost in Love.",
+  },
+     
+
+      
+      
+  // views and likes are optional: leave them out and a steady number is generated per photo
+],
+      
+
+      
       {
         type: "heading",
         text: "The gear that made the frame work",
