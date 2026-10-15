@@ -6,6 +6,7 @@ import ContactPill from "@/components/ContactPill";
 import RelatedPosts from "@/components/RelatedPosts";
 import RichText from "@/components/RichText";
 import FaqBlock from "@/components/FaqBlock";
+import BlogGallery from "@/components/BlogGallery";
 import { photographerBio, socialLinks, studio } from "@/lib/content";
 import type { BlogPost, FaqItem } from "@/types";
 
@@ -151,6 +152,16 @@ export default function BlogPostView({
               );
           }
         })}
+
+        {/* Optional Instagram-style photo grid — only rendered when the post
+            has a `gallery` (see GalleryImage in types/index.ts). */}
+        {post.gallery && post.gallery.length > 0 && (
+          <BlogGallery
+            images={post.gallery}
+            postTitle={post.title}
+            postPath={`/blog/${post.slug}`}
+          />
+        )}
 
         {/* 3–4 random FAQs, each linking to the full /faq page */}
         <FaqBlock faqs={faqs} />
