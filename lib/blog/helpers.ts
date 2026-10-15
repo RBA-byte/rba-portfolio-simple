@@ -5,6 +5,8 @@ export const h = (text: string): BlogBlock => ({ type: "heading", text });
 export const h3 = (text: string): BlogBlock => ({ type: "subheading", text });
 export const p = (text: string): BlogBlock => ({ type: "paragraph", text });
 export const ul = (items: string[]): BlogBlock => ({ type: "list", items });
+/** Put this in `blocks` where the post's gallery should appear. */
+export const galleryHere = (): BlogBlock => ({ type: "gallery" });
 export const ol = (items: string[]): BlogBlock => ({
   type: "list",
   items,
