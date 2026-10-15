@@ -95,6 +95,24 @@ export type BlogCluster =
   | "Lahore Locations"
   | "Studio Stories";
 
+/**
+ * One photo in a post's optional Instagram-style gallery.
+ * Use a 1080 x 1350 (4:5 portrait) file so the grid thumbnail and the
+ * post view show it uncropped.
+ */
+export interface GalleryImage {
+  /** e.g. "/images/blog/gallery/shalimar-gardens-01.webp" */
+  src: string;
+  /** Describes the photo for Google Images and screen readers. */
+  alt: string;
+  /** Short caption shown under the photo in the post view. */
+  caption: string;
+  /** Optional. Leave out and a steady, made-up number is generated. */
+  views?: number;
+  /** Optional. Leave out and a steady, made-up number is generated. */
+  likes?: number;
+}
+
 export interface BlogPost {
   slug: string;
   decorativeTitle?: string;
@@ -105,6 +123,8 @@ export interface BlogPost {
   /** Short summary used on related-post cards. */
   excerpt: string;
   featuredImage: ResponsiveImage;
+  /** Optional photo grid shown under the article text. Omit it and nothing is rendered. */
+  gallery?: GalleryImage[];
   publishedAt: string;
   updatedAt?: string;
   blocks: BlogBlock[];
