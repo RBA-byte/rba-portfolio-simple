@@ -79,7 +79,10 @@ export default async function BlogPostPage({
     "@type": "Article",
     headline: post.title,
     description: post.metaDescription,
-    image: [absoluteUrl(post.featuredImage.desktop)],
+    image: [
+      absoluteUrl(post.featuredImage.desktop),
+      ...(post.gallery ?? []).map((img) => absoluteUrl(img.src)),
+    ],
     datePublished: post.publishedAt,
     dateModified: post.updatedAt ?? post.publishedAt,
     articleSection: post.cluster,
@@ -108,6 +111,32 @@ export default async function BlogPostPage({
     ],
   };
 
+  // Only for posts that have a gallery: lets Google tie each photo to its
+  // caption, creator and this page.
+  const galleryJsonLd =
+    post.gallery && post.gallery.length > 0
+      ? {
+          "@context": "https://schema.org",
+          "@type": "ImageGallery",
+          name: `${post.title} — photo gallery`,
+          url,
+          mainEntityOfPage: { "@type": "WebPage", "@id": url },
+          image: post.gallery.map((img) => ({
+            "@type": "ImageObject",
+            contentUrl: absoluteUrl(img.src),
+            url: absoluteUrl(img.src),
+            name: img.alt,
+            caption: img.caption,
+            description: img.caption,
+            width: 1080,
+            height: 1350,
+            creator: { "@type": "Person", name: photographerBio.name },
+            creditText: SITE_NAME,
+            copyrightNotice: `© ${new Date(post.publishedAt).getFullYear()} ${SITE_NAME}`,
+          })),
+        }
+      : null;
+
   const faqJsonLd =
     faqs.length > 0
       ? {
@@ -133,6 +162,13 @@ export default async function BlogPostPage({
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
+      {galleryJsonLd && (
+        // eslint-disable-next-line react/no-danger
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(galleryJsonLd) }}
+        />
+      )}
       {faqJsonLd && (
         // eslint-disable-next-line react/no-danger
         <script
