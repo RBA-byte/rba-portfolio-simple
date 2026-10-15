@@ -39,6 +39,18 @@ export default function BlogPostView({
   const headings = post.blocks.filter((block) => block.type === "heading");
   const showToc = post.role === "pillar" && headings.length >= 5;
 
+  // The gallery appears where a `galleryHere()` block sits in the text; if
+  // the post has a gallery but no marker, it goes after the text.
+  const hasGallery = !!post.gallery && post.gallery.length > 0;
+  const hasGalleryMarker = post.blocks.some((block) => block.type === "gallery");
+  const gallery = hasGallery ? (
+    <BlogGallery
+      images={post.gallery!}
+      postTitle={post.title}
+      postPath={`/blog/${post.slug}`}
+    />
+  ) : null;
+
   return (
     <div className="no-copy min-h-screen bg-[#22242a] text-[#e8e8e8]">
       <BlogHeader />
@@ -144,6 +156,8 @@ export default function BlogPostView({
                 </ListTag>
               );
             }
+            case "gallery":
+              return gallery ? <div key={i}>{gallery}</div> : null;
             default:
               return (
                 <p key={i} className="mb-5 text-[0.98rem] font-light leading-relaxed text-[#e8e8e8]/85">
@@ -153,15 +167,8 @@ export default function BlogPostView({
           }
         })}
 
-        {/* Optional Instagram-style photo grid — only rendered when the post
-            has a `gallery` (see GalleryImage in types/index.ts). */}
-        {post.gallery && post.gallery.length > 0 && (
-          <BlogGallery
-            images={post.gallery}
-            postTitle={post.title}
-            postPath={`/blog/${post.slug}`}
-          />
-        )}
+        {/* No marker in the text: show the gallery after it. */}
+        {!hasGalleryMarker && gallery}
 
         {/* 3–4 random FAQs, each linking to the full /faq page */}
         <FaqBlock faqs={faqs} />

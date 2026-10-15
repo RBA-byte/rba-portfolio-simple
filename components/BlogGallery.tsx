@@ -15,6 +15,7 @@ import type { GalleryImage } from "@/types";
 /** Shown in the post view, top-right above the photo. */
 const BRAND_NAME = "RBA Wedding Films";
 const HANDLE = "refractionsbyammar";
+const INSTAGRAM_URL = "https://www.instagram.com/refractionsbyammar/";
 const EASE = [0.22, 1, 0.36, 1] as const;
 const DOUBLE_TAP_MS = 300;
 const SWIPE_DISTANCE = 50;
@@ -212,8 +213,22 @@ export default function BlogGallery({
                 if (e.target === e.currentTarget) close();
               }}
             >
-              {/* Top row: close (left) · logo + name (right, outside the photo) */}
+              {/* Top row: logo + name (left, links to Instagram) · close (right) */}
               <div className="mb-2.5 flex items-center justify-between px-3 sm:px-0">
+                <a
+                  href={INSTAGRAM_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`${BRAND_NAME} on Instagram`}
+                  className="flex items-center gap-2 transition-opacity hover:opacity-80"
+                >
+                  <span className="relative h-7 w-7 overflow-hidden rounded-full bg-ink ring-1 ring-white/15">
+                    <Image src="/rba-logo.png" alt="" fill sizes="28px" className="object-cover" />
+                  </span>
+                  <span className="font-sans text-[0.78rem] font-medium tracking-[0.04em] text-paper">
+                    {BRAND_NAME}
+                  </span>
+                </a>
                 <button
                   ref={closeRef}
                   type="button"
@@ -223,14 +238,6 @@ export default function BlogGallery({
                 >
                   <CloseIcon className="h-5 w-5" />
                 </button>
-                <div className="flex items-center gap-2">
-                  <span className="relative h-7 w-7 overflow-hidden rounded-full bg-ink ring-1 ring-white/15">
-                    <Image src="/rba-logo.png" alt="" fill sizes="28px" className="object-cover" />
-                  </span>
-                  <span className="font-sans text-[0.78rem] font-medium tracking-[0.04em] text-paper">
-                    {BRAND_NAME}
-                  </span>
-                </div>
               </div>
 
               {/* Photo (sharp corners) with chevrons + double-tap heart */}
@@ -341,7 +348,9 @@ export default function BlogGallery({
                   >
                     <HeartIcon filled={isLiked} className="h-[1.65rem] w-[1.65rem]" />
                   </motion.span>
-                  <span className="text-[0.9rem] font-medium">{fmt(likeCount)}</span>
+                  <span className="inline-block min-w-[5.5ch] text-left text-[0.9rem] font-medium tabular-nums">
+                    {fmt(likeCount)}
+                  </span>
                 </button>
                 <button
                   type="button"
@@ -355,7 +364,14 @@ export default function BlogGallery({
 
               {/* Handle + caption */}
               <p className="mt-2 px-3 pb-2 text-[0.88rem] font-light leading-relaxed text-paper/90 sm:px-0">
-                <span className="mr-1.5 font-medium text-paper">{HANDLE}</span>
+                <a
+                  href={INSTAGRAM_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mr-1.5 font-medium text-paper hover:underline"
+                >
+                  {HANDLE}
+                </a>
                 {current.caption}
               </p>
             </div>
