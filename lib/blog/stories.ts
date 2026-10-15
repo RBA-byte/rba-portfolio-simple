@@ -226,6 +226,38 @@ export const storyPosts: BlogPost[] = [
       "A glass vase, a shaft of afternoon light and a few quiet minutes before the reception began.",
     featuredImage: heroImage("zainab-bridal-reception-portrait-glass-rim-light"),
     publishedAt: "2026-09-25",
+      gallery: [
+    {
+    src: "/images/blog/gallery/zainab-bridal-reception-portrait-glass-rim-light-01.webp",
+    alt: "Beautiful Zainab on her reception posing for bridal shoot, Lahore",
+    caption: "//ÉLAN - Elegance, immortalised.",
+  },
+        {
+    src: "/images/blog/gallery/zainab-bridal-reception-portrait-glass-rim-light-02.webp",
+    alt: "Beautiful Zainab on her reception posing for bridal shoot, Lahore",
+    caption: "//ÉLAN - Elegance, immortalised.",
+  },
+        {
+    src: "/images/blog/gallery/zainab-bridal-reception-portrait-glass-rim-light-03.webp",
+    alt: "Beautiful Zainab on her reception posing for bridal shoot, Lahore",
+    caption: "//ÉLAN - Elegance, immortalised.",
+  },
+        {
+    src: "/images/blog/gallery/zainab-bridal-reception-portrait-glass-rim-light-04.webp",
+    alt: "Beautiful Zainab on her reception posing for bridal shoot, Lahore",
+    caption: "//ÉLAN - Elegance, immortalised.",
+  },
+        {
+    src: "/images/blog/gallery/zainab-bridal-reception-portrait-glass-rim-light-05.webp",
+    alt: "Beautiful Zainab on her reception posing for bridal shoot, Lahore",
+    caption: "//ÉLAN - Elegance, immortalised.",
+  },
+        {
+    src: "/images/blog/gallery/zainab-bridal-reception-portrait-glass-rim-light-06.webp",
+    alt: "Beautiful Zainab on her reception posing for bridal shoot, Lahore",
+    caption: "//ÉLAN - Elegance, immortalised.",
+  },
+        ],
     relatedSlugs: [
       "candid-vs-cinematic-vs-traditional-wedding-photography",
       "best-time-of-day-for-wedding-photography-in-lahore",
