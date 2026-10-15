@@ -36,31 +36,8 @@ export const storyPosts: BlogPost[] = [
       "Marble columns, late light and a slow drift of smoke — how we shot Ezza and Hammad's walima portraits at Quaid-e-Azam Library.",
     featuredImage: heroImage("ezza-hammad-walima-shoot-quaid-e-azam-library"),
     publishedAt: "2026-09-23",
-    relatedSlugs: [
-      "ezza-hammad-cinematic-walima-portraits-lahore",
-      "best-wedding-photography-locations-in-lahore",
-      "best-wedding-venues-in-lahore-for-photography",
-    ],
-    faqTags: ["venues", "locations", "luxury", "style", "cinematic"],
-    blocks: [
-      {
-        type: "paragraph",
-        text: "Ezza and Hammad didn't want a banquet hall for their walima portraits. They wanted somewhere in Lahore that felt like it belonged to the city rather than to a wedding season, and Quaid-e-Azam Library gave us exactly that: high ceilings, old marble, and light that moves differently through every hall depending on the hour.",
-      },
-      {
-        type: "heading",
-        text: "Why a library for a walima shoot",
-      },
-      {
-        type: "paragraph",
-        text: "It's an unusual choice for wedding photography in Lahore, and that was the point. The library is a working public building, not a wedding venue, which meant we had one real constraint to plan around: a scheduled slot, booked in advance through the library's own photo shoot request page, rather than the open-ended access a private venue allows. We walked the halls a few days earlier to time where the afternoon light lands on the columns, so we weren't guessing on the day.",
-      },
-      {
-        type: "paragraph",
-        text: "Once the light was mapped, we brought in smoke. A slow bomb behind the couple, timed to drift rather than billow, turned the depth of the hallway into something closer to a stage than a corridor — the kind of frame that reads as cinematic wedding photography in Lahore without needing much explanation.",
-      },
-      
-      gallery: [
+
+     gallery: [
     {
     src: "/images/blog/gallery/ezza-hammad-cinematic-walima-portraits-lahore-01.webp",
     alt: "Beautiful Ezza and Hammad waleema couple shoot at Quaid e Azam Library, Lahore",
@@ -101,6 +78,32 @@ export const storyPosts: BlogPost[] = [
   // views and likes are optional: leave them out and a steady number is generated per photo
 ],
       
+    
+    relatedSlugs: [
+      "ezza-hammad-cinematic-walima-portraits-lahore",
+      "best-wedding-photography-locations-in-lahore",
+      "best-wedding-venues-in-lahore-for-photography",
+    ],
+    faqTags: ["venues", "locations", "luxury", "style", "cinematic"],
+    blocks: [
+      {
+        type: "paragraph",
+        text: "Ezza and Hammad didn't want a banquet hall for their walima portraits. They wanted somewhere in Lahore that felt like it belonged to the city rather than to a wedding season, and Quaid-e-Azam Library gave us exactly that: high ceilings, old marble, and light that moves differently through every hall depending on the hour.",
+      },
+      {
+        type: "heading",
+        text: "Why a library for a walima shoot",
+      },
+      {
+        type: "paragraph",
+        text: "It's an unusual choice for wedding photography in Lahore, and that was the point. The library is a working public building, not a wedding venue, which meant we had one real constraint to plan around: a scheduled slot, booked in advance through the library's own photo shoot request page, rather than the open-ended access a private venue allows. We walked the halls a few days earlier to time where the afternoon light lands on the columns, so we weren't guessing on the day.",
+      },
+      {
+        type: "paragraph",
+        text: "Once the light was mapped, we brought in smoke. A slow bomb behind the couple, timed to drift rather than billow, turned the depth of the hallway into something closer to a stage than a corridor — the kind of frame that reads as cinematic wedding photography in Lahore without needing much explanation.",
+      },
+      
+     
 
       
       {
