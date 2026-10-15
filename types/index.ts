@@ -64,7 +64,9 @@ export type BlogBlock =
   | { type: "heading"; text: string }
   | { type: "subheading"; text: string }
   | { type: "paragraph"; text: string }
-  | { type: "list"; items: string[]; ordered?: boolean };
+  | { type: "list"; items: string[]; ordered?: boolean }
+  /** Marks where the post's `gallery` appears inside the text. */
+  | { type: "gallery" };
 
 /** A single question/answer shown on /faq and (randomly) inside blog posts. */
 export interface FaqItem {
