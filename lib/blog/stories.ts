@@ -596,6 +596,39 @@ export const storyPosts: BlogPost[] = [
       "We waited for the sun to drop behind the trees before asking Mahnoor and Aliee to simply look at each other.",
     featuredImage: heroImage("mahnoor-aliee-mehndi-sunset-shoot-kabeer-studio"),
     publishedAt: "2026-10-01",
+    gallery: [
+    {
+    src: "/images/blog/gallery/mahnoor-aliee-mehndi-sunset-shoot-kabeer-studio-01.webp",
+    alt: "Mahnoor and Aliee striking an intimate pose on their Mehndi couple shoot in Kabeer studio.",
+    caption: "Outdoor Mehndi Couple shoot with @mahnoor and @aaliee",
+  },
+      {
+    src: "/images/blog/gallery/mahnoor-aliee-mehndi-sunset-shoot-kabeer-studio-02.webp",
+    alt: "Mahnoor and Aliee striking an intimate pose on their Mehndi couple shoot in Kabeer studio.",
+    caption: "Outdoor Mehndi Couple shoot with @mahnoor and @aaliee",
+  },
+      {
+    src: "/images/blog/gallery/mahnoor-aliee-mehndi-sunset-shoot-kabeer-studio-03.webp",
+    alt: "Mahnoor and Aliee striking an intimate pose on their Mehndi couple shoot in Kabeer studio.",
+    caption: "Outdoor Mehndi Couple shoot with @mahnoor and @aaliee",
+  },
+      {
+    src: "/images/blog/gallery/mahnoor-aliee-mehndi-sunset-shoot-kabeer-studio-04.webp",
+    alt: "Mahnoor and Aliee striking an intimate pose on their Mehndi couple shoot in Kabeer studio.",
+    caption: "Outdoor Mehndi Couple shoot with @mahnoor and @aaliee",
+  },
+      {
+    src: "/images/blog/gallery/mahnoor-aliee-mehndi-sunset-shoot-kabeer-studio-05.webp",
+    alt: "Mahnoor and Aliee striking an intimate pose on their Mehndi couple shoot in Kabeer studio.",
+    caption: "Outdoor Mehndi Couple shoot with @mahnoor and @aaliee",
+  },
+      {
+    src: "/images/blog/gallery/mahnoor-aliee-mehndi-sunset-shoot-kabeer-studio-06.webp",
+    alt: "Mahnoor and Aliee striking an intimate pose on their Mehndi couple shoot in Kabeer studio.",
+    caption: "Outdoor Mehndi Couple shoot with @mahnoor and @aaliee",
+  },
+      
+      ].
     relatedSlugs: [
       "best-time-of-day-for-wedding-photography-in-lahore",
       "mehndi-nikah-baraat-walima-wedding-photography",
