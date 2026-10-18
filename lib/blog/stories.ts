@@ -40,35 +40,35 @@ export const storyPosts: BlogPost[] = [
      gallery: [
     {
     src: "/images/blog/gallery/ezza-hammad-cinematic-walima-portraits-lahore-01.webp",
-    alt: "Beautiful Ezza and Hammad waleema couple shoot at Quaid e Azam Library, Lahore",
+    alt: "Beautiful Ezza and Hammad waleema couple stanging in a balcony of Quaid e Azam Library for the shoot.",
     caption: "//Lost in Love.",
   },
          {
     src: "/images/blog/gallery/ezza-hammad-cinematic-walima-portraits-lahore-02.webp",
-    alt: "Beautiful Ezza and Hammad waleema couple shoot at Quaid e Azam Library, Lahore",
+    alt: "Beautiful Ezza and Hammad surrounded in smoke in an intimate waleema couple shoot at Quaid e Azam Library, Lahore.",
     caption: "//Lost in Love.",
   },
 
          {
     src: "/images/blog/gallery/ezza-hammad-cinematic-walima-portraits-lahore-03.webp",
-    alt: "Beautiful Ezza and Hammad waleema couple shoot at Quaid e Azam Library, Lahore",
+    alt: "Beautiful chandliers of Quaid e Azam Library, Lahore.",
     caption: "//Lost in Love.",
   },
 
          {
     src: "/images/blog/gallery/ezza-hammad-cinematic-walima-portraits-lahore-04.webp",
-    alt: "Beautiful Ezza and Hammad waleema couple shoot at Quaid e Azam Library, Lahore",
+    alt: "Beautiful waleema couple Ezza and Hammad posing in the corridor of Quaid e Azam Library, Lahore.",
     caption: "//Lost in Love.",
   },
          {
     src: "/images/blog/gallery/ezza-hammad-cinematic-walima-portraits-lahore-05.webp",
-    alt: "Beautiful Ezza and Hammad waleema couple shoot at Quaid e Azam Library, Lahore",
+    alt: "Sillohet of beautiful Ezza looking outside the window of Quaid e Azam Library, Lahore.",
     caption: "//Lost in Love.",
   },
 
          {
     src: "/images/blog/gallery/ezza-hammad-cinematic-walima-portraits-lahore-06.webp",
-    alt: "Beautiful Ezza and Hammad waleema couple shoot at Quaid e Azam Library, Lahore",
+    alt: "Motion trails from the shoot of Ezza and Hammad slow shutter effect.",
     caption: "//Lost in Love.",
   },
      
