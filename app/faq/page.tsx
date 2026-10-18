@@ -140,6 +140,10 @@ export default function FaqPage() {
         <div className="mt-14 border-t border-white/10 pt-10 text-center">
           <p className="font-display text-xl sm:text-2xl">Ready to plan your wedding?</p>
           <div className="mt-6 flex flex-wrap items-center justify-center gap-x-6 gap-y-3 text-[0.78rem] font-light uppercase tracking-[0.14em] text-[#e8e8e8]/80">
+            <Link href="/gallery/wedding-photographer-in-lahore" className="underline decoration-white/30 underline-offset-4 hover:text-[#e8e8e8]">
+              Wedding Photographer in Lahore
+            </Link>
+            
             <Link href="/#packages" className="underline decoration-white/30 underline-offset-4 hover:text-[#e8e8e8]">
               View Packages
             </Link>
