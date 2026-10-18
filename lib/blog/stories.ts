@@ -628,7 +628,7 @@ export const storyPosts: BlogPost[] = [
     caption: "Outdoor Mehndi Couple shoot with @mahnoor and @aaliee",
   },
       
-      ].
+      ],
     relatedSlugs: [
       "best-time-of-day-for-wedding-photography-in-lahore",
       "mehndi-nikah-baraat-walima-wedding-photography",
