@@ -307,6 +307,23 @@ export const storyPosts: BlogPost[] = [
       "Farrah's head resting on Faisal's lap, warm bulbs overhead — one of our favourite mehndi frames this season.",
     featuredImage: heroImage("faisal-farrah-mehndi-couple-shoot-lahore"),
     publishedAt: "2026-09-26",
+     gallery: [
+    {
+    src: "/images/blog/gallery/faisal-farrah-mehndi-couple-shoot-lahore-01.webp",
+    alt: "Faisal and Farrah on their mehndi posing for mehndi couple shoot in front of a heritage backdrop.",
+    caption: "//Mehndi Vibes",
+  },
+         {
+    src: "/images/blog/gallery/faisal-farrah-mehndi-couple-shoot-lahore-02.webp",
+    alt: "Faisal and Farrah having fun on their mehndi, farrah applying mehndi on faisal's face and giving a candid shot for the camera.",
+    caption: "//Mehndi Vibes",
+  },
+         {
+    src: "/images/blog/gallery/faisal-farrah-mehndi-couple-shoot-lahore-03.webp",
+    alt: "Beautiful couple, Faisal and Farrah, on their mehndi shoot in a tradational backdrop.",
+    caption: "//Mehndi Vibes",
+  },
+       ],
     relatedSlugs: [
       "mehndi-nikah-baraat-walima-wedding-photography",
       "wedding-photography-in-lahore-styles-seasons",
@@ -356,6 +373,38 @@ export const storyPosts: BlogPost[] = [
       "A controlled studio set gave us full command of the light for Samie and Khadija's baraat portraits.",
     featuredImage: heroImage("samie-khadija-baraat-couple-shoot-h-square-studio"),
     publishedAt: "2026-09-27",
+    gallery: [
+    {
+    src: "/images/blog/gallery/samie-khadija-baraat-couple-shoot-h-square-studio-01.webp",
+    alt: "Samie and Khadija striking an intimate pose on their baraat couple shoot in h-square production.",
+    caption: "Love is in the air vibes",
+  },
+        {
+    src: "/images/blog/gallery/samie-khadija-baraat-couple-shoot-h-square-studio-02.webp",
+    alt: "Beautiful Khadija striking a pose  for the camera on her baraat.",
+    caption: "Love is in the air vibes",
+  },
+        {
+    src: "/images/blog/gallery/samie-khadija-baraat-couple-shoot-h-square-studio-03.webp",
+    alt: "Samie and Khadija striking an intimate pose on their baraat couple shoot in h-square production.",
+    caption: "Love is in the air vibes",
+  },
+        {
+    src: "/images/blog/gallery/samie-khadija-baraat-couple-shoot-h-square-studio-04.webp",
+    alt: "Samie and Khadija in a close up shot, groom kissing the bride on the forehead on their baraat couple shoot.",
+    caption: "Love is in the air vibes",
+  },
+        {
+    src: "/images/blog/gallery/samie-khadija-baraat-couple-shoot-h-square-studio-05.webp",
+    alt: "Details of groom sherwani on his baraat.",
+    caption: "Love is in the air vibes",
+  },
+        {
+    src: "/images/blog/gallery/samie-khadija-baraat-couple-shoot-h-square-studio-06.webp",
+    alt: "Beautiful bride, Khadija, holding a candle waiting for her groom in h-square production.",
+    caption: "Love is in the air vibes",
+  },
+      ],
     relatedSlugs: [
       "samie-khadija-walima-shoot-aureum-grand-bahria-town",
       "best-wedding-venues-in-lahore-for-photography",
