@@ -20,6 +20,8 @@ export function absoluteUrl(path: string) {
  * with the pillar posts in lib/blog/*.ts.
  */
 export const homepageCrawlLinks: { href: string; label: string }[] = [
+  { href: "/gallery/wedding-photographer-in-lahore", label: "Wedding photographer in Lahore: photography gallery" },
+  
   { href: "/blog", label: "Wedding photography journal" },
   { href: "/faq", label: "Wedding photography FAQs" },
   {
